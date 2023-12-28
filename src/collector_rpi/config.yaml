@@ -1,0 +1,22 @@
+#
+# collection device and location
+device: rpi4c-anderson1
+#
+# dump1090 URL
+dump1090url: http://localhost:8080/data.json
+#
+# collected files go here
+exportDir: /Users/gsc/Documents/github/mellow-hyena/aws_export
+#exportDir: /home/gsc/github/mellow-hyena/aws_export
+#
+#AWS_ACCESS_KEY_ID: bogus
+#AWS_SECRET_ACCESS_KEY: bogus
+#AWS_DEFAULT_REGION: us-west-2
+#
+#gzipCommand: /bin/gzip
+gzipCommand: /usr/bin/gzip
+#
+# how often to collect data (in seconds)
+# cron runs every minute, so 30 seconds is 2 samples
+sampleSleep: 30
+#

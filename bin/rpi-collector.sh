@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# Title: rpi-collector.sh
+# Description: dump1090
+# Development Environment: Debian 10 (buster)/raspian
+# Author: Guy Cole (guycole at gmail dot com)
+#
+# * * * * * /home/gsc/github/mellow-hyena/bin/rpi-collector > /dev/null 2>&1
+#
+PATH=/bin:/usr/bin:/etc:/usr/local/bin; export PATH
+#
+echo "start collection"
+cd /Users/gsc/Documents/github/mellow-hyena/src/collector_rpi
+#cd /home/gsc/github/mellow-hyena/src/collector_rpi
+source venv/bin/activate
+python3 ./driver.py
+echo "end collection"
