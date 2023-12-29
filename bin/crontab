@@ -1,0 +1,5 @@
+#
+* * * * * /home/gsc/github/mellow-hyena/bin/rpi-collector.sh > /dev/null 2>&1
+#
+05 * * * * /home/gsc/github/mellow-hyena/bin/rpi-xfer-anderson.sh > /dev/null 2>&1
+#
