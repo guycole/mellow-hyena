@@ -40,18 +40,19 @@ class Collector:
         utc_timestamp = utc_time.timestamp()
         return int(utc_timestamp)
 
-    def write_payload(self, payload: typing.List[typing.Dict]):
+    def write_payload(self, paylist: typing.List[typing.Dict]):
         """write payload to file"""
 
-        payload["device"] = self.device
-        payload["project"] = "hyena"
-        payload["timestamp"] = self.get_timestamp()
-        payload["version"] = 1
+        paydict = {}
+        paydict["device"] = self.device
+        paydict["project"] = "hyena"
+        paydict["timestamp"] = self.get_timestamp()
+        paydict["version"] = 1
+        paydict["observation"] = paylist
 
         out_file_name = self.get_filename()
         with open(out_file_name, "w", encoding="utf-8") as outfile:
-            for ndx in range(len(payload)):
-                outfile.write("%s\n" % json.dumps(payload[ndx]))
+            outfile.write("%s\n" % json.dumps(paydict))
 
     def perform_collection(self):
         """read from dump1090"""

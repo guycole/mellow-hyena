@@ -6,8 +6,8 @@ device: rpi4c-anderson1
 dump1090url: http://localhost:8080/data.json
 #
 # collected files go here
-exportDir: /Users/gsc/Documents/github/mellow-hyena/aws_export
-#exportDir: /home/gsc/github/mellow-hyena/aws_export
+#exportDir: /Users/gsc/Documents/github/mellow-hyena/aws_export
+exportDir: /home/gsc/github/mellow-hyena/aws_export
 #
 #AWS_ACCESS_KEY_ID: bogus
 #AWS_SECRET_ACCESS_KEY: bogus
