@@ -37,8 +37,32 @@ class LoadLog(Base):
 
         return f"<load_log({self.id}, {self.file_name}, {self.file_type})>"
 
+class Aircraft(Base):
+    """aircraft table definition"""
+
+    __tablename__ = "aircraft"
+
+    id = Column(Integer, primary_key=True)
+
+    aircraft = Column(String)
+    callsign = Column(String)
+    hex = Column(String)
+    version = Column(Integer)
+
+    def __init__(self, aircraft, callsign, hex, version):
+        self.aircraft = aircraft
+        self.callsign = callsign
+        self.hex = hex
+        self.version = version
+
+    def __repr__(self):
+        if self.id is None:
+            self.id = 0
+
+        return f"<aircraft({self.hex}, {self.callsign}, {self.aircraft}, {self.version})>"
+
 class Observation(Base):
-    """xxxx"""
+    """observation table definition"""
 
     __tablename__ = "observation"
 
@@ -54,4 +78,13 @@ class Observation(Base):
     longitude = Column(Float)
     speed = Column(Integer)
     track = Column(Integer)
-#
+
+    def __init__(self, device, timestamp):
+        self.device = device
+        self.time_stamp = timestamp
+
+    def __repr__(self):
+        if self.id is None:
+            self.id = 0
+
+        return f"<observation({self.id}, {self.device}, {self.time_stamp})>"
