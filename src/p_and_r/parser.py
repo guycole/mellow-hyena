@@ -1,0 +1,150 @@
+"""mellow hyena processing"""
+
+import json
+import datetime
+import os
+import sys
+import time
+import typing
+import uuid
+
+from datetime import timezone
+
+from typing import Dict, List
+
+import requests
+
+import yaml
+from yaml.loader import SafeLoader
+
+from postgres import PostGres
+
+from hyena import Hyena
+class Parser:
+    """mellow hynena parser"""
+
+    device = None
+    dump1090url = None
+    export_dir = None
+
+    def __init__(self, device: str, dump1090url: str, export_dir: str):
+        self.device = device
+        self.dump1090url = dump1090url
+        self.export_dir = export_dir
+  
+    def file_classifier(self, buffer: Dict[str, str]) -> str:
+        """discover file format, i.e. hyena_v1, etc"""
+
+        print(buffer)
+
+        file_type = "unknown"
+
+        project = buffer['project']
+        version = buffer['version']
+
+        return f"{project}_{version}"
+
+    def file_reader(self, file_name: str) -> List[str]:
+        """read a mellow hyena file into a buffer"""
+
+        buffer = []
+
+        with open(file_name, "r", encoding="utf-8") as infile:
+            try:
+                buffer = infile.readlines()
+                if len(buffer) < 1:
+                    print(f"empty file noted: {file_name}")
+            except:
+                print(f"file read error: {file_name}")
+
+        return buffer
+
+    def file_processor(self, file_name: str, postgres: str) -> int:
+        """dispatch to approprate file parser/loader"""
+
+        load_log = None
+        #load_log = postgres.load_log_select(file_name)
+        #if load_log is not None:
+        #    print("skipping duplicate file")
+        #    return 0
+
+        status = 0
+
+        buffer = self.file_reader(file_name)
+        for ndx in range(len(buffer)):
+            element = json.loads(buffer[ndx])
+
+            classifier = self.file_classifier(element)
+            print(f"file:{file_name} classifier:{classifier}")
+
+            if classifier == "hyena_1":
+                hyena = Hyena(postgres)
+                status = hyena.hyena_v1(element, load_log)
+            elif classifier == "unknown":
+                status = -1
+
+        #print(json.loads(buffer))
+  
+    def execute(self, sample_sleep: int):
+        """drive processing pass"""
+
+        import_dir = "/Users/gsc/Documents/github/mellow-hyena/samples"
+
+        postgres = PostGres(None)
+        # postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False))
+
+        success_dir = None
+        failure_dir = None
+
+        os.chdir(import_dir)
+        targets = os.listdir(".")
+        print(f"{len(targets)} files noted")
+
+        success_counter = 0
+        failure_counter = 0
+
+        for target in targets:
+            if os.path.isfile(target) is False:
+                continue
+
+            status = -1
+            status = self.file_processor(target, postgres)
+
+            if status == 0:
+                success_counter += 1
+                # self.file_success(target, success_dir)
+            else:
+                failure_counter += 1
+                # self.file_failure(target, failure_dir)
+
+        print(f"success:{success_counter} failure:{failure_counter}")
+
+print("parser start")
+
+#
+# argv[1] = configuration filename
+#
+if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        file_name = sys.argv[1]
+    else:
+        file_name = "config.yaml"
+
+    with open(file_name, "r", encoding="utf-8") as stream:
+        try:
+            configuration = yaml.load(stream, Loader=SafeLoader)
+        except yaml.YAMLError as exc:
+            print(exc)
+
+    parser = Parser(
+        configuration["device"],
+        configuration["dump1090url"],
+        configuration["exportDir"],
+    )
+    parser.execute(configuration["sampleSleep"])
+
+print("parser stop")
+
+# ;;; Local Variables: ***
+# ;;; mode:python ***
+# ;;; End: ***
