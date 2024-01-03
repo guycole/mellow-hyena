@@ -1,0 +1,45 @@
+
+A sample is an unbiased number of observations taken from a population. 
+In simple terms, a population is the total number of observations (i.e., 
+individuals, animals, items, data, etc.)
+
+tables
+
+geoloc
+  name (i.e. anderson1, vallejo1, mobile)
+  accuracy
+  altitude
+  latitude
+  longitude 
+  device
+
+observation 
+  geoloc
+  bssid 
+  ssid 
+  level (sig strength)
+  frequency (integer)
+  capability 
+  wap
+
+wap
+  bssid
+  ssid
+  frequency ghz 2462 = 2.462 GHz
+  capability
+  version 
+
+how to capture wap changes? (i.e. ssid name changes)
+wap can have multiple rows w/different version
+
+daily observation population (# from site) (file uploads)
+daily raw AP samples (# from site) select for detail
+daily new AP observed (# from site) select for detail
+daily missing AP observed (# from site) select for detail
+daily changed AP observed (# from site) select for detail
+
+https://docs.sqlalchemy.org/en/20/orm/session_basics.html#id1
+
+boxscore bssid_total and score_date/device
+observation fix_time_ms and wap_id;
+given a date, caculate epoch time in ms 
