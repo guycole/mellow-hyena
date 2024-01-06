@@ -1,4 +1,7 @@
 #
+# database connection
+dbConn: "postgresql+psycopg2://hyena_py:bogus@localhost:5432/hyena_v1"
+#
 # collection device and location
 device: rpi4c-anderson1
 #

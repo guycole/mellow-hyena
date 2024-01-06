@@ -12,6 +12,9 @@ from datetime import timezone
 
 from typing import Dict, List
 
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
 import requests
 
 import yaml
@@ -20,14 +23,19 @@ from yaml.loader import SafeLoader
 from postgres import PostGres
 
 from hyena import Hyena
+
+from sql_table import LoadLog
+
 class Parser:
     """mellow hynena parser"""
 
+    db_conn = None
     device = None
     dump1090url = None
     export_dir = None
 
-    def __init__(self, device: str, dump1090url: str, export_dir: str):
+    def __init__(self, db_conn: str, device: str, dump1090url: str, export_dir: str):
+        self.db_conn = db_conn
         self.device = device
         self.dump1090url = dump1090url
         self.export_dir = export_dir
@@ -62,11 +70,10 @@ class Parser:
     def file_processor(self, file_name: str, postgres: str) -> int:
         """dispatch to approprate file parser/loader"""
 
-        load_log = None
-        #load_log = postgres.load_log_select(file_name)
-        #if load_log is not None:
-        #    print("skipping duplicate file")
-        #    return 0
+        load_log = postgres.load_log_select(file_name)
+        if load_log is not None:
+            print(f"skipping duplicate file:{file_name}")
+            return 0
 
         status = 0
 
@@ -77,21 +84,22 @@ class Parser:
             classifier = self.file_classifier(element)
             print(f"file:{file_name} classifier:{classifier}")
 
+            load_log = LoadLog(file_name, classifier, element['device'], element['timestamp'])
+            postgres.load_log_insert(load_log)
+
             if classifier == "hyena_1":
                 hyena = Hyena(postgres)
                 status = hyena.hyena_v1(element, load_log)
             elif classifier == "unknown":
                 status = -1
 
-        #print(json.loads(buffer))
-  
     def execute(self, sample_sleep: int):
         """drive processing pass"""
 
         import_dir = "/Users/gsc/Documents/github/mellow-hyena/samples"
 
-        postgres = PostGres(None)
-        # postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False))
+        db_engine = create_engine(self.db_conn, echo=False)
+        postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False))
 
         success_dir = None
         failure_dir = None
@@ -137,6 +145,7 @@ if __name__ == "__main__":
             print(exc)
 
     parser = Parser(
+        configuration["dbConn"],
         configuration["device"],
         configuration["dump1090url"],
         configuration["exportDir"],

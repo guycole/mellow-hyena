@@ -6,7 +6,7 @@ from typing import List
 
 from postgres import PostGres
 
-from sql_table import LoadLog
+from sql_table import LoadLog, Observation
 
 from typing import Dict, List
 
@@ -54,8 +54,9 @@ class Hyena:
 
         observation = buffer['observation']
         for ndx in range(len(observation)):
-            obs = observation[ndx]
-            print(obs)
+            temp = observation[ndx]
+            obs = Observation(1, load_log.id, temp['altitude'], temp['hex'], temp['flight'], temp['lat'], temp['lon'], temp['speed'], temp['track'])
+            self.postgres.observation_insert(obs)
           
 #{"device": "rpi4c-anderson1", "project": "hyena", "timestamp": 1703826814, "version": 1, 
 # "observation": [

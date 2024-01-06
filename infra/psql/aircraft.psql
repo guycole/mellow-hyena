@@ -18,5 +18,4 @@ create table aircraft (
 grant select, insert, update, delete on aircraft to hyena_py;
 grant usage, select on sequence aircraft_id_seq to hyena_py;
 
--- create index wap_ssid on wap(ssid);
--- create unique index wap_bssid_version on wap(bssid, version);
+insert into aircraft(air_type, callsign, hex, version) values('unknown', 'unknown', '0', 0);

@@ -5,11 +5,9 @@
 -- hex = icao
 -- flight = airline assigned flight
 -- 
--- fix_time_ms = same as geoloc.time_stamp
--- 
 create table observation (
   id           bigserial    primary key,
-  altitude     smallint     not null,
+  altitude     int          not null,
   aircraft_id  bigint       not null,
   constraint   aircraft_id  foreign key(aircraft_id) references aircraft(id),
   flight       varchar(16)  not null,

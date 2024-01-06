@@ -1,5 +1,7 @@
 """mellow heeler database table definitions"""
 
+import time
+
 from datetime import datetime, timezone
 
 from sqlalchemy import Column
@@ -22,14 +24,18 @@ class LoadLog(Base):
     __tablename__ = "load_log"
 
     id = Column(Integer, primary_key=True)
+    device = Column(String)
     file_name = Column(String)
     file_type = Column(String)
-    time_stamp = Column(DateTime)
+    load_time = Column(DateTime)
+    obs_time = Column(DateTime)
 
-    def __init__(self, file_name, file_type):
+    def __init__(self, file_name, file_type, device, obs_time):
+        self.device = device
         self.file_name = file_name
         self.file_type = file_type
-        self.time_stamp = datetime.now(timezone.utc)
+        self.load_time = datetime.now(timezone.utc)
+        self.obs_time = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(obs_time))
 
     def __repr__(self):
         if self.id is None:
@@ -68,8 +74,8 @@ class Observation(Base):
 
     id = Column(Integer, primary_key=True)
 
-    device = Column(String)
-    time_stamp = Column(DateTime)
+    aircraft_id = Column(BigInteger)
+    load_log_id = Column(BigInteger)
 
     altitude = Column(Integer)
     hex = Column(String)
@@ -79,12 +85,19 @@ class Observation(Base):
     speed = Column(Integer)
     track = Column(Integer)
 
-    def __init__(self, device, timestamp):
-        self.device = device
-        self.time_stamp = timestamp
+    def __init__(self, aircraft_id, load_log_id, altitude, hex, flight, latitude, longitude, speed, track):
+        self.aircraft_id = aircraft_id
+        self.load_log_id = load_log_id
+        self.altitude = altitude
+        self.hex = hex
+        self.flight = flight
+        self.latitude = latitude
+        self.longitude = longitude
+        self.speed = speed
+        self.track = track
 
     def __repr__(self):
         if self.id is None:
             self.id = 0
 
-        return f"<observation({self.id}, {self.device}, {self.time_stamp})>"
+        return f"<observation({self.id}, {self.aircraft_id}, {self.hex})>"
