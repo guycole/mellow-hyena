@@ -1,12 +1,13 @@
 """mellow heeler hound file parser and database loader"""
 
 import json
+import time
 
 from typing import List
 
 from postgres import PostGres
 
-from sql_table import LoadLog, Observation
+from sql_table import Aircraft, LoadLog, Observation
 
 from typing import Dict, List
 
@@ -35,38 +36,73 @@ class Hyena:
     def run_stat_dump(self):
         """print run_stats summary"""
 
-        print(
-            f"cooked: {self.run_stats['fresh_cooked']} observation: {self.run_stats['fresh_observation']} wap: {self.run_stats['fresh_wap']}"
-        )
+        print(f"cooked: {self.run_stats['fresh_cooked']} observation: {self.run_stats['fresh_observation']} wap: {self.run_stats['fresh_wap']}")
 
-    def hound_v1_get_timestamp(self, buffer: List[str]) -> int:
-        """return file timestamp"""
+    def discover_aircraft(self, args: Dict[str, str]) -> Aircraft:
+        """hyena_v1 discover if known aircraft, or create new"""
 
-        payload = json.loads(buffer[0])
-        geoloc = payload["geoLoc"]
-        return geoloc['fixTimeMs']
+        # stub for now
+ 
+        air_dict = {}
+        air_dict['air_type'] = "unknown"
+        air_dict['callsign'] = "unknown"
+        air_dict['hex'] = "0000"
+        air_dict['version'] = 1
 
-    def hyena_v1(self, buffer: Dict[str, str], load_log: LoadLog) -> int:
-        """hyena parser v1"""
+        aircraft = Aircraft(air_dict)
+        aircraft.id = 1
 
-        device = buffer['device']
-        timestamp = buffer['timestamp']
+        return aircraft
+
+    def hyena_v1_load_log(self, buffer: Dict[str, str]) -> LoadLog:
+        """hyena_v1 load_log"""
+
+        load_dict = {}
+        load_dict['device'] = buffer['device']
+        load_dict['file_name'] = buffer['file_name']
+        load_dict['file_type'] = buffer['file_type']
+        load_dict['obs_time'] = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(buffer['timestamp']))
+        load_dict['population'] = len(buffer['observation'])
+
+        return self.postgres.load_log_insert(load_dict)
+    
+    def hyena_v1_load_observation(self, aircraft:Aircraft, buffer: Dict[str, str], load_log:LoadLog) -> Observation:
+        """hyena_v1 load_observation"""
+
+        obs_dict = {}
+
+        if aircraft is None:
+            obs_dict['aircraft_id'] = 1
+        else:
+            obs_dict['aircraft_id'] = aircraft.id
+
+        obs_dict['load_log_id'] = load_log.id
+        obs_dict['obs_time'] = load_log.obs_time
+
+        obs_dict['altitude'] = buffer['altitude']
+        obs_dict['hex'] = buffer['hex'].lower()
+
+        if len(buffer['flight']) < 1:
+            obs_dict['flight'] = "unknown"
+        else:
+            obs_dict['flight'] = buffer['flight']
+
+        obs_dict['latitude'] = buffer['lat']
+        obs_dict['longitude'] = buffer['lon']
+        obs_dict['speed'] = buffer['speed']
+        obs_dict['track'] = buffer['track']
+
+        return self.postgres.observation_insert(obs_dict)
+
+    def hyena_v1_loader(self, buffer: Dict[str, str]) -> int:
+        """hyena_v1 loader"""
+
+        load_log = self.hyena_v1_load_log(buffer)
 
         observation = buffer['observation']
         for ndx in range(len(observation)):
-            temp = observation[ndx]
-            obs = Observation(1, load_log.id, temp['altitude'], temp['hex'], temp['flight'], temp['lat'], temp['lon'], temp['speed'], temp['track'])
-            self.postgres.observation_insert(obs)
-          
-#{"device": "rpi4c-anderson1", "project": "hyena", "timestamp": 1703826814, "version": 1, 
-# "observation": [
-#     {"hex": "80153b", "flight": "AIC180  ", "lat": 40.192318, "lon": -121.393994, "altitude": 28000, "track": 16, "speed": 509}, 
-#     {"hex": "acc1eb", "flight": "", "lat": 39.487517, "lon": -122.630188, "altitude": 29000, "track": 175, "speed": 433}, 
-#     {"hex": "a1442f", "flight": "", "lat": 39.974965, "lon": -121.679577, "altitude": 16300, "track": 176, "speed": 331}, 
-#     {"hex": "ad88ef", "flight": "N971SC  ", "lat": 39.23688, "lon": -122.137817, "altitude": 16800, "track": 174, "speed": 203}, 
-#     {"hex": "abf3da", "flight": "SWA3425 ", "lat": 40.49501, "lon": -121.965759, "altitude": 36000, "track": 6, "speed": 463}, 
-#     {"hex": "ac13f9", "flight": "SWA2298 ", "lat": 40.024384, "lon": -122.374451, "altitude": 36000, "track": 352, "speed": 452}]}
-
+            aircraft = self.discover_aircraft(observation[ndx])
+            self.hyena_v1_load_observation(aircraft, observation[ndx], load_log)
 
         return 0
 

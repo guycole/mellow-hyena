@@ -7,13 +7,16 @@
 -- 
 --
 create table load_log (
-  id         bigserial    primary key,
-  device     varchar(32)  not null,
-  file_name  varchar(48)  unique not null,
-  file_type  varchar(16)  not null,
-  load_time  timestamptz  not null default CURRENT_TIMESTAMP,
-  obs_time   timestamptz  not null default CURRENT_TIMESTAMP
+  id          bigserial    primary key,
+  device      varchar(32)  not null,
+  file_name   varchar(48)  unique not null,
+  file_type   varchar(16)  not null,
+  load_time   timestamptz  not null default CURRENT_TIMESTAMP,
+  obs_time    timestamptz  not null default CURRENT_TIMESTAMP,
+  population  smallint     not null
 );
 
 grant select, insert, update, delete on load_log to hyena_py;
 grant usage, select on sequence load_log_id_seq to hyena_py;
+
+create unique index load_log_device_obs_time on load_log(device, obs_time);

@@ -43,8 +43,6 @@ class Parser:
     def file_classifier(self, buffer: Dict[str, str]) -> str:
         """discover file format, i.e. hyena_v1, etc"""
 
-        print(buffer)
-
         file_type = "unknown"
 
         project = buffer['project']
@@ -70,28 +68,28 @@ class Parser:
     def file_processor(self, file_name: str, postgres: str) -> int:
         """dispatch to approprate file parser/loader"""
 
+        status = 0
+
         load_log = postgres.load_log_select(file_name)
         if load_log is not None:
             print(f"skipping duplicate file:{file_name}")
-            return 0
-
-        status = 0
+            return status
 
         buffer = self.file_reader(file_name)
         for ndx in range(len(buffer)):
-            element = json.loads(buffer[ndx])
+            json_dict = json.loads(buffer[ndx])
+            json_dict['file_name'] = file_name
 
-            classifier = self.file_classifier(element)
-            print(f"file:{file_name} classifier:{classifier}")
+            json_dict['file_type'] = self.file_classifier(json_dict)
+            print(f"file_name:{file_name} file_type:{json_dict['file_type']}")
 
-            load_log = LoadLog(file_name, classifier, element['device'], element['timestamp'])
-            postgres.load_log_insert(load_log)
-
-            if classifier == "hyena_1":
+            if json_dict['file_type'] == "hyena_1":
                 hyena = Hyena(postgres)
-                status = hyena.hyena_v1(element, load_log)
-            elif classifier == "unknown":
+                status = hyena.hyena_v1_loader(json_dict)
+            else:
                 status = -1
+       
+        return status
 
     def execute(self, sample_sleep: int):
         """drive processing pass"""
