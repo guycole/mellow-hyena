@@ -43,6 +43,12 @@ class Collector:
         utc_timestamp = utc_time.timestamp()
         return int(utc_timestamp)
 
+    def process_payload(self, payload: typing.List[typing.Dict]):
+        """process payload from dump1090"""
+
+        for element in payload:
+            print(element)
+
     def write_payload(self, paylist: typing.List[typing.Dict]):
         """write payload to file"""
 
@@ -65,7 +71,8 @@ class Collector:
             if response.status_code == 200:
                 payload = json.loads(response.text)
                 if len(payload) > 1:
-                    self.write_payload(payload)
+                    self.process_payload(payload)
+#                    self.write_payload(payload)
                 else:
                     print("empty response")
             else:
