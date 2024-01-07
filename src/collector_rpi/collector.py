@@ -9,11 +9,12 @@ import uuid
 
 from datetime import timezone
 
+from aircraft import Aircraft
+
 import requests
 
 import yaml
 from yaml.loader import SafeLoader
-
 
 class Collector:
     """mellow hynena collector"""
@@ -21,11 +22,13 @@ class Collector:
     device = None
     dump1090url = None
     export_dir = None
+    rapidApiKey = None
 
-    def __init__(self, device: str, dump1090url: str, export_dir: str):
+    def __init__(self, device: str, dump1090url: str, export_dir: str, rapidApiKey: str):
         self.device = device
         self.dump1090url = dump1090url
         self.export_dir = export_dir
+        self.rapidApiKey = rapidApiKey
 
     def get_filename(self) -> str:
         """return fully qualified filename"""
@@ -73,11 +76,23 @@ class Collector:
     def execute(self, sample_sleep: int):
         """drive the collection pass"""
 
+        aircraft = Aircraft(self.rapidApiKey)
+        aircraft.add_to_queue("a4d42e")
+        aircraft.add_to_queue("a55055")
+        aircraft.add_to_queue("a24743")
+        aircraft.add_to_queue("ad9aac")
+        aircraft.add_to_queue("c03a3d")
+        aircraft.add_to_queue("ae0226")
+        aircraft.add_to_queue("bogus")
+        aircraft.get_aircraft()
+
+        print(aircraft.out_queue)
+
         limit = int(60 / sample_sleep)
-        for ndx in range(int(60 / sample_sleep)):
-            self.perform_collection()
-            if ndx < limit - 1:
-                time.sleep(sample_sleep)
+#        for ndx in range(int(60 / sample_sleep)):
+#            self.perform_collection()
+#            if ndx < limit - 1:
+#                time.sleep(sample_sleep)
 
 
 print("collection start")
@@ -101,6 +116,7 @@ if __name__ == "__main__":
         configuration["device"],
         configuration["dump1090url"],
         configuration["exportDir"],
+        configuration['rapidApiKey'],
     )
     collector.execute(configuration["sampleSleep"])
 

@@ -13,3 +13,4 @@ echo "start transfer"
 cd /home/gsc/github/mellow-hyena
 aws s3 mv aws_export s3://mellow-hyena.braingang.net/vallejo1 --profile=hyena-rpi --recursive
 echo "end transfer"
+#

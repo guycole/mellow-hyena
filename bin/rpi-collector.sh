@@ -14,5 +14,6 @@ echo "start collection"
 #cd /Users/gsc/Documents/github/mellow-hyena/src/collector_rpi
 cd /home/gsc/github/mellow-hyena/src/collector_rpi
 source venv/bin/activate
-python3 ./driver.py
+python3 ./collector.py
 echo "end collection"
+#

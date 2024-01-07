@@ -20,3 +20,5 @@ gzipCommand: /usr/bin/gzip
 # cron runs every minute, so 30 seconds is 2 samples
 sampleSleep: 30
 #
+rapidApiKey: bogus
+#

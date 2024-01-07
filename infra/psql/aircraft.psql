@@ -11,7 +11,7 @@ create table aircraft (
   id        bigserial    primary key,
   air_type  varchar(24)  not null,
   callsign  varchar(24)  not null,
-  hex       varchar(24)  not null,
+  hex       varchar(12)  not null,
   version   int          not null
 );
 
