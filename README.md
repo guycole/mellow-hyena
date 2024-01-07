@@ -15,7 +15,7 @@ ADSB Collection runs on a standard [Raspberry Pi 4](https://www.raspberrypi.org/
 
 dump1090 exposes a small HTTP server and will return a json formatted report of all ADSB broadcasts.
 
-Twice a minute, I ask dump1090 to report on current ADSB broadcasts.  For each aircraft, I then request amplifying information from the ADSB REST API.  The collected output is written to json formatted file and uploaded to [AWS S3][https://aws.amazon.com/pm/serv-s3] for later processing.
+Twice a minute, I ask dump1090 to report on current ADSB broadcasts.  For each aircraft, I then request amplifying information from the ADSB REST API.  The collected output is written to json formatted file and uploaded to [AWS S3](https://aws.amazon.com/pm/serv-s3) for later processing.
 
 ## Processing
 Move collected ADSB observations from S3 to local machine for parsing and loading into postgres.
