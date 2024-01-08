@@ -76,6 +76,9 @@ class Hyena:
         """hyena_v1 load_aircraft"""
 
         for element in buffer:
+            if "hex" in element:
+                element['adsb_hex'] = element['hex']
+                
             self.postgres.aircraft_select_or_insert(element)
 
     def hyena_v1_load_observation(self, buffer: Dict[str, str], load_log: LoadLog):

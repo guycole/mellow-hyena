@@ -2,9 +2,9 @@
 # database connection
 dbConn: "postgresql+psycopg2://hyena_py:bogus@localhost:5432/hyena_v1"
 #
-failureDir = "bogus"
+failureDir: "bogus"
 #
-successDir = "bogus"
+successDir: "bogus"
 #
-importDir = "bogus"
+importDir: /var/mellow/hyena-raw
 #
