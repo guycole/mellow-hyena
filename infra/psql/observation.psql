@@ -7,11 +7,9 @@
 -- 
 create table observation (
   id           bigserial    primary key,
+  adsb_hex     varchar(12)  not null,
   altitude     int          not null,
-  aircraft_id  bigint       not null,
-  constraint   aircraft_id  foreign key(aircraft_id) references aircraft(id),
-  flight       varchar(24)  not null,
-  hex          varchar(12)  not null,
+  flight       varchar(12)  not null,
   latitude     real         not null,
   longitude    real         not null,
   load_log_id  bigint       not null,
@@ -23,3 +21,5 @@ create table observation (
 
 grant select, insert, update, delete on observation to hyena_py;
 grant usage, select on sequence observation_id_seq to hyena_py;
+
+create unique index observation_adsb_hex_flight_obs_time on observation(adsb_hex, flight, obs_time);

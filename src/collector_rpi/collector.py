@@ -88,7 +88,7 @@ class Collector:
                     self.process_payload(payload)
                     self.write_payload(payload)
                 else:
-                    print("empty response")
+                    print("empty response from dump1090")
             else:
                 print(f"error reading dump1090:{response.status_code}")
         except:
@@ -111,11 +111,11 @@ print("collection start")
 #
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        file_name = sys.argv[1]
+        config_file_name = sys.argv[1]
     else:
-        file_name = "config.yaml"
+        config_file_name = "config.yaml"
 
-    with open(file_name, "r", encoding="utf-8") as stream:
+    with open(config_file_name, "r", encoding="utf-8") as stream:
         try:
             configuration = yaml.load(stream, Loader=SafeLoader)
         except yaml.YAMLError as exc:

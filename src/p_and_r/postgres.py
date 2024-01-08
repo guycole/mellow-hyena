@@ -1,36 +1,26 @@
 """mellow heeler postgresql support"""
 
-import datetime
-import time
+from typing import Dict
 
-from typing import List, Dict
-
-# import pytz
 
 import sqlalchemy
-from sqlalchemy import and_
 from sqlalchemy import select
 
 from sql_table import Aircraft, LoadLog, Observation
+
 
 class PostGres:
     """mellow heeler postgresql support"""
 
     Session = None
 
-    def __init__(self, session: str):
-        pass
-
     def __init__(self, session: sqlalchemy.orm.session.sessionmaker):
         self.Session = session
 
-    def aircraft_insert(self, aircraft: Aircraft) -> Aircraft:
+    def aircraft_insert(self, args: Dict[str, str]) -> Aircraft:
         """aircraft insert row"""
 
-        aircraft.hex = aircraft.hex.lower()
-
-        if len(aircraft.callsign) < 1:
-            aircraft.callsign = "unknown"
+        aircraft = Aircraft(args)
 
         session = self.Session()
         session.add(aircraft)
@@ -38,44 +28,58 @@ class PostGres:
         session.close()
 
         return aircraft
-    
-    def aircraft_select(self, hex: str, flight:str) -> Aircraft:
+
+    def aircraft_select(self, adsb_hex: str, flight: str) -> Aircraft:
         """aircraft select row"""
 
-        statement = (select(Aircraft).filter_by(hex=hex.lower()).order_by(Aircraft.version))
-
-        with self.Session() as session:
-            rows = session.scalars(statement).all()
-            for row in rows:
-                if row.callsign == flight:
-                    return row
-
-        return None
-    
-    def aircraft_select_or_insert(self, hex: str, flight: str) -> Aircraft:
-        """discover if aircraft exists or if not, max version for insert"""
-
-        hex = hex.lower()
-
-        if len(flight) < 1:
-            flight = "unknown"
-
-        statement = (select(Aircraft).filter_by(hex=hex).order_by(Aircraft.version))
+        statement = (
+            select(Aircraft)
+            .filter_by(adsb_hex=adsb_hex, flight=flight)
+            .order_by(Aircraft.version)
+        )
 
         row = None
         with self.Session() as session:
             rows = session.scalars(statement).all()
             for row in rows:
-                if row.callsign == flight:
+                continue
+
+        return row
+
+    def aircraft_select_or_insert(self, args: Dict[str, str]) -> Aircraft:
+        """discover if aircraft exists or if not, max version for insert"""
+
+        statement = (
+            select(Aircraft)
+            .filter_by(adsb_hex=args["adsb_hex"])
+            .order_by(Aircraft.version)
+        )
+
+        row = None
+        with self.Session() as session:
+            rows = session.scalars(statement).all()
+            for row in rows:
+                if (
+                    row.adsb_hex == args["adsb_hex"]
+                    and row.category == args["category"]
+                    and row.emergency == args["emergency"]
+                    and row.flight == args["flight"]
+                    and row.model == args["model"]
+                    and row.registration == args["registration"]
+                    and row.ladd_flag == args["ladd_flag"]
+                    and row.military_flag == args["military_flag"]
+                    and row.pia_flag == args["pia_flag"]
+                    and row.wierdo_flag == args["wierdo_flag"]
+                ):
                     return row
 
         if row is None:
-            aircraft = Aircraft("unknown", flight, hex, version=1)
+            args["version"] = 1
         else:
-            aircraft = Aircraft("unknown", flight, hex, row.version + 1)
+            args["version"] = row.version + 1
 
-        return self.aircraft_insert(aircraft)
-       
+        return self.aircraft_insert(args)
+
     def load_log_insert(self, args: Dict[str, str]) -> LoadLog:
         """load_log insert row"""
 
@@ -104,13 +108,14 @@ class PostGres:
         """observation insert row"""
 
         observation = Observation(args)
-      
+
         session = self.Session()
         session.add(observation)
         session.commit()
         session.close()
 
         return observation
+
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

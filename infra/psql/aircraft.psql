@@ -1,21 +1,34 @@
 --
 -- Title: aircraft.psql
 -- Description: all the aircraft
--- 
--- air_type = aircraft type, i.e. B727
--- callsign = 
--- hex = icao 
--- version
+--
+-- "adsb_hex": "a324b0" (version)
+-- "category": "A3"
+-- "emergency": "none"
+-- "flight": "SKW3649"
+-- "registration": "N301SY"
+-- "model": "E75L"
+-- "ladd_flag": false
+-- "military_flag": false
+-- "pia_flag": false
+-- "wierdo_flag": false
 --
 create table aircraft (
-  id        bigserial    primary key,
-  air_type  varchar(24)  not null,
-  callsign  varchar(24)  not null,
-  hex       varchar(12)  not null,
-  version   int          not null
+  id             bigserial    primary key,
+  adsb_hex       varchar(12)  not null,
+  category       varchar(4)   not null,
+  emergency      varchar(8)   not null,
+  flight         varchar(12)  not null,
+  model          varchar(24)  not null,
+  registration   varchar(12)  not null,
+  ladd_flag      boolean      not null,
+  military_flag  boolean      not null,
+  pia_flag       boolean      not null,
+  wierdo_flag    boolean      not null,
+  version        int          not null
 );
 
 grant select, insert, update, delete on aircraft to hyena_py;
 grant usage, select on sequence aircraft_id_seq to hyena_py;
 
-insert into aircraft(air_type, callsign, hex, version) values('unknown', 'unknown', '0', 0);
+insert into aircraft(adsb_hex, category, emergency, flight, model, registration, ladd_flag, military_flag, pia_flag, wierdo_flag, version) values('unknown', '00', 'none', 'unknown', 'unknown', 'unknown', false, false, false, false, 1); 

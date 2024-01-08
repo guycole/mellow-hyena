@@ -1,21 +1,13 @@
 """mellow hyena processing"""
 
 import json
-import datetime
 import os
 import sys
-import time
-import typing
-import uuid
-
-from datetime import timezone
 
 from typing import Dict, List
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
-import requests
 
 import yaml
 from yaml.loader import SafeLoader
@@ -24,29 +16,20 @@ from postgres import PostGres
 
 from hyena import Hyena
 
-from sql_table import LoadLog
 
 class Parser:
     """mellow hynena parser"""
 
     db_conn = None
-    device = None
-    dump1090url = None
-    export_dir = None
 
-    def __init__(self, db_conn: str, device: str, dump1090url: str, export_dir: str):
+    def __init__(self, db_conn: str):
         self.db_conn = db_conn
-        self.device = device
-        self.dump1090url = dump1090url
-        self.export_dir = export_dir
-  
+
     def file_classifier(self, buffer: Dict[str, str]) -> str:
         """discover file format, i.e. hyena_v1, etc"""
 
-        file_type = "unknown"
-
-        project = buffer['project']
-        version = buffer['version']
+        project = buffer["project"]
+        version = buffer["version"]
 
         return f"{project}_{version}"
 
@@ -76,25 +59,23 @@ class Parser:
             return status
 
         buffer = self.file_reader(file_name)
-        for ndx in range(len(buffer)):
-            json_dict = json.loads(buffer[ndx])
-            json_dict['file_name'] = file_name
+        for element in buffer:
+            json_dict = json.loads(element)
+            json_dict["file_name"] = file_name
 
-            json_dict['file_type'] = self.file_classifier(json_dict)
+            json_dict["file_type"] = self.file_classifier(json_dict)
             print(f"file_name:{file_name} file_type:{json_dict['file_type']}")
 
-            if json_dict['file_type'] == "hyena_1":
+            if json_dict["file_type"] == "hyena_1":
                 hyena = Hyena(postgres)
                 status = hyena.hyena_v1_loader(json_dict)
             else:
                 status = -1
-       
+
         return status
 
-    def execute(self, sample_sleep: int):
+    def execute(self, import_dir: str, success_dir: str, failure_dir: str):
         """drive processing pass"""
-
-        import_dir = "/Users/gsc/Documents/github/mellow-hyena/samples"
 
         db_engine = create_engine(self.db_conn, echo=False)
         postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False))
@@ -125,6 +106,7 @@ class Parser:
 
         print(f"success:{success_counter} failure:{failure_counter}")
 
+
 print("parser start")
 
 #
@@ -132,23 +114,22 @@ print("parser start")
 #
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        file_name = sys.argv[1]
+        config_file_name = sys.argv[1]
     else:
-        file_name = "config.yaml"
+        config_file_name = "config.yaml"
 
-    with open(file_name, "r", encoding="utf-8") as stream:
+    with open(config_file_name, "r", encoding="utf-8") as stream:
         try:
             configuration = yaml.load(stream, Loader=SafeLoader)
         except yaml.YAMLError as exc:
             print(exc)
 
-    parser = Parser(
-        configuration["dbConn"],
-        configuration["device"],
-        configuration["dump1090url"],
-        configuration["exportDir"],
+    parser = Parser(configuration["dbConn"])
+    parser.execute(
+        configuration["importDir"],
+        configuration["successDir"],
+        configuration["failureDir"],
     )
-    parser.execute(configuration["sampleSleep"])
 
 print("parser stop")
 

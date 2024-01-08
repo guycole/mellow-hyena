@@ -4,4 +4,4 @@ needs more information
 
 FlightRadar (airlab) REST API not work
 
-ADSBExchange?
+ADSBExchange works
