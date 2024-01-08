@@ -5,7 +5,7 @@
 # Development Environment: Debian 10 (buster)/raspian
 # Author: Guy Cole (guycole at gmail dot com)
 #
-# * * * * * /home/gsc/github/mellow-hyena/bin/rpi-collector > /dev/null 2>&1
+# * * * * * /home/gsc/github/mellow-hyena/bin/rpi-collector.sh > /dev/null 2>&1
 #
 PATH=/bin:/usr/bin:/etc:/usr/local/bin; export PATH
 LD_LIBRARY_PATH=/usr/local/lib/arm-linux-gnueabihf; export LD_LIBRARY_PATH

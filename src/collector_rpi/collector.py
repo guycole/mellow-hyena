@@ -9,7 +9,7 @@ import uuid
 
 from datetime import timezone
 
-from aircraft import Aircraft
+from adsb_exchange import AdsbExchange
 
 import requests
 
@@ -19,16 +19,16 @@ from yaml.loader import SafeLoader
 class Collector:
     """mellow hynena collector"""
 
+    adsb_exchange = None
     device = None
     dump1090url = None
     export_dir = None
-    rapidApiKey = None
 
-    def __init__(self, device: str, dump1090url: str, export_dir: str, rapidApiKey: str):
+    def __init__(self, device: str, dump1090url: str, export_dir: str, rapid_api_key: str):
+        self.adsb_exchange = AdsbExchange(rapid_api_key)
         self.device = device
         self.dump1090url = dump1090url
         self.export_dir = export_dir
-        self.rapidApiKey = rapidApiKey
 
     def get_filename(self) -> str:
         """return fully qualified filename"""
@@ -47,10 +47,18 @@ class Collector:
         """process payload from dump1090"""
 
         for element in payload:
-            print(element)
+            element['hex'] = element['hex'].lower()
+
+            element['flight'] = element['flight'].strip() 
+            if len(element['flight']) < 1:
+                element['flight'] = 'unknown'
+
+            self.adsb_exchange.add_to_queue(element['hex'])
 
     def write_payload(self, paylist: typing.List[typing.Dict]):
         """write payload to file"""
+
+        self.adsb_exchange.get_aircraft()
 
         paydict = {}
         paydict["device"] = self.device
@@ -58,6 +66,7 @@ class Collector:
         paydict["timestamp"] = self.get_timestamp()
         paydict["version"] = 1
         paydict["observation"] = paylist
+        paydict["adsbex"] = self.adsb_exchange.convert_out_dict()
 
         out_file_name = self.get_filename()
         with open(out_file_name, "w", encoding="utf-8") as outfile:
@@ -72,34 +81,22 @@ class Collector:
                 payload = json.loads(response.text)
                 if len(payload) > 1:
                     self.process_payload(payload)
-#                    self.write_payload(payload)
+                    self.write_payload(payload)
                 else:
                     print("empty response")
             else:
-                print("error response from dump1090:%d" % response.status_code)
+                print(f"error reading dump1090:{response.status_code}")
         except:
-            print("error reading dump1090")
+            print("error processing dump1090")
 
     def execute(self, sample_sleep: int):
         """drive the collection pass"""
 
-        aircraft = Aircraft(self.rapidApiKey)
-        aircraft.add_to_queue("a4d42e")
-        aircraft.add_to_queue("a55055")
-        aircraft.add_to_queue("a24743")
-        aircraft.add_to_queue("ad9aac")
-        aircraft.add_to_queue("c03a3d")
-        aircraft.add_to_queue("ae0226")
-        aircraft.add_to_queue("bogus")
-        aircraft.get_aircraft()
-
-        print(aircraft.out_queue)
-
         limit = int(60 / sample_sleep)
-#        for ndx in range(int(60 / sample_sleep)):
-#            self.perform_collection()
-#            if ndx < limit - 1:
-#                time.sleep(sample_sleep)
+        for ndx in range(int(60 / sample_sleep)):
+            self.perform_collection()
+            if ndx < limit - 1:
+                time.sleep(sample_sleep)
 
 
 print("collection start")

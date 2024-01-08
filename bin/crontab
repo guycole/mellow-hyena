@@ -1,5 +1,9 @@
 #
-* * * * * /home/gsc/github/mellow-hyena/bin/rpi-collector.sh > /dev/null 2>&1
+#2,12,22,32,42,52 * * * * /home/gsc/github/mellow-heeler/bin/rpi-converter.sh > /dev/null 2>&1
 #
-05 * * * * /home/gsc/github/mellow-hyena/bin/rpi-xfer-anderson.sh > /dev/null 2>&1
+29 * * * * /home/gsc/github/mellow-heeler/bin/rpi-xfer-vallejo.sh > /dev/null 2>&1
+#
+#* * * * * /home/gsc/github/mellow-hyena/bin/rpi-collector.sh > /dev/null 2>&1
+#
+05 * * * * /home/gsc/github/mellow-hyena/bin/rpi-xfer-vallejo.sh > /dev/null 2>&1
 #
