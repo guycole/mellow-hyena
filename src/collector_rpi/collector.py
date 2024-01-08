@@ -9,12 +9,13 @@ import uuid
 
 from datetime import timezone
 
-from adsb_exchange import AdsbExchange
-
 import requests
 
 import yaml
 from yaml.loader import SafeLoader
+
+from adsb_exchange import AdsbExchange
+
 
 class Collector:
     """mellow hynena collector"""
@@ -24,7 +25,9 @@ class Collector:
     dump1090url = None
     export_dir = None
 
-    def __init__(self, device: str, dump1090url: str, export_dir: str, rapid_api_key: str):
+    def __init__(
+        self, device: str, dump1090url: str, export_dir: str, rapid_api_key: str
+    ):
         self.adsb_exchange = AdsbExchange(rapid_api_key)
         self.device = device
         self.dump1090url = dump1090url
@@ -33,7 +36,7 @@ class Collector:
     def get_filename(self) -> str:
         """return fully qualified filename"""
 
-        return "%s/%s" % (self.export_dir, str(uuid.uuid4()))
+        return f"{self.export_dir}/{str(uuid.uuid4())}"
 
     def get_timestamp(self) -> int:
         """return epoch timestamp in UTC"""
@@ -47,13 +50,13 @@ class Collector:
         """process payload from dump1090"""
 
         for element in payload:
-            element['hex'] = element['hex'].lower()
+            element["hex"] = element["hex"].lower()
 
-            element['flight'] = element['flight'].strip() 
-            if len(element['flight']) < 1:
-                element['flight'] = 'unknown'
+            element["flight"] = element["flight"].strip()
+            if len(element["flight"]) < 1:
+                element["flight"] = "unknown"
 
-            self.adsb_exchange.add_to_queue(element['hex'])
+            self.adsb_exchange.add_to_queue(element["hex"])
 
     def write_payload(self, paylist: typing.List[typing.Dict]):
         """write payload to file"""
@@ -70,7 +73,7 @@ class Collector:
 
         out_file_name = self.get_filename()
         with open(out_file_name, "w", encoding="utf-8") as outfile:
-            outfile.write("%s\n" % json.dumps(paydict))
+            outfile.write(f"{json.dumps(paydict)}\n")
 
     def perform_collection(self):
         """read from dump1090"""
@@ -120,7 +123,7 @@ if __name__ == "__main__":
         configuration["device"],
         configuration["dump1090url"],
         configuration["exportDir"],
-        configuration['rapidApiKey'],
+        configuration["rapidApiKey"],
     )
     collector.execute(configuration["sampleSleep"])
 
