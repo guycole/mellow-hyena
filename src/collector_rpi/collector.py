@@ -56,6 +56,8 @@ class Collector:
             if len(element["flight"]) < 1:
                 element["flight"] = "unknown"
 
+            print(f"{element['hex']}:{element['flight']}")
+            
             self.adsb_exchange.add_to_queue(element["hex"])
 
     def write_payload(self, paylist: typing.List[typing.Dict]):

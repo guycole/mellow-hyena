@@ -1,3 +1,4 @@
 # start dump1090
 LD_LIBRARY_PATH=/usr/local/lib/arm-linux-gnueabihf; export LD_LIBRARY_PATH
-/usr/local/bin/dump1090 --net > /dev/null 2>&1
+#/usr/local/bin/dump1090 --net > /dev/null 2>&1
+nohup bash -c "( /usr/local/bin/dump1090 --net > /dev/null 2>&1) &"
