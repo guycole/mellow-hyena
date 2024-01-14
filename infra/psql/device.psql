@@ -1,0 +1,29 @@
+--
+-- Title: device.psql
+-- Description: collection devices
+--
+-- altitude in feet
+-- device i.e. rpi4c-anderson1
+-- latitude in decimal degrees
+-- longitude in decimal degrees
+-- note 
+-- retired_date is date device was retired
+-- start_date is date device started reporting
+--
+create table device (
+  id            bigserial     primary key,
+  altitude      smallint      not null,
+  latitude      real          not null,
+  longitude     real          not null,
+  name          varchar(32)   unique not null,
+  note          varchar(132)  not null,
+  retired_date  date   not null default CURRENT_DATE,
+  start_date    date   not null default CURRENT_DATE
+);
+
+grant select, insert, update, delete on device to hyena_py;
+grant usage, select on sequence device_id_seq to hyena_py;
+
+insert into device(altitude, latitude, longitude, name, note, retired_date, start_date) values(500, 40.416667, -122.241667, 'rpi4c-anderson1', 'no note', '2023-12-29', '2023-12-29');
+insert into device(altitude, latitude, longitude, name, note, retired_date, start_date) values(0, 38.106389, -122.272778, 'rpi4a-vallejo1', 'no note', '2024-1-9', '2024-1-9');
+

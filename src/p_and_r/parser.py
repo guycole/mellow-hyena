@@ -66,12 +66,15 @@ class Parser:
             json_dict["file_type"] = self.file_classifier(json_dict)
             print(f"file_name:{file_name} file_type:{json_dict['file_type']}")
 
+            device = postgres.device_select(json_dict['device'])
+
             if json_dict["file_type"] == "hyena_1":
-                hyena = Hyena(postgres)
+                hyena = Hyena(device, postgres)
                 status = hyena.hyena_v1_loader(json_dict)
             else:
                 status = -1
 
+        print(f"status:{status}")
         return status
 
     def execute(self, import_dir: str, success_dir: str, failure_dir: str):

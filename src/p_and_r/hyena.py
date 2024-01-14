@@ -1,21 +1,24 @@
-"""mellow heeler hound file parser and database loader"""
+"""mellow heeler hound file parser and database loader, runs for each file"""
 
 import time
 
+from geopy import distance
 from typing import Dict
 
 from postgres import PostGres
 
-from sql_table import Aircraft, LoadLog
+from sql_table import AdsbExchange, Device, LoadLog
 
 
 class Hyena:
     """mellow hyena file parser and database loader"""
 
+    device = None
     postgres = None
     run_stats = {}
 
-    def __init__(self, postgres: PostGres):
+    def __init__(self, device: Device, postgres: PostGres):
+        self.device = device
         self.postgres = postgres
 
         self.run_stats["fresh_cooked"] = 0
@@ -38,7 +41,7 @@ class Hyena:
             f"cooked: {self.run_stats['fresh_cooked']} observation: {self.run_stats['fresh_observation']} wap: {self.run_stats['fresh_wap']}"
         )
 
-    def discover_aircraft(self, args: Dict[str, str]) -> Aircraft:
+    def discover_aircraft(self, args: Dict[str, str]) -> AdsbExchange:
         """hyena_v1 discover if known aircraft, or create new"""
 
         print("-x-x-x-")
@@ -58,6 +61,21 @@ class Hyena:
 
         return aircraft
 
+    def hyena_v1_range_and_bearing(self, latitude: float, longitude: float) -> (float, float):
+        """hyena_v1 range and bearing"""
+
+        origin = (self.device.latitude, self.device.longitude)
+        destination = (latitude, longitude)
+
+        distance2 = distance.distance(origin, destination).miles
+        print(distance2)
+        bearing2 = distance.bearing(origin, destination)
+        print(bearing2)
+
+        return (distance2, bearing2)
+
+    #    return (0.0, 0.0)
+
     def hyena_v1_load_log(self, buffer: Dict[str, str]) -> LoadLog:
         """hyena_v1 load_log"""
 
@@ -72,50 +90,67 @@ class Hyena:
 
         return self.postgres.load_log_insert(load_dict)
 
-    def hyena_v1_load_aircraft(self, buffer: Dict[str, str]):
-        """hyena_v1 load_aircraft"""
+    def hyena_v1_load_adsb_exchange(self, buffer: Dict[str, str]) -> Dict[str, str]:
+        """hyena_v1 load_adsb_exchange"""
+
+        results = {}
 
         for element in buffer:
             if "hex" in element:
                 element['adsb_hex'] = element['hex']
-                
-            self.postgres.aircraft_select_or_insert(element)
 
-    def hyena_v1_load_observation(self, buffer: Dict[str, str], load_log: LoadLog):
+            results[element['adsb_hex']] = self.postgres.adsb_exchange_select_or_insert(element).id
+
+        return(results)
+
+    def hyena_v1_load_observation(self, buffer: Dict[str, str], adsb_keys: Dict[str, str], load_log: LoadLog):
         """hyena_v1 load_observation"""
-
+     
         obs_dict = {}
-        obs_dict["adsb_hex"] = buffer["hex"].lower()
         obs_dict["altitude"] = buffer["altitude"]
-
-        obs_dict["flight"] = buffer["flight"].strip()
-        if len(obs_dict["flight"]) < 1:
-            obs_dict["flight"] = "unknown"
-
         obs_dict["latitude"] = buffer["lat"]
         obs_dict["longitude"] = buffer["lon"]
+#        obs_dict["load_log_id"] = load_log.id
+#        obs_dict["obs_time"] = load_log.obs_time
+        obs_dict["load_log_id"] = 1
+        obs_dict["obs_time"] = 12345
         obs_dict["speed"] = buffer["speed"]
         obs_dict["track"] = buffer["track"]
 
-        obs_dict["load_log_id"] = load_log.id
-        obs_dict["obs_time"] = load_log.obs_time
+        if len(buffer["flight"]) < 1:
+            obs_dict["flight"] = "unknown"
+        else:
+            obs_dict["flight"] = buffer["flight"].strip()
+
+        (obs_dict['range'], obs_dict['bearing']) = self.hyena_v1_range_and_bearing(buffer["lat"], buffer["lon"])
+        
+        if "hex" in buffer:
+            obs_dict["adsb_hex"] = buffer["hex"].lower()
+        else:
+            obs_dict["adsb_hex"] = buffer["adsb_hex"].lower()
+
+        if obs_dict["adsb_hex"] in adsb_keys:
+            obs_dict["adsb_exchange_id"] = adsb_keys[obs_dict["adsb_hex"]]
+        else:
+            obs_dict["adsb_exchange_id"] = 1
 
         self.postgres.observation_insert(obs_dict)
 
     def hyena_v1_loader(self, buffer: Dict[str, str]) -> int:
         """hyena_v1 loader"""
 
-        load_log = self.hyena_v1_load_log(buffer)
+#        load_log = self.hyena_v1_load_log(buffer)
+        load_log = None
 
+        adsb_keys = {}
         if "adsbex" in buffer:
-            self.hyena_v1_load_aircraft(buffer["adsbex"])
+            adsb_keys = self.hyena_v1_load_adsb_exchange(buffer["adsbex"])
 
         observation = buffer["observation"]
         for element in observation:
-            self.hyena_v1_load_observation(element, load_log)
+            self.hyena_v1_load_observation(element, adsb_keys, load_log)
 
-        return 0
-
+        return -1
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

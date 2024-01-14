@@ -6,5 +6,6 @@ failureDir: "bogus"
 #
 successDir: "bogus"
 #
-importDir: /var/mellow/hyena-raw
+# importDir: /var/mellow/hyena-raw
+importDir: /Users/gsc/Documents/github/mellow-hyena/samples
 #

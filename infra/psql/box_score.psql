@@ -1,0 +1,26 @@
+--
+-- Title: box_score.psql
+-- Description: daily boxscore, for 24 hour period 00:00 to 23:59 UTC
+--
+-- adsb_hex_total = total of adsb hex heard today
+-- adsb_hex_new = total of new adsb hex heard today
+-- score_date = date
+-- device = anderson, vallejo, android, etc
+-- file_population = total files uploaded
+-- refresh_flag = true, must recalculate stats
+-- score_date = date
+--
+create table box_score (
+  id               bigserial    primary key,
+  adsb_hex_total   smallint     not null,
+  adsb_hex_new     smallint     not null,
+  device           varchar(16)  not null,
+  file_population  smallint     not null, 
+  refresh_flag     boolean      not null,
+  score_date       date         not null
+);
+
+grant select, insert, update, delete on box_score to hyena_py;
+grant usage, select on sequence box_score_id_seq to hyena_py;
+
+create unique index boxscore_date_device on box_score(score_date, device);

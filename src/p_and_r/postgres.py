@@ -6,7 +6,7 @@ from typing import Dict
 import sqlalchemy
 from sqlalchemy import select
 
-from sql_table import Aircraft, LoadLog, Observation
+from sql_table import AdsbExchange, Device, LoadLog, Observation
 
 
 class PostGres:
@@ -17,68 +17,71 @@ class PostGres:
     def __init__(self, session: sqlalchemy.orm.session.sessionmaker):
         self.Session = session
 
-    def aircraft_insert(self, args: Dict[str, str]) -> Aircraft:
-        """aircraft insert row"""
+    def adsb_exchange_insert(self, args: Dict[str, str]) -> AdsbExchange:
+        """adsb_exchange insert row"""
 
-        aircraft = Aircraft(args)
+        adsb_exchange = AdsbExchange(args)
 
         session = self.Session()
-        session.add(aircraft)
+        session.add(adsb_exchange)
         session.commit()
         session.close()
 
-        return aircraft
+        return adsb_exchange
 
-    def aircraft_select(self, adsb_hex: str, flight: str) -> Aircraft:
-        """aircraft select row"""
+#    def adsb_exchanget_select(self, adsb_hex: str, flight: str) -> AdsbExchange:
+#        """aircraft select row"""
+#
+#        statement = (
+#            select(Aircraft)
+#            .filter_by(adsb_hex=adsb_hex, flight=flight)
+#            .order_by(Aircraft.version)
+#        )
+
+#        row = None
+#        with self.Session() as session:
+#            rows = session.scalars(statement).all()
+#            for row in rows:
+#                continue
+#
+#        return row
+
+    def adsb_exchange_select_or_insert(self, args: Dict[str, str]) -> AdsbExchange:
+        """discover if adsb row exists or if not, max version for insert"""
+
+        args['adsb_hex'] = args['adsb_hex'].lower() # normalize
 
         statement = (
-            select(Aircraft)
-            .filter_by(adsb_hex=adsb_hex, flight=flight)
-            .order_by(Aircraft.version)
+            select(AdsbExchange)
+            .filter_by(adsb_hex=args["adsb_hex"], category=args['category'], emergency=args['emergency'], flight=args['flight'], model=args['model'], registration=args['registration'], ladd_flag=args['ladd_flag'], military_flag=args['military_flag'], pia_flag=args['pia_flag'], wierdo_flag=args['wierdo_flag'])
         )
 
-        row = None
         with self.Session() as session:
             rows = session.scalars(statement).all()
             for row in rows:
-                continue
+                return row
 
-        return row
+        return self.adsb_exchange_insert(args)
 
-    def aircraft_select_or_insert(self, args: Dict[str, str]) -> Aircraft:
-        """discover if aircraft exists or if not, max version for insert"""
+    def device_select(self, name: str) -> Device:
+        """device select row"""
 
-        statement = (
-            select(Aircraft)
-            .filter_by(adsb_hex=args["adsb_hex"])
-            .order_by(Aircraft.version)
-        )
-
-        row = None
-        with self.Session() as session:
-            rows = session.scalars(statement).all()
-            for row in rows:
-                if (
-                    row.adsb_hex == args["adsb_hex"]
-                    and row.category == args["category"]
-                    and row.emergency == args["emergency"]
-                    and row.flight == args["flight"]
-                    and row.model == args["model"]
-                    and row.registration == args["registration"]
-                    and row.ladd_flag == args["ladd_flag"]
-                    and row.military_flag == args["military_flag"]
-                    and row.pia_flag == args["pia_flag"]
-                    and row.wierdo_flag == args["wierdo_flag"]
-                ):
-                    return row
-
-        if row is None:
-            args["version"] = 1
+        if name.endswith("anderson1"):
+            name = 'rpi4c-anderson1'
+        elif name.endswith("vallejo1"):
+            name = 'rpi4a-vallejo1'
         else:
-            args["version"] = row.version + 1
+            print(f"error unknown device: {name}")
+            return None
+      
+        statement = select(Device).filter_by(name=name)
 
-        return self.aircraft_insert(args)
+        with self.Session() as session:
+            rows = session.scalars(statement).all()
+            for row in rows:
+                return row
+
+        return None
 
     def load_log_insert(self, args: Dict[str, str]) -> LoadLog:
         """load_log insert row"""
@@ -110,8 +113,8 @@ class PostGres:
         observation = Observation(args)
 
         session = self.Session()
-        session.add(observation)
-        session.commit()
+#        session.add(observation)
+#        session.commit()
         session.close()
 
         return observation

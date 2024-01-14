@@ -6,17 +6,21 @@
 -- flight = airline assigned flight
 -- 
 create table observation (
-  id           bigserial    primary key,
-  adsb_hex     varchar(12)  not null,
-  altitude     int          not null,
-  flight       varchar(12)  not null,
-  latitude     real         not null,
-  longitude    real         not null,
-  load_log_id  bigint       not null,
-  constraint   load_log_id  foreign key(load_log_id) references load_log(id),
-  obs_time     timestamptz  not null default CURRENT_TIMESTAMP,
-  speed        smallint     not null,
-  track        smallint     not null
+  id                bigserial    primary key,
+  adsb_hex          varchar(12)  not null,
+  adsb_exchange_id  bigint       not null,
+  constraint        adsb_exchange_id  foreign key(adsb_exchange_id) references adsb_exchange(id),
+  altitude          int          not null,
+  bearing           real         not null,
+  flight            varchar(12)  not null,
+  latitude          real         not null,
+  longitude         real         not null,
+  load_log_id       bigint       not null,
+  constraint        load_log_id  foreign key(load_log_id) references load_log(id),
+  obs_time          timestamptz  not null default CURRENT_TIMESTAMP,
+  range             real         not null,
+  speed             smallint     not null,
+  track             smallint     not null
 );
 
 grant select, insert, update, delete on observation to hyena_py;
