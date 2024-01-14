@@ -2,7 +2,7 @@
 #
 # Title: parser.sh
 # Description: parse and load collection files
-# Development Environment: Debian 10 (buster)/raspian
+# Development Environment: macOS Monterey 12.6.9
 # Author: Guy Cole (guycole at gmail dot com)
 #
 PATH=/bin:/usr/bin:/etc:/usr/local/bin; export PATH

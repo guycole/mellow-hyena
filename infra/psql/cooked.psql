@@ -4,31 +4,18 @@
 --
 -- adsb_hex = hex beacon id
 -- adsb_hex_population = total of adsb_exchange rows associated w/adsb_hex
+-- note
 -- observed_counter = total observation rows associated w/adsb_hex
 -- observed_first = adsb_hex first observation
 -- observed_last = adsb_hex recent AP observation
--- ladd_flag = adsb exchange 'limiting aircaft data displayed'
--- military_flag = adsb_exchange flag for military aircraft
--- pia_flag = adsb_exchange 'privacy ICAO aircraft address'
--- weirdo_flag = adsb_exchange interesting
--- device = anderson, vallejo, android, etc
--- file_population = total files uploaded
--- refresh_flag = true, must recalculate stats
--- score_date = date
 --
 create table cooked (
-  id               bigserial     primary key,
-  adsb_hex         varchar(12)   not null,
-  adsb_hex_population  smallint  not null,
-  ladd_flag         boolean      not null,
-  military_flag     boolean      not null,
-  pia_flag          boolean      not null,
-  wierdo_flag       boolean      not null,
-  observed_counter  bigint       not null,
-  observed_first    timestamptz  not null default CURRENT_TIMESTAMP,
-  observed_last     timestamptz  not null default CURRENT_TIMESTAMP,
-  note              varchar(132) not null default 'default',
-
+  id                bigserial     primary key,
+  adsb_hex          varchar(12)   unique not null,
+  observed_counter  bigint        not null,
+  observed_first    timestamptz   not null default CURRENT_TIMESTAMP,
+  observed_last     timestamptz   not null default CURRENT_TIMESTAMP,
+  note              varchar(132)  not null default 'default'
 );
 
 grant select, insert, update, delete on cooked to hyena_py;

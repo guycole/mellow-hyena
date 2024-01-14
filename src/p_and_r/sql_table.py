@@ -63,12 +63,38 @@ class AdsbExchange(Base):
 
         return f"aircraft({self.adsb_hex}, {self.registration}, {self.model})"
 
+
+class Cooked(Base):
+    """cooked table definition"""
+
+    __tablename__ = "cooked"
+
+    id = Column(BigInteger, primary_key=True)
+    adsb_hex = Column(String)
+    observed_counter = Column(BigInteger)
+    observed_first = Column(DateTime)
+    observed_last = Column(DateTime)
+    note = Column(String)
+
+    def __init__(self, args: Dict[str, str]):
+        self.adsb_hex = args["adsb_hex"].lower()
+        self.observed_counter = args["observed_counter"]
+        self.observed_first = args["observed_first"]
+        self.observed_last = args["observed_last"]
+        self.note = args["note"]
+
+    def __repr__(self):
+        if self.id is None:
+            self.id = 0
+
+        return f"cooked({self.id}, {self.adsb_hex})"
+
 class Device(Base):
     """device table definition"""
 
     __tablename__ = "device"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(BigInteger, primary_key=True)
     altitude = Column(SmallInteger)
     latitude = Column(Float)
     longitude = Column(Float)
@@ -97,7 +123,7 @@ class LoadLog(Base):
 
     __tablename__ = "load_log"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(BigInteger, primary_key=True)
     device = Column(String)
     file_name = Column(String)
     file_type = Column(String)
@@ -119,13 +145,12 @@ class LoadLog(Base):
 
         return f"load_log({self.id}, {self.file_name}, {self.file_type})"
 
-
 class Observation(Base):
     """observation table definition"""
 
     __tablename__ = "observation"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(BigInteger, primary_key=True)
 
     adsb_exchange_id = Column(BigInteger)
     load_log_id = Column(BigInteger)

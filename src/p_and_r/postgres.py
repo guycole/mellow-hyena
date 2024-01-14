@@ -4,9 +4,9 @@ from typing import Dict
 
 
 import sqlalchemy
-from sqlalchemy import select
+from sqlalchemy import select, update
 
-from sql_table import AdsbExchange, Device, LoadLog, Observation
+from sql_table import AdsbExchange, Cooked, Device, LoadLog, Observation
 
 
 class PostGres:
@@ -29,25 +29,8 @@ class PostGres:
 
         return adsb_exchange
 
-#    def adsb_exchanget_select(self, adsb_hex: str, flight: str) -> AdsbExchange:
-#        """aircraft select row"""
-#
-#        statement = (
-#            select(Aircraft)
-#            .filter_by(adsb_hex=adsb_hex, flight=flight)
-#            .order_by(Aircraft.version)
-#        )
-
-#        row = None
-#        with self.Session() as session:
-#            rows = session.scalars(statement).all()
-#            for row in rows:
-#                continue
-#
-#        return row
-
     def adsb_exchange_select_or_insert(self, args: Dict[str, str]) -> AdsbExchange:
-        """discover if adsb row exists or if not, max version for insert"""
+        """select or insert adsb_exchange row"""
 
         args['adsb_hex'] = args['adsb_hex'].lower() # normalize
 
@@ -62,6 +45,38 @@ class PostGres:
                 return row
 
         return self.adsb_exchange_insert(args)
+
+    def cooked_insert(self, args: Dict[str, str]) -> Cooked:
+        """cooked insert row"""
+
+        cooked = Cooked(args)
+
+        session = self.Session()
+        session.add(cooked)
+        session.commit()
+        session.close()
+
+        return cooked
+
+    def cooked_select(self, adsb_hex:str) -> Cooked:
+        """cooked select row"""
+        
+        statement = (select(Cooked).filter_by(adsb_hex=adsb_hex))
+
+        with self.Session() as session:
+            rows = session.scalars(statement).all()
+            for row in rows:
+                return row
+
+        return None
+
+    def cooked_update(self, cooked: Cooked):
+        """update cooked row"""
+
+        session = self.Session()
+        session.add(cooked)
+        session.commit()
+        session.close()
 
     def device_select(self, name: str) -> Device:
         """device select row"""
@@ -113,8 +128,8 @@ class PostGres:
         observation = Observation(args)
 
         session = self.Session()
-#        session.add(observation)
-#        session.commit()
+        session.add(observation)
+        session.commit()
         session.close()
 
         return observation

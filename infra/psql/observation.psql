@@ -2,8 +2,18 @@
 -- Title: observation.psql
 -- Description: dump1090 observation
 --
--- hex = icao
+-- adsb_hex = hex beacon id
+-- adsb_exchange_id = join w/adsb_exchange 
+-- altitude = reported altitude in feet
+-- bearing = calculated target bearing in degrees from north
 -- flight = airline assigned flight
+-- latitude = reported latitude
+-- longitude = reported longitude
+-- load_log_id = join w/load_log
+-- obs_time = observation time
+-- range = calculated distance from receiver in nautical miles
+-- speed = reported speed in knots
+-- track = reported heading in degrees from north
 -- 
 create table observation (
   id                bigserial    primary key,
