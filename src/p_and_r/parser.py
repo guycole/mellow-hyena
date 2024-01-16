@@ -48,7 +48,7 @@ class Parser:
 
         return buffer
 
-    def file_processor(self, file_name: str, postgres: str) -> int:
+    def file_processor(self, file_name: str, postgres: PostGres) -> int:
         """dispatch to approprate file parser/loader"""
 
         status = 0
@@ -66,7 +66,7 @@ class Parser:
             json_dict["file_type"] = self.file_classifier(json_dict)
             print(f"file_name:{file_name} file_type:{json_dict['file_type']}")
 
-            device = postgres.device_select(json_dict['device'])
+            device = postgres.device_select(json_dict["device"])
 
             if json_dict["file_type"] == "hyena_1":
                 hyena = Hyena(device, postgres)
@@ -74,7 +74,6 @@ class Parser:
             else:
                 status = -1
 
-        print(f"status:{status}")
         return status
 
     def execute(self, import_dir: str, success_dir: str, failure_dir: str):
@@ -82,9 +81,6 @@ class Parser:
 
         db_engine = create_engine(self.db_conn, echo=False)
         postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False))
-
-        success_dir = None
-        failure_dir = None
 
         os.chdir(import_dir)
         targets = os.listdir(".")
@@ -102,10 +98,10 @@ class Parser:
 
             if status == 0:
                 success_counter += 1
-                # self.file_success(target, success_dir)
+                os.rename(target, success_dir + "/" + target)
             else:
                 failure_counter += 1
-                # self.file_failure(target, failure_dir)
+                os.rename(target, failure_dir + "/" + target)
 
         print(f"success:{success_counter} failure:{failure_counter}")
 

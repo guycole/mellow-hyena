@@ -13,6 +13,8 @@ export PGPASSWORD=woofwoof
 export PGUSER=hyena_admin
 #
 psql < adsb_exchange.psql
+psql < adsb_ranking.psql
+psql < box_score.psql
 psql < cooked.psql
 psql < device.psql
 psql < load_log.psql

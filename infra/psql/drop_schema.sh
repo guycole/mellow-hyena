@@ -10,9 +10,11 @@ export PGHOST=localhost
 export PGPASSWORD=woofwoof
 export PGUSER=hyena_admin
 #
+psql $PGDATABASE -c "drop table box_score"
 psql $PGDATABASE -c "drop table cooked"
 psql $PGDATABASE -c "drop table device"
 psql $PGDATABASE -c "drop table observation"
 psql $PGDATABASE -c "drop table load_log"
 psql $PGDATABASE -c "drop table adsb_exchange"
+psql $PGDATABASE -c "drop table adsb_ranking"
 #

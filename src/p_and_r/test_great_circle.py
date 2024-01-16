@@ -1,14 +1,15 @@
 #
-# Title: test_utility.py
+# Title: test_great_circle.py
 # Description:
 # Development Environment: OS X 12.6.9/Python 3.11.5
 # Author: G.S. Cole (guycole at gmail dot com)
 #
 from unittest import TestCase
 
-from utility import range_and_bearing
+from great_circle import range_and_bearing
 
-class TestUtility(TestCase):
+
+class TestGreatCircle(TestCase):
     def test_range_and_bearing(self):
         result = range_and_bearing(0.0, 0.0, 0.0, 0.0)
         assert result == (0.0, 0.0)
@@ -33,7 +34,7 @@ class TestUtility(TestCase):
         result = range_and_bearing(0.0, 0.0, -1.0, 0.0)
         assert result == (60.04046073261274, 180.0)
 
-        # south west        
+        # south west
         result = range_and_bearing(0.0, 0.0, -1.0, -1.0)
         assert result == (84.90787832133203, 224.99563645534485)
 
@@ -44,6 +45,7 @@ class TestUtility(TestCase):
         # north west
         result = range_and_bearing(0.0, 0.0, 1.0, -1.0)
         assert result == (84.90787832133203, 315.0043635446552)
+
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

@@ -20,13 +20,14 @@ from sqlalchemy import (
 from sqlalchemy.orm import registry
 from sqlalchemy.ext.declarative import declared_attr
 
-mapper_registry = registry()
-
 from sqlalchemy.orm import DeclarativeBase
+
+mapper_registry = registry()
 
 
 class Base(DeclarativeBase):
     pass
+
 
 class AdsbExchange(Base):
     """adsb_exchange table definition"""
@@ -58,10 +59,57 @@ class AdsbExchange(Base):
         self.wierdo_flag = args["wierdo_flag"]
 
     def __repr__(self):
-        if self.id is None:
-            self.id = 0
+        return f"adsb_exchange({self.adsb_hex}, {self.registration}, {self.model})"
 
-        return f"aircraft({self.adsb_hex}, {self.registration}, {self.model})"
+
+class AdsbRanking(Base):
+    """adsb_ranking table definition"""
+
+    __tablename__ = "adsb_ranking"
+
+    id = Column(Integer, primary_key=True)
+    adsb_hex = Column(String)
+    model = Column(String)
+    population = Column(Integer)
+    rank = Column(SmallInteger)
+    registration = Column(String)
+    score_date = Column(Date)
+
+    def __init__(self, args: Dict[str, str]):
+        self.adsb_hex = args["adsb_hex"]
+        self.model = args["model"]
+        self.population = args["population"]
+        self.rank = args["rank"]
+        self.registration = args["registration"]
+        self.score_date = args["score_date"]
+
+    def __repr__(self):
+        return f"adsb_ranking({self.score_date} {self.rank} {self.adsb_hex} {self.registration} {self.model})"
+
+
+class BoxScore(Base):
+    """box_score table definition"""
+
+    __tablename__ = "box_score"
+
+    id = Column(Integer, primary_key=True)
+    adsb_hex_total = Column(Integer)
+    adsb_hex_new = Column(Integer)
+    device = Column(String)
+    file_population = Column(SmallInteger)
+    refresh_flag = Column(Boolean)
+    score_date = Column(Date)
+
+    def __init__(self, args: Dict[str, str]):
+        self.adsb_hex_total = args["adsb_hex_total"]
+        self.adsb_hex_new = args["adsb_hex_new"]
+        self.device = args["device"]
+        self.file_population = args["file_population"]
+        self.refresh_flag = args["refresh_flag"]
+        self.score_date = args["score_date"]
+
+    def __repr__(self):
+        return f"box_score({self.score_date})"
 
 
 class Cooked(Base):
@@ -84,10 +132,8 @@ class Cooked(Base):
         self.note = args["note"]
 
     def __repr__(self):
-        if self.id is None:
-            self.id = 0
+        return f"cooked({self.adsb_hex})"
 
-        return f"cooked({self.id}, {self.adsb_hex})"
 
 class Device(Base):
     """device table definition"""
@@ -113,10 +159,8 @@ class Device(Base):
         self.start_date = args["start_date"]
 
     def __repr__(self):
-        if self.id is None:
-            self.id = 0
+        return f"device({self.name})"
 
-        return f"device({self.id}, {self.name})"
 
 class LoadLog(Base):
     """load_log table definition"""
@@ -140,10 +184,8 @@ class LoadLog(Base):
         self.population = args["population"]
 
     def __repr__(self):
-        if self.id is None:
-            self.id = 0
+        return f"load_log({self.file_name}, {self.file_type})"
 
-        return f"load_log({self.id}, {self.file_name}, {self.file_type})"
 
 class Observation(Base):
     """observation table definition"""
@@ -167,8 +209,6 @@ class Observation(Base):
     track = Column(Integer)
 
     def __init__(self, args: Dict[str, str]):
-        print(args)
-
         self.adsb_hex = args["adsb_hex"].lower()
         self.adsb_exchange_id = args["adsb_exchange_id"]
         self.altitude = args["altitude"]

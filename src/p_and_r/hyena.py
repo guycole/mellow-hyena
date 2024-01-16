@@ -1,17 +1,17 @@
 """mellow heeler hound file parser and database loader, runs for each file"""
 
 import datetime
-#from datetime import datetime
-import math
+
 import time
 
 from typing import Dict
 
 from postgres import PostGres
 
-from sql_table import AdsbExchange, Device, LoadLog
+from sql_table import Device, LoadLog
 
 from great_circle import range_and_bearing
+
 
 class Hyena:
     """mellow hyena file parser and database loader"""
@@ -24,10 +24,8 @@ class Hyena:
         self.device = device
         self.postgres = postgres
 
-        self.run_stats["fresh_cooked"] = 0
-        self.run_stats["fresh_observation"] = 0
-        self.run_stats["fresh_wap"] = 0
-        self.run_stats["update_wap"] = 0
+        self.run_stats["hex_new"] = 0
+        self.run_stats["hex_total"] = 0
 
     def run_stat_bump(self, key: str):
         """increment a run_stat"""
@@ -40,23 +38,7 @@ class Hyena:
     def run_stat_dump(self):
         """print run_stats summary"""
 
-        print(
-            f"cooked: {self.run_stats['fresh_cooked']} observation: {self.run_stats['fresh_observation']} wap: {self.run_stats['fresh_wap']}"
-        )
-
-    def hyena_v1_load_log(self, buffer: Dict[str, str]) -> LoadLog:
-        """hyena_v1 load_log"""
-
-        load_dict = {}
-        load_dict["device"] = buffer["device"]
-        load_dict["file_name"] = buffer["file_name"]
-        load_dict["file_type"] = buffer["file_type"]
-        load_dict["obs_time"] = time.strftime(
-            "%Y-%m-%d %H:%M:%S", time.gmtime(buffer["timestamp"])
-        )
-        load_dict["population"] = len(buffer["observation"])
-
-        return self.postgres.load_log_insert(load_dict)
+        print(f"total: {self.run_stats['hex_total']} new: {self.run_stats['hex_new']}")
 
     def hyena_v1_load_adsb_exchange(self, buffer: Dict[str, str]) -> Dict[str, str]:
         """hyena_v1 load_adsb_exchange"""
@@ -65,11 +47,40 @@ class Hyena:
 
         for element in buffer:
             if "hex" in element:
-                element['adsb_hex'] = element['hex']
+                element["adsb_hex"] = element["hex"]
 
-            results[element['adsb_hex']] = self.postgres.adsb_exchange_select_or_insert(element).id
+            results[element["adsb_hex"]] = self.postgres.adsb_exchange_select_or_insert(
+                element
+            ).id
 
-        return(results)
+        return results
+
+    def hyena_v1_load_boxscore(self, device: str, obs_time: str):
+        """hyena_v1 load_boxscore"""
+
+        box_score = self.postgres.box_score_select_or_insert(device, obs_time)
+        box_score.adsb_hex_new = box_score.adsb_hex_new + self.run_stats["hex_new"]
+        box_score.adsb_hex_total = (
+            box_score.adsb_hex_total + self.run_stats["hex_total"]
+        )
+        box_score.file_population = box_score.file_population + 1
+        box_score.refresh_flag = True
+
+        self.postgres.box_score_update(box_score)
+
+    def hyena_v1_load_log(self, buffer: Dict[str, str]) -> LoadLog:
+        """hyena_v1 load_log"""
+
+        load_dict = {}
+        load_dict["device"] = self.device.name
+        load_dict["file_name"] = buffer["file_name"]
+        load_dict["file_type"] = buffer["file_type"]
+        load_dict["obs_time"] = time.strftime(
+            "%Y-%m-%d %H:%M:%S", time.gmtime(buffer["timestamp"])
+        )
+        load_dict["population"] = len(buffer["observation"])
+
+        return self.postgres.load_log_insert(load_dict)
 
     def hyena_v1_load_cooked(self, buffer: Dict[str, str], timestamp: str):
         """hyena_v1 load_cooked"""
@@ -92,6 +103,7 @@ class Hyena:
         if cooked is None:
             # fresh first entry
             cooked = self.postgres.cooked_insert(cooked_dict)
+            self.run_stat_bump("hex_new")
         else:
             # update existing entry
             cooked.observed_counter = cooked.observed_counter + 1
@@ -104,9 +116,11 @@ class Hyena:
 
             self.postgres.cooked_update(cooked)
 
-    def hyena_v1_load_observation(self, buffer: Dict[str, str], adsb_keys: Dict[str, str], load_log: LoadLog):
+    def hyena_v1_load_observation(
+        self, buffer: Dict[str, str], adsb_keys: Dict[str, str], load_log: LoadLog
+    ):
         """hyena_v1 load_observation"""
-     
+
         obs_dict = {}
         obs_dict["altitude"] = buffer["altitude"]
         obs_dict["latitude"] = buffer["lat"]
@@ -121,9 +135,11 @@ class Hyena:
         else:
             obs_dict["flight"] = buffer["flight"].strip()
 
-        (range, bearing) = range_and_bearing(self.device.latitude, self.device.longitude, buffer["lat"], buffer["lon"])
-        obs_dict['bearing'] = round(bearing, 2)
-        obs_dict['range'] = round(range, 2)
+        (range2, bearing) = range_and_bearing(
+            self.device.latitude, self.device.longitude, buffer["lat"], buffer["lon"]
+        )
+        obs_dict["bearing"] = round(bearing, 2)
+        obs_dict["range"] = round(range2, 2)
 
         if "hex" in buffer:
             obs_dict["adsb_hex"] = buffer["hex"].lower()
@@ -144,14 +160,26 @@ class Hyena:
 
         adsb_keys = {}
         if "adsbex" in buffer:
-            adsb_keys = self.hyena_v1_load_adsb_exchange(buffer["adsbex"])
+            try:
+                adsb_keys = self.hyena_v1_load_adsb_exchange(buffer["adsbex"])
+            except:
+                print("adsbex parse error")
 
         observation = buffer["observation"]
         for element in observation:
-            self.hyena_v1_load_observation(element, adsb_keys, load_log)            
-            self.hyena_v1_load_cooked(element, buffer['timestamp'])
+            try:
+                self.hyena_v1_load_observation(element, adsb_keys, load_log)
+                self.hyena_v1_load_cooked(element, buffer["timestamp"])
+                self.run_stat_bump("hex_total")
+            except:
+                print("observation parse error")
+                return -1
 
-        return -1
+        self.run_stat_dump()
+        self.hyena_v1_load_boxscore(load_log.device, load_log.obs_time)
+
+        return 0
+
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***
