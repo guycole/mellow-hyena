@@ -66,6 +66,7 @@ class Ranker:
             0,
             pytz.utc,
         )
+
         stop_time = datetime.datetime(
             score_date.year,
             score_date.month,
@@ -82,6 +83,7 @@ class Ranker:
         tweaked = dict(
             sorted(candidates.items(), key=lambda item: item[1], reverse=True)
         )
+
         rank = 0
         for key in tweaked:
             rank = 1 + rank
@@ -101,16 +103,14 @@ class Ranker:
         targets = postgres.box_score_select_refresh()
         print(f"box_score targets: {len(targets)}")
         for target in targets:
-            if target.score_date in duplicate_list:
-                print(f"skipping date: {target.score_date}")
-                continue
-
-            self.daily_ranker(target.score_date, postgres)
-
             target.refresh_flag = False
             postgres.box_score_update(target)
 
-            duplicate_list.append(target.score_date)
+            if target.score_date in duplicate_list:
+                print(f"skipping date: {target.score_date}")
+            else:
+                self.daily_ranker(target.score_date, postgres)
+                duplicate_list.append(target.score_date)
 
 
 print("ranker start")
