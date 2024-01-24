@@ -1,29 +1,28 @@
-"""mellow hyena processing"""
+"""mellow hyena loader for mellow wombat"""
 
 import json
 import os
 import sys
 
+from sqlite import SqlLite
+
 from typing import Dict, List
 
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+import sqlite3
+from sqlite3 import Error
 
 import yaml
 from yaml.loader import SafeLoader
 
-from postgres import PostGres
-
-from hyena import Hyena
 
 
-class Parser:
-    """mellow hynena parser"""
+class Wombat:
+    """mellow hynena parser/loader for mellow wombat"""
 
-    db_conn = None
+    db_filename = None
 
-    def __init__(self, db_conn: str):
-        self.db_conn = db_conn
+    def __init__(self, db_filename: str):
+        self.db_filename = db_filename
 
     def file_classifier(self, buffer: Dict[str, str]) -> str:
         """discover file format, i.e. hyena_v1, etc"""
@@ -48,39 +47,57 @@ class Parser:
 
         return buffer
 
-    def file_processor(self, file_name: str, postgres: PostGres) -> int:
+    def file_processor(self, file_name: str, sqlite:SqlLite) -> int:
         """dispatch to approprate file parser/loader"""
 
         status = 0
+        print(sqlite)
+        print(type(sqlite))
 
-        load_log = postgres.load_log_select(file_name)
-        if load_log is not None:
-            print(f"skipping duplicate file:{file_name}")
-            return status
+        sqlite.load_log_select(file_name)
 
-        buffer = self.file_reader(file_name)
-        for element in buffer:
-            json_dict = json.loads(element)
-            json_dict["file_name"] = file_name
+        args = {}
+        args["file_name"] = file_name   
+        args["load_time"] = "2021-01-01 00:00:00"
+        args["obs_time"] = "2021-01-01 00:00:00"
+        args["population"] = 1
+#        sqlite.load_log_insert(args)
 
-            json_dict["file_type"] = self.file_classifier(json_dict)
-            print(f"file_name:{file_name} file_type:{json_dict['file_type']}")
+#        print(f"load_log:{load_log}")
 
-            device = postgres.device_select(json_dict["device"])
+#        if load_log is not None:
+#            print(f"skipping duplicate file:{file_name}")
+#            return status
 
-            if json_dict["file_type"] == "hyena_1":
-                hyena = Hyena(device, postgres)
-                status = hyena.hyena_v1_loader(json_dict)
-            else:
-                status = -1
+#        buffer = self.file_reader(file_name)
+#        for element in buffer:
+#            json_dict = json.loads(element)
+#            json_dict["file_name"] = file_name
 
+#            json_dict["file_type"] = self.file_classifier(json_dict)
+#            print(f"file_name:{file_name} file_type:{json_dict['file_type']}")
+
+#            device = postgres.device_select(json_dict['device'])
+
+#            if json_dict["file_type"] == "hyena_1":
+#                hyena = Hyena(device, postgres)
+#                status = hyena.hyena_v1_loader(json_dict)
+#            else:
+#                status = -1
+
+        print(f"status:{status}")
         return status
 
-    def execute(self, import_dir: str, success_dir: str, failure_dir: str):
+    def execute(self, import_dir: str):
         """drive processing pass"""
 
-        db_engine = create_engine(self.db_conn, echo=False)
-        postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False))
+        sqlite = None
+
+        try:
+            sqlite = SqlLite(sqlite3.connect(self.db_filename))
+        except Error as error:
+            print(error)
+            return
 
         os.chdir(import_dir)
         targets = os.listdir(".")
@@ -93,14 +110,13 @@ class Parser:
             if os.path.isfile(target) is False:
                 continue
 
-            status = self.file_processor(target, postgres)
+            print(type(sqlite))
+            status = self.file_processor(target, sqlite)
 
             if status == 0:
                 success_counter += 1
-                self.file_success(target, success_dir)
             else:
                 failure_counter += 1
-                self.file_failure(target, failure_dir)
 
         print(f"success:{success_counter} failure:{failure_counter}")
 
@@ -122,12 +138,8 @@ if __name__ == "__main__":
         except yaml.YAMLError as exc:
             print(exc)
 
-    parser = Parser(configuration["dbConn"])
-    parser.execute(
-        configuration["importDir"],
-        configuration["successDir"],
-        configuration["failureDir"],
-    )
+    wombat = Wombat(configuration["sqliteDb"])
+    wombat.execute(configuration["importDir"])
 
 print("parser stop")
 

@@ -1,4 +1,4 @@
-"""mellow heeler postgresql support"""
+"""mellow hyena postgresql support"""
 import datetime
 
 from typing import Dict, List
@@ -18,7 +18,7 @@ from sql_table import (
 
 
 class PostGres:
-    """mellow heeler postgresql support"""
+    """mellow hyena postgresql support"""
 
     Session = None
 

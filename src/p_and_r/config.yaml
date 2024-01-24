@@ -9,8 +9,8 @@ failureDir: /var/mellow/hyena-failure
 successDir: /var/mellow/hyena-success
 #
 # raw files to process
-importDir: /var/mellow/hyena-raw
-# importDir: /Users/gsc/Documents/github/mellow-hyena/samples
+# importDir: /var/mellow/hyena-raw
+importDir: /Users/gsc/Documents/github/mellow-hyena/samples
 #
 # HTML output from report
 # reportDir: /Users/gsc/Documents/github/mellow-hyena/web
@@ -18,4 +18,7 @@ reportDir: /var/mellow/hyena-web
 #
 # Root URL of report
 baseUrl: "http://braingang.net/mellow-hyena"
+#
+# django sqlite3 database
+sqliteDb: /Users/gsc/Documents/github/mellow-wombat/django/mellow/db.sqlite3
 #
