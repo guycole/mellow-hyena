@@ -4,7 +4,7 @@ import json
 import os
 import sys
 
-from sqlite import SqlLite
+from datetime import datetime, timezone
 
 from typing import Dict, List
 
@@ -14,7 +14,9 @@ from sqlite3 import Error
 import yaml
 from yaml.loader import SafeLoader
 
+from great_circle import range_and_bearing
 
+from sqlite import SqlLite
 
 class Wombat:
     """mellow hynena parser/loader for mellow wombat"""
@@ -47,43 +49,77 @@ class Wombat:
 
         return buffer
 
-    def file_processor(self, file_name: str, sqlite:SqlLite) -> int:
+    def v1_loader(self, args: Dict[str, str], sqlite: SqlLite) -> int:
+        status = 0
+
+        device_lat = 38.106389
+        device_lon = -122.272778
+
+        if "adsbex" in args:
+            for element in args["adsbex"]:
+                adsbex_dict = sqlite.adsb_exchange_select(element)
+                if len(adsbex_dict) < 1:
+                    sqlite.adsb_exchange_insert(element)
+
+        for element in args["observation"]:
+            if "hex" in element:
+                element["adsb_hex"] = element["hex"]
+            else:
+                element["adsb_hex"] = element["adsb_hex"].strip()
+
+            if len(element["flight"]) < 1:
+                element["flight"] = "unknown"
+            else:
+                element["flight"] = element["flight"].strip()
+
+            (range2, bearing) = range_and_bearing(
+                device_lat, device_lon, element["lat"], element["lon"]
+            )
+            element["bearing"] = round(bearing, 2)
+            element["range"] = round(range2, 2)
+
+            selected_obs = sqlite.observation_select(
+                element["adsb_hex"], args["obs_time"]
+            )
+            if len(selected_obs) > 0:
+                print(
+                    f"skipping observation adsb_hex:{element['adsb_hex']} obs_time:{args['obs_time']}"
+                )
+            else:
+                sqlite.observation_insert(args["obs_time"], element)
+
+        return status
+
+    def file_processor(self, file_name: str, sqlite: SqlLite) -> int:
         """dispatch to approprate file parser/loader"""
 
         status = 0
-        print(sqlite)
-        print(type(sqlite))
 
-        sqlite.load_log_select(file_name)
+        result = sqlite.load_log_select(file_name)
+        if len(result) > 1:
+            print(f"skipping duplicate file {file_name}")
+            return status
 
-        args = {}
-        args["file_name"] = file_name   
-        args["load_time"] = "2021-01-01 00:00:00"
-        args["obs_time"] = "2021-01-01 00:00:00"
-        args["population"] = 1
-#        sqlite.load_log_insert(args)
+        buffer = self.file_reader(file_name)
+        for element in buffer:
+            json_dict = json.loads(element)
 
-#        print(f"load_log:{load_log}")
+            json_dict["file_name"] = file_name
+            json_dict["file_type"] = self.file_classifier(json_dict)
+            json_dict["load_time"] = datetime.now(timezone.utc)
+            json_dict["obs_time"] = datetime.fromtimestamp(
+                json_dict["timestamp"], timezone.utc
+            )
+            json_dict["population"] = len(json_dict["observation"])
 
-#        if load_log is not None:
-#            print(f"skipping duplicate file:{file_name}")
-#            return status
+            print(f"file_name:{file_name} file_type:{json_dict['file_type']}")
 
-#        buffer = self.file_reader(file_name)
-#        for element in buffer:
-#            json_dict = json.loads(element)
-#            json_dict["file_name"] = file_name
+            if json_dict["file_type"] == "hyena_1":
+                status = self.v1_loader(json_dict, sqlite)
+            else:
+                status = -1
 
-#            json_dict["file_type"] = self.file_classifier(json_dict)
-#            print(f"file_name:{file_name} file_type:{json_dict['file_type']}")
-
-#            device = postgres.device_select(json_dict['device'])
-
-#            if json_dict["file_type"] == "hyena_1":
-#                hyena = Hyena(device, postgres)
-#                status = hyena.hyena_v1_loader(json_dict)
-#            else:
-#                status = -1
+            sqlite.load_log_insert(json_dict)
 
         print(f"status:{status}")
         return status
@@ -110,7 +146,6 @@ class Wombat:
             if os.path.isfile(target) is False:
                 continue
 
-            print(type(sqlite))
             status = self.file_processor(target, sqlite)
 
             if status == 0:

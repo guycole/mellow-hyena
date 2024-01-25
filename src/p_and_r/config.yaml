@@ -9,8 +9,8 @@ failureDir: /var/mellow/hyena-failure
 successDir: /var/mellow/hyena-success
 #
 # raw files to process
-# importDir: /var/mellow/hyena-raw
-importDir: /Users/gsc/Documents/github/mellow-hyena/samples
+importDir: /var/mellow/hyena-raw
+# importDir: /Users/gsc/Documents/github/mellow-hyena/samples
 #
 # HTML output from report
 # reportDir: /Users/gsc/Documents/github/mellow-hyena/web
