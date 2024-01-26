@@ -22,9 +22,13 @@ class Wombat:
     """mellow hynena parser/loader for mellow wombat"""
 
     db_filename = None
+    device_lat = None
+    device_lon = None
 
-    def __init__(self, db_filename: str):
+    def __init__(self, db_filename: str, device_lat: float, device_lon: float):
         self.db_filename = db_filename
+        self.device_lat = device_lat
+        self.device_lon = device_lon
 
     def file_classifier(self, buffer: Dict[str, str]) -> str:
         """discover file format, i.e. hyena_v1, etc"""
@@ -52,9 +56,6 @@ class Wombat:
     def v1_loader(self, args: Dict[str, str], sqlite: SqlLite) -> int:
         status = 0
 
-        device_lat = 38.106389
-        device_lon = -122.272778
-
         if "adsbex" in args:
             for element in args["adsbex"]:
                 adsbex_dict = sqlite.adsb_exchange_select(element)
@@ -73,7 +74,7 @@ class Wombat:
                 element["flight"] = element["flight"].strip()
 
             (range2, bearing) = range_and_bearing(
-                device_lat, device_lon, element["lat"], element["lon"]
+                self.device_lat, self.device_lon, element["lat"], element["lon"]
             )
             element["bearing"] = round(bearing, 2)
             element["range"] = round(range2, 2)
@@ -81,6 +82,7 @@ class Wombat:
             selected_obs = sqlite.observation_select(
                 element["adsb_hex"], args["obs_time"]
             )
+            
             if len(selected_obs) > 0:
                 print(
                     f"skipping observation adsb_hex:{element['adsb_hex']} obs_time:{args['obs_time']}"
@@ -173,7 +175,7 @@ if __name__ == "__main__":
         except yaml.YAMLError as exc:
             print(exc)
 
-    wombat = Wombat(configuration["sqliteDb"])
+    wombat = Wombat(configuration["sqliteDb"], configuration["deviceLat"], configuration["deviceLon"])
     wombat.execute(configuration["importDir"])
 
 print("parser stop")

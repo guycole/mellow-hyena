@@ -1,8 +1,6 @@
 """mellow heeler hound file parser and database loader, runs for each file"""
 
-import datetime
-
-import time
+from datetime import datetime, timezone
 
 from typing import Dict
 
@@ -75,9 +73,7 @@ class Hyena:
         load_dict["device"] = self.device.name
         load_dict["file_name"] = buffer["file_name"]
         load_dict["file_type"] = buffer["file_type"]
-        load_dict["obs_time"] = time.strftime(
-            "%Y-%m-%d %H:%M:%S", time.gmtime(buffer["timestamp"])
-        )
+        load_dict["obs_time"] = datetime.fromtimestamp(buffer["timestamp"], timezone.utc)
         load_dict["population"] = len(buffer["observation"])
 
         return self.postgres.load_log_insert(load_dict)
@@ -151,7 +147,7 @@ class Hyena:
         else:
             obs_dict["adsb_exchange_id"] = 1
 
-        self.postgres.observation_insert(obs_dict)
+        self.postgres.observation_select_or_insert(obs_dict)
 
     def hyena_v1_loader(self, buffer: Dict[str, str]) -> int:
         """hyena_v1 loader"""

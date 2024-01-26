@@ -278,6 +278,23 @@ class PostGres:
 
         return observation
 
+    def observation_select_or_insert(self, args: Dict[str, str]) -> Observation:
+        """select or insert observation row"""
+
+        args["adsb_hex"] = args["adsb_hex"].lower()  # normalize
+
+        statement = select(Observation).filter_by(
+            adsb_hex=args["adsb_hex"],
+            flight=args["flight"],
+            obs_time=args["obs_time"],
+        )
+
+        with self.Session() as session:
+            rows = session.scalars(statement).all()
+            for row in rows:
+                return row
+
+        return self.observation_insert(args)
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

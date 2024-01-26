@@ -2,6 +2,10 @@
 # database connection
 dbConn: "postgresql+psycopg2://hyena_py:bogus@localhost:5432/hyena_v1"
 #
+# device location (wombat only)
+deviceLat: 38.106389
+deviceLon: -122.272778
+#
 # problem files
 failureDir: /var/mellow/hyena-failure
 #
