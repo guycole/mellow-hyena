@@ -20,6 +20,8 @@ LD_LIBRARY_PATH=/usr/local/lib/arm-linux-gnueabihf; export LD_LIBRARY_PATH
 
 https://github.com/antirez/dump1090.git
 
+### curl dump1090 example
+```
 curl -v http://127.0.0.1:8080/data.json
 *   Trying 127.0.0.1:8080...
 * Connected to 127.0.0.1 (127.0.0.1) port 8080 (#0)
@@ -40,6 +42,7 @@ curl -v http://127.0.0.1:8080/data.json
 {"hex":"a89d0a", "flight":"QXE2335 ", "lat":40.431564, "lon":-122.294434, "altitude":1650, "track":2, "speed":137}
 ]
 * Connection #0 to host 127.0.0.1 left intact
+```
 
 ### output file example
 ```
