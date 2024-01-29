@@ -1,0 +1,13 @@
+#
+# collection device and location
+device: rpi3a-adsb-anderson1
+#
+# dump1090 URL
+dump1090url: http://localhost:8080/data.json
+#
+# collected files go here
+#exportDir: /Users/gsc/Documents/github/mellow-hyena/aws_export
+exportDir: /home/gsc/github/mellow-hyena/aws_export
+#
+rapidApiKey: bogus
+#

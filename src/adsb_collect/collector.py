@@ -1,4 +1,4 @@
-"""mellow hyena collection"""
+"""mellow hyena adsb collection"""
 
 import json
 import datetime
@@ -18,7 +18,7 @@ from adsb_exchange import AdsbExchange
 
 
 class Collector:
-    """mellow hynena collector"""
+    """mellow hynena adsb collector"""
 
     adsb_exchange = None
     device = None

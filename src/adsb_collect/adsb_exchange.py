@@ -122,7 +122,6 @@ class AdsbExchange:
                 print(f"skipping known hex:{target}")
                 continue
 
-
 # ;;; Local Variables: ***
 # ;;; mode:python ***
 # ;;; End: ***
