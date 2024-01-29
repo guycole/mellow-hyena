@@ -50,7 +50,8 @@ class Collector:
         """process payload from dump1090"""
 
         for element in payload:
-            element["hex"] = element["hex"].lower()
+            element["adsb_hex"] = element["hex"].lower()
+            element["hex"].remove(element["hex"])
 
             element["flight"] = element["flight"].strip()
             if len(element["flight"]) < 1:
@@ -58,9 +59,9 @@ class Collector:
 
             print(f"{element['hex']}:{element['flight']}")
             
-            self.adsb_exchange.add_to_queue(element["hex"])
+            self.adsb_exchange.add_to_queue(element["adsb_hex"])
 
-    def write_payload(self, paylist: typing.List[typing.Dict]):
+    def write_payload(self, paylist: typing.List[typing.Dict], timestamp: int):
         """write payload to file"""
 
         self.adsb_exchange.get_aircraft()
@@ -68,7 +69,7 @@ class Collector:
         paydict = {}
         paydict["device"] = self.device
         paydict["project"] = "hyena"
-        paydict["timestamp"] = self.get_timestamp()
+        paydict["timestamp"] = timestamp
         paydict["version"] = 1
         paydict["observation"] = paylist
         paydict["adsbex"] = self.adsb_exchange.convert_out_dict()
@@ -80,13 +81,15 @@ class Collector:
     def perform_collection(self):
         """read from dump1090"""
 
+        timestamp = self.get_timestamp()
+
         try:
             response = requests.get(self.dump1090url, timeout=5.0)
             if response.status_code == 200:
                 payload = json.loads(response.text)
                 if len(payload) > 1:
                     self.process_payload(payload)
-                    self.write_payload(payload)
+                    self.write_payload(payload, timestamp)
                 else:
                     print("empty response from dump1090")
             else:
@@ -94,15 +97,10 @@ class Collector:
         except:
             print("error processing dump1090")
 
-    def execute(self, sample_sleep: int):
+    def execute(self):
         """drive the collection pass"""
 
-        limit = int(60 / sample_sleep)
-        for ndx in range(int(60 / sample_sleep)):
-            self.perform_collection()
-            if ndx < limit - 1:
-                time.sleep(sample_sleep)
-
+        self.perform_collection()
 
 print("collection start")
 
@@ -127,7 +125,7 @@ if __name__ == "__main__":
         configuration["exportDir"],
         configuration["rapidApiKey"],
     )
-    collector.execute(configuration["sampleSleep"])
+    collector.execute()
 
 print("collection stop")
 

@@ -2,7 +2,7 @@ mellow-hyena/adsb_collect
 =========================
 
 ## Introduction
-Python script to read json from dump1090 and write to a json formatted file.  Runs from cron every minute.  Eventually the output files will be moved to AWS S3 for later processing.
+Python script to read json from dump1090 and write to a json formatted file.  Runs from cron every minute and exits.  Eventually the output files will be moved to AWS S3 for later processing.
 
 ## Bill Of Materials
 1. Raspberry Pi 3 w/power supply
@@ -53,7 +53,7 @@ curl -v http://127.0.0.1:8080/data.json
     "version": 1, 
     "observation": [
         {
-            "hex": "a68e4c", 
+            "adsb_hex": "a68e4c", 
             "flight": "SKW4846", 
             "lat": 38.447354, 
             "lon": -120.296875, 

@@ -1,9 +1,0 @@
-cffi @ file:///private/tmp/cffi-20231015-5725-9apj93/cffi-1.16.0
-distlib==0.3.7
-docutils @ file:///private/tmp/docutils-20231016-5650-skkzey/docutils-0.20.1
-filelock==3.13.1
-platformdirs==3.11.0
-protobuf==4.25.2
-pycparser @ file:///private/tmp/pycparser-20231013-5761-icrp1n/pycparser-2.21
-six==1.16.0
-virtualenv==20.24.6
