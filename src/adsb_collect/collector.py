@@ -3,7 +3,6 @@
 import json
 import datetime
 import sys
-import time
 import typing
 import uuid
 
@@ -51,14 +50,14 @@ class Collector:
 
         for element in payload:
             element["adsb_hex"] = element["hex"].lower()
-            del element['hex']
+            del element["hex"]
 
             element["flight"] = element["flight"].strip()
             if len(element["flight"]) < 1:
                 element["flight"] = "unknown"
 
             print(f"{element['adsb_hex']}:{element['flight']}")
-            
+
             self.adsb_exchange.add_to_queue(element["adsb_hex"])
 
     def write_payload(self, paylist: typing.List[typing.Dict], timestamp: int):
@@ -101,6 +100,7 @@ class Collector:
         """drive the collection pass"""
 
         self.perform_collection()
+
 
 print("collection start")
 

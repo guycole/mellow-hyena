@@ -9,16 +9,12 @@ Python script to read json from dump1090 and write to a json formatted file.  Ru
 1. RTL-SDR w/antenna
 
 ## dump1090
-stuff
+[dump1090](https://github.com/antirez/dump1090.git) reads from rtl-sdr and exposes a web endpoint that provides a jason formatted report of all ADSB emitters observed.  There is a curl example near the bottom of the file.
 
 ### dump1090 installation
-
-[vortac.io](https://vortac.io/2020/06/02/installing-dump1090-on-raspberrypi/)
-
-use https://github.com/osmocom/rtl-sdr.git
-LD_LIBRARY_PATH=/usr/local/lib/arm-linux-gnueabihf; export LD_LIBRARY_PATH
-
-https://github.com/antirez/dump1090.git
+1. This link was a big help [vortac.io](https://vortac.io/2020/06/02/installing-dump1090-on-raspberrypi/)
+    1. use https://github.com/osmocom/rtl-sdr.git
+    1. LD_LIBRARY_PATH=/usr/local/lib/arm-linux-gnueabihf; export LD_LIBRARY_PATH
 
 ### curl dump1090 example
 ```

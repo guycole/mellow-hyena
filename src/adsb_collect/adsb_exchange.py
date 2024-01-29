@@ -113,7 +113,7 @@ class AdsbExchange:
         while len(self.in_queue) > 0:
             target = self.in_queue.pop(0)
             print(f"adsbex:{target}")
-            
+
             if target not in self.out_dict:
                 url = f"https://adsbexchange-com1.p.rapidapi.com/v2/icao/{target}/"
                 response = requests.get(url, headers=self.headers, timeout=5.0)
@@ -121,6 +121,7 @@ class AdsbExchange:
             else:
                 print(f"skipping known hex:{target}")
                 continue
+
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***
