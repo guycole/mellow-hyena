@@ -51,13 +51,13 @@ class Collector:
 
         for element in payload:
             element["adsb_hex"] = element["hex"].lower()
-            element["hex"].remove(element["hex"])
+            del element['hex']
 
             element["flight"] = element["flight"].strip()
             if len(element["flight"]) < 1:
                 element["flight"] = "unknown"
 
-            print(f"{element['hex']}:{element['flight']}")
+            print(f"{element['adsb_hex']}:{element['flight']}")
             
             self.adsb_exchange.add_to_queue(element["adsb_hex"])
 
