@@ -10,6 +10,14 @@ Python script to read json from [dump1090](https://github.com/antirez/dump1090) 
 1. Raspberry Pi 3 w/power supply
 1. RTL-SDR w/antenna
 
+### collector.py
+cron(8) will invoke [adsb-collector.sh](https://github.com/guycole/mellow-hyena/blob/main/bin/adsb-collector.sh) to run [collector.py](https://github.com/guycole/mellow-hyena/blob/main/src/adsb_collect/collector.py) and produce an observation file.  
+
+1. Run virtualenv within the adsb_collect directory 
+1. import requirements.txt 
+1. tweak config.yaml
+1. run python collector.py to verify output files are produced and there are no error messages
+
 ## dump1090
 [dump1090](https://github.com/antirez/dump1090.git) reads from rtl-sdr and exposes a web endpoint that provides a jason formatted report of all ADSB emitters observed.  There is a curl example near the bottom of the file.
 
