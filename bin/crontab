@@ -3,7 +3,7 @@
 #
 29 * * * * /home/gsc/github/mellow-heeler/bin/rpi-xfer-vallejo.sh > /dev/null 2>&1
 #
-#* * * * * /home/gsc/github/mellow-hyena/bin/rpi-collector.sh > /dev/null 2>&1
+#* * * * * /home/gsc/github/mellow-hyena/bin/adsb-collector.sh > /dev/null 2>&1
 #
-05 * * * * /home/gsc/github/mellow-hyena/bin/rpi-xfer-vallejo.sh > /dev/null 2>&1
+#05 * * * * /home/gsc/github/mellow-hyena/bin/xfer-vallejo.sh > /dev/null 2>&1
 #

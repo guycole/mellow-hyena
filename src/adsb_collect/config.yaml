@@ -1,6 +1,6 @@
 #
 # collection device and location
-device: rpi4c-anderson1
+device: rpi4c-adsb-anderson1
 #
 # dump1090 URL
 dump1090url: http://localhost:8080/data.json
@@ -9,13 +9,5 @@ dump1090url: http://localhost:8080/data.json
 #exportDir: /Users/gsc/Documents/github/mellow-hyena/aws_export
 exportDir: /home/gsc/github/mellow-hyena/aws_export
 #
-#gzipCommand: /bin/gzip
-gzipCommand: /usr/bin/gzip
-#
-# how often to collect data (in seconds)
-# cron runs every minute, so 30 seconds is 2 samples
-sampleSleep: 30
-#
 rapidApiKey: bogus
 #
-

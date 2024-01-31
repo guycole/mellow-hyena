@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Title: rpi-xfer-anderson.sh
+# Title: xfer-anderson.sh
 # Description: move local files to s3
 # Development Environment: Debian 10 (buster)/raspian
 # Author: Guy Cole (guycole at gmail dot com)
