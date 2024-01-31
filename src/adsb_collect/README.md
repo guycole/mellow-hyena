@@ -2,7 +2,7 @@ mellow-hyena/adsb_collect
 =========================
 
 ## Introduction
-Python script to read json from dump1090 and write to a json formatted file.  Runs from cron every minute and exits.  Eventually the output files will be moved to AWS S3 for later processing.
+Python script to read json from [dump1090](https://github.com/antirez/dump1090) and produce a json formatted file.  Runs from cron every minute and exits.  Eventually the output files will be moved to AWS S3 for later processing.
 
 [ADSB Exchange]("https://www.adsbexchange.com/data/") offers an API to collect aircraft information.  Results are best when requesting while the flight is active, so I make the API requests each collection cycle.  The results are stored in the output file along with the raw observation.
 
