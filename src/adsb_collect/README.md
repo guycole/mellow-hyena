@@ -13,10 +13,12 @@ Python script to read json from [dump1090](https://github.com/antirez/dump1090) 
 ### collector.py
 cron(8) will invoke [adsb-collector.sh](https://github.com/guycole/mellow-hyena/blob/main/bin/adsb-collector.sh) to run [collector.py](https://github.com/guycole/mellow-hyena/blob/main/src/adsb_collect/collector.py) and produce an observation file.  
 
+### collector.py installation
 1. Run virtualenv within the adsb_collect directory 
 1. import requirements.txt 
 1. tweak config.yaml
-1. run python collector.py to verify output files are produced and there are no error messages
+1. run python collector.py to verify output files are produced and there are no error messages.
+1. edit crontab(5) if you want automated collection, there is a sample crontab in the bin directory.
 
 ## dump1090
 [dump1090](https://github.com/antirez/dump1090.git) reads from rtl-sdr and exposes a web endpoint that provides a jason formatted report of all ADSB emitters observed.  There is a curl example near the bottom of the file.
@@ -25,6 +27,7 @@ cron(8) will invoke [adsb-collector.sh](https://github.com/guycole/mellow-hyena/
 1. This link was a big help [vortac.io](https://vortac.io/2020/06/02/installing-dump1090-on-raspberrypi/)
     1. use https://github.com/osmocom/rtl-sdr.git
     1. LD_LIBRARY_PATH=/usr/local/lib/arm-linux-gnueabihf; export LD_LIBRARY_PATH
+    1. I start dump1090 within rc.local so it starts at boot, example within infra directory
 
 ### also needs AWS if copying files to S3
 https://stackoverflow.com/questions/63030641/how-to-install-awscli-version-2-on-raspberry-pi

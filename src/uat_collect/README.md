@@ -8,13 +8,23 @@ Python script to read json from [dump978](https://github.com/mutability/dump978)
 1. Raspberry Pi 3 w/power supply
 1. RTL-SDR w/antenna
 
+### collector.py
+cron(8) will invoke [uat-collector.sh](https://github.com/guycole/mellow-hyena/blob/main/bin/uat-collector.sh) to run [collector.py](https://github.com/guycole/mellow-hyena/blob/main/src/uat_collect/collector.py) and produce an observation file.  
+
+### collector.py installation
+1. Run virtualenv within the adsb_collect directory 
+1. import requirements.txt 
+1. tweak config.yaml
+1. run python collector.py to verify output files are produced and there are no error messages.
+1. edit crontab(5) if you want automated collection, there is a sample crontab in the bin directory.
+
 ## dump978 
 [dump978](https://github.com/mutability/dump978) reads from rtl-sdr and writes a json formatted file with a summary of any observed beacons.  There is a file sample later in this README.
 
 ### dump978 installation
 You will need a working copy of [rtl-sdr](https://github.com/osmocom/rtl-sdr.git)
 
-Then build dump978 and test, the aircraft.json file should appear in /tmp
+Then build dump978 and run, the aircraft.json file should appear in /tmp (it is normal for there to be no aircraft, UAT is not popular).
 
 ```
 rtl_sdr -f 978000000 -s 2083334 -g 48 - | ./dump978 | ./uat2json /tmp
@@ -71,4 +81,4 @@ https://stackoverflow.com/questions/63030641/how-to-install-awscli-version-2-on-
 ```
 
 ## Data Flow Diagram
-![Data Flow](https://github.com/guycole/mellow-hyena/blob/main/src/uat_collect/uat_data_flow.png)
+![Data Flow](https://github.com/guycole/mellow-hyena/blob/main/src/uat_collect/uat_data_flow.jpg)
