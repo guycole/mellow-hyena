@@ -9,14 +9,13 @@ import uuid
 
 from datetime import timezone
 
-import requests
+from typing import Dict
 
 import yaml
 from yaml.loader import SafeLoader
 
 from adsb_exchange import AdsbExchange
 
-from typing import Dict, List
 
 class Collector:
     """mellow hynena adsb collector"""
@@ -46,7 +45,7 @@ class Collector:
         utc_time = dt.replace(tzinfo=timezone.utc)
         utc_timestamp = utc_time.timestamp()
         return int(utc_timestamp)
-    
+
     def file_reader(self) -> Dict[str, str]:
         """read a dump978 file into a dictionary"""
 
@@ -70,17 +69,17 @@ class Collector:
 
         for element in payload:
             current.clear()
-        
+
             current["adsb_hex"] = element["hex"].lower()
             current["flight"] = element["flight"].strip()
             if len(current["flight"]) < 1:
                 current["flight"] = "unknown"
 
             current["altitude"] = element["altitude"]
-            current['lat'] = element['lat']
-            current['lon'] = element['lon']
-            current['speed'] = element['speed']
-            current['track'] = element['track']
+            current["lat"] = element["lat"]
+            current["lon"] = element["lon"]
+            current["speed"] = element["speed"]
+            current["track"] = element["track"]
 
             self.adsb_exchange.add_to_queue(current["adsb_hex"])
 
@@ -100,15 +99,15 @@ class Collector:
         results = {}
         results["device"] = self.device
         results["project"] = "hyena"
-        results["timestamp"] = buffer['now']
+        results["timestamp"] = buffer["now"]
         results["version"] = 1
 
         timestamp = self.get_timestamp()
-        if timestamp - results['timestamp'] > 180:
+        if timestamp - results["timestamp"] > 180:
             print("stale dump978 file")
-            return 
+            return
 
-        results["observation"] = self.converter(buffer['aircraft'])
+        results["observation"] = self.converter(buffer["aircraft"])
         if len(results["observation"]) < 1:
             print("no observations")
             return
