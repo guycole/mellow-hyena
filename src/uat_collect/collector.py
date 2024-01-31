@@ -106,13 +106,15 @@ class Collector:
         timestamp = self.get_timestamp()
         if timestamp - results['timestamp'] > 180:
             print("stale dump978 file")
-            # return 
+            return 
 
         results["observation"] = self.converter(buffer['aircraft'])
+        if len(results["observation"]) < 1:
+            print("no observations")
+            return
 
         self.adsb_exchange.get_aircraft()
         results["adsbex"] = self.adsb_exchange.convert_out_dict()
-        print(results)
 
         out_file_name = self.get_filename()
         with open(out_file_name, "w", encoding="utf-8") as outfile:
