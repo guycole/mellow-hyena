@@ -2,7 +2,7 @@ mellow-hyena/adsb_collect
 =========================
 
 ## Introduction
-Python script to read json from [dump1090](https://github.com/antirez/dump1090) and produce a json formatted file.  Runs from cron every minute and exits.  Eventually the output files will be moved to AWS S3 for later processing.
+Python script to read json from [dump1090](https://github.com/antirez/dump1090) and produce a json formatted file.  Runs from cron every minute and exits.  Eventually the output files are moved to AWS S3 for later processing.  There is a data flow diagram at the bottom of this file.
 
 [ADSB Exchange]("https://www.adsbexchange.com/data/") offers an API to collect aircraft information.  Results are best when requesting while the flight is active, so I make the API requests each collection cycle.  The results are stored in the output file along with the raw observation.
 
@@ -75,3 +75,6 @@ curl -v http://127.0.0.1:8080/data.json
     ]
 }
 ```
+
+## Data Flow Diagram
+[Data Flow](https://github.com/guycole/mellow-hyena/tree/main/src/adsb_collect/adsb_data_flow.png)

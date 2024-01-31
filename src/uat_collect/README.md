@@ -15,6 +15,9 @@ https://github.com/mutability/dump978.git
 
 rtl_sdr -f 978000000 -s 2083334 -g 48 - | ./dump978 | ./uat2json /tmp
 
+### also needs AWS if copying files to S3
+https://stackoverflow.com/questions/63030641/how-to-install-awscli-version-2-on-raspberry-pi
+
 ### output file example
 ```
 {

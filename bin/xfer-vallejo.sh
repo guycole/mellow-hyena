@@ -7,7 +7,7 @@
 #
 # 29 * * * * /home/gsc/github/mellow-heeler/bin/rpi-xfer-vallejo.sh > /dev/null 2>&1
 #
-PATH=/bin:/usr/bin:/etc:/usr/local/bin; export PATH
+PATH=/bin:/usr/bin:/etc:/usr/local/bin:~/.local/bin; export PATH
 #
 echo "start transfer"
 cd /home/gsc/github/mellow-hyena
