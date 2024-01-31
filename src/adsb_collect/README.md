@@ -18,6 +18,9 @@ Python script to read json from [dump1090](https://github.com/antirez/dump1090) 
     1. use https://github.com/osmocom/rtl-sdr.git
     1. LD_LIBRARY_PATH=/usr/local/lib/arm-linux-gnueabihf; export LD_LIBRARY_PATH
 
+### also needs AWS if copying files to S3
+https://stackoverflow.com/questions/63030641/how-to-install-awscli-version-2-on-raspberry-pi
+
 ### curl dump1090 example
 ```
 curl -v http://127.0.0.1:8080/data.json
