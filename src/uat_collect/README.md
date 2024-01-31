@@ -9,16 +9,11 @@ Python script to read json from [dump978](https://github.com/mutability/dump978)
 1. Raspberry Pi 3 w/power supply
 1. RTL-SDR w/antenna
 
-## dump1090
-stuff
-
 ### dump978 installation
 
 https://github.com/mutability/dump978.git
 
-rtl_sdr -f 978000000 -s 2083334 -g 48 - | ./dump978 | ./uat2text
-
-
+rtl_sdr -f 978000000 -s 2083334 -g 48 - | ./dump978 | ./uat2json /tmp
 
 ### output file example
 ```
