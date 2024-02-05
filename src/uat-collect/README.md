@@ -81,4 +81,4 @@ https://stackoverflow.com/questions/63030641/how-to-install-awscli-version-2-on-
 ```
 
 ## Data Flow Diagram
-![Data Flow](https://github.com/guycole/mellow-hyena/blob/main/src/uat_collect/uat_data_flow.jpg)
+![Data Flow](https://github.com/guycole/mellow-hyena/blob/main/src/uat-collect/uat_data_flow.jpg)
