@@ -26,3 +26,8 @@ grant usage, select on sequence device_id_seq to hyena_py;
 
 insert into device(altitude, latitude, longitude, name, note, retired_date, start_date) values(500, 40.416667, -122.241667, 'rpi4c-anderson1', 'no note', '2023-12-28', '2023-12-28');
 insert into device(altitude, latitude, longitude, name, note, retired_date, start_date) values(0, 38.106389, -122.272778, 'rpi4a-vallejo1', 'no note', '2024-1-9', '2024-1-9');
+insert into device(altitude, latitude, longitude, name, note, retired_date, start_date) values(500, 40.416667, -122.241667, 'rpi4c-adsb-anderson1', 'no note', '2023-12-28', '2023-12-28');
+insert into device(altitude, latitude, longitude, name, note, retired_date, start_date) values(500, 40.416667, -122.241667, 'rpi3b-uat-anderson1', 'no note', '2023-12-28', '2023-12-28');
+insert into device(altitude, latitude, longitude, name, note, retired_date, start_date) values(0, 38.106389, -122.272778, 'rpi4a-adsb-vallejo1', 'no note', '2024-1-9', '2024-1-9');
+insert into device(altitude, latitude, longitude, name, note, retired_date, start_date) values(0, 38.106389, -122.272778, 'rpi3a-uat-vallejo1', 'no note', '2024-1-9', '2024-1-9');
+insert into device(altitude, latitude, longitude, name, note, retired_date, start_date) values(0, 38.106389, -122.272778, 'rpi4c-vallejo1', 'no note', '2024-1-9', '2024-1-9');

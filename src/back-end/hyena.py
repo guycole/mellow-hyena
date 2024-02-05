@@ -47,20 +47,18 @@ class Hyena:
             if "hex" in element:
                 element["adsb_hex"] = element["hex"]
 
-            results[element["adsb_hex"]] = self.postgres.adsb_exchange_select_or_insert(
-                element
-            ).id
+            element["adsb_hex"] = element["adsb_hex"].lower()
+
+            results[element["adsb_hex"]] = self.postgres.adsb_exchange_select_or_insert(element).id
 
         return results
 
     def hyena_v1_load_boxscore(self, device: str, obs_time: str):
         """hyena_v1 load_boxscore"""
 
-        box_score = self.postgres.box_score_select_or_insert(device, obs_time)
+        box_score = self.postgres.box_score_select_or_insert(device, obs_time.date())
         box_score.adsb_hex_new = box_score.adsb_hex_new + self.run_stats["hex_new"]
-        box_score.adsb_hex_total = (
-            box_score.adsb_hex_total + self.run_stats["hex_total"]
-        )
+        box_score.adsb_hex_total = (box_score.adsb_hex_total + self.run_stats["hex_total"])
         box_score.file_population = box_score.file_population + 1
         box_score.refresh_flag = True
 
@@ -76,12 +74,12 @@ class Hyena:
         load_dict["obs_time"] = datetime.fromtimestamp(buffer["timestamp"], timezone.utc)
         load_dict["population"] = len(buffer["observation"])
 
-        return self.postgres.load_log_insert(load_dict)
+        return self.postgres.load_log_select_or_insert(load_dict)
 
     def hyena_v1_load_cooked(self, buffer: Dict[str, str], timestamp: str):
         """hyena_v1 load_cooked"""
 
-        timestampz = datetime.datetime.fromtimestamp(timestamp, datetime.timezone.utc)
+        timestampz = datetime.fromtimestamp(timestamp, timezone.utc)
 
         cooked_dict = {}
 
@@ -112,9 +110,7 @@ class Hyena:
 
             self.postgres.cooked_update(cooked)
 
-    def hyena_v1_load_observation(
-        self, buffer: Dict[str, str], adsb_keys: Dict[str, str], load_log: LoadLog
-    ):
+    def hyena_v1_load_observation(self, buffer: Dict[str, str], adsb_keys: Dict[str, str], load_log: LoadLog):
         """hyena_v1 load_observation"""
 
         obs_dict = {}
@@ -171,7 +167,7 @@ class Hyena:
                 print("observation parse error")
                 return -1
 
-        self.run_stat_dump()
+#        self.run_stat_dump()
         self.hyena_v1_load_boxscore(load_log.device, load_log.obs_time)
 
         return 0

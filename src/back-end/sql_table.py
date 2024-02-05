@@ -47,7 +47,7 @@ class AdsbExchange(Base):
     wierdo_flag = Column(Boolean)
 
     def __init__(self, args: Dict[str, str]):
-        self.adsb_hex = args["adsb_hex"].lower()
+        self.adsb_hex = args["adsb_hex"]
         self.category = args["category"]
         self.emergency = args["emergency"]
         self.flight = args["flight"]
@@ -125,7 +125,7 @@ class Cooked(Base):
     note = Column(String)
 
     def __init__(self, args: Dict[str, str]):
-        self.adsb_hex = args["adsb_hex"].lower()
+        self.adsb_hex = args["adsb_hex"]
         self.observed_counter = args["observed_counter"]
         self.observed_first = args["observed_first"]
         self.observed_last = args["observed_last"]
@@ -209,7 +209,7 @@ class Observation(Base):
     track = Column(Integer)
 
     def __init__(self, args: Dict[str, str]):
-        self.adsb_hex = args["adsb_hex"].lower()
+        self.adsb_hex = args["adsb_hex"]
         self.adsb_exchange_id = args["adsb_exchange_id"]
         self.altitude = args["altitude"]
         self.bearing = args["bearing"]

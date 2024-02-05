@@ -1,4 +1,4 @@
-mellow-hyena/adsb_collect
+mellow-hyena/adsb-collect
 =========================
 
 ## Introduction

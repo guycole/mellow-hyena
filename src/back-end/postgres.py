@@ -98,7 +98,7 @@ class PostGres:
 
         return adsb_ranking
 
-    def box_score_insert(self, device: str, timestampz: str) -> BoxScore:
+    def box_score_insert(self, device: str, score_date: datetime.date) -> BoxScore:
         """box_score insert row"""
 
         args = {}
@@ -107,7 +107,7 @@ class PostGres:
         args["device"] = device
         args["file_population"] = 0
         args["refresh_flag"] = True
-        args["score_date"] = timestampz
+        args["score_date"] = score_date
 
         box_score = BoxScore(args)
 
@@ -134,18 +134,17 @@ class PostGres:
 
         return results
 
-    def box_score_select_or_insert(self, device: str, timestampz: str) -> BoxScore:
+    def box_score_select_or_insert(self, device: str, score_date: datetime.date) -> BoxScore:
         """select or insert box_score row"""
 
-        statement = select(BoxScore).filter_by(device=device, score_date=timestampz)
+        statement = select(BoxScore).filter_by(device=device, score_date=score_date)
 
         with self.Session() as session:
             rows = session.scalars(statement).all()
             for row in rows:
                 return row
 
-        print("must insert boxscore")
-        return self.box_score_insert(device, timestampz)
+        return self.box_score_insert(device, score_date)
 
     def box_score_select_refresh(self) -> List[BoxScore]:
         """select box score rows with refresh flag true"""
@@ -204,14 +203,6 @@ class PostGres:
     def device_select(self, name: str) -> Device:
         """device select row"""
 
-        if name.endswith("anderson1"):
-            name = "rpi4c-anderson1"
-        elif name.endswith("vallejo1"):
-            name = "rpi4a-vallejo1"
-        else:
-            print(f"error unknown device: {name}")
-            return None
-
         statement = select(Device).filter_by(name=name)
 
         with self.Session() as session:
@@ -244,6 +235,18 @@ class PostGres:
                 return row
 
         return None
+
+    def load_log_select_or_insert(self, args: Dict[str, str]) -> LoadLog:
+        """select or insert load_log row"""
+
+        statement = select(LoadLog).filter_by(device=args["device"], obs_time=args["obs_time"],)
+
+        with self.Session() as session:
+            rows = session.scalars(statement).all()
+            for row in rows:
+                return row
+
+        return self.load_log_insert(args)
 
     def observation_counter(
         self, start_time: datetime.datetime, stop_time: datetime.datetime
@@ -280,8 +283,6 @@ class PostGres:
 
     def observation_select_or_insert(self, args: Dict[str, str]) -> Observation:
         """select or insert observation row"""
-
-        args["adsb_hex"] = args["adsb_hex"].lower()  # normalize
 
         statement = select(Observation).filter_by(
             adsb_hex=args["adsb_hex"],

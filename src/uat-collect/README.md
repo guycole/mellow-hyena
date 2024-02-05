@@ -1,4 +1,4 @@
-mellow-hyena/uat_collect
+mellow-hyena/uat-collect
 =========================
 
 ## Introduction

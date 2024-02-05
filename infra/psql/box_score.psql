@@ -14,7 +14,7 @@ create table box_score (
   id               bigserial    primary key,
   adsb_hex_total   int          not null,
   adsb_hex_new     int          not null,
-  device           varchar(16)  not null,
+  device           varchar(32)  not null,
   file_population  smallint     not null, 
   refresh_flag     boolean      not null,
   score_date       date         not null
