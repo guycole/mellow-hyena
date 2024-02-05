@@ -11,4 +11,6 @@ echo "start move"
 cd /var/mellow/hyena-raw
 aws s3 mv s3://mellow-hyena.braingang.net/anderson1 . --recursive --profile=cli_braingang
 aws s3 mv s3://mellow-hyena.braingang.net/vallejo1 . --recursive --profile=cli_braingang
+gunzip *.gz
 echo "end move"
+#

@@ -8,7 +8,8 @@
 PATH=/bin:/usr/bin:/etc:/usr/local/bin; export PATH
 #
 echo "start parser"
-cd /Users/gsc/Documents/github/mellow-hyena/src/p_and_r
+cd /Users/gsc/Documents/github/mellow-hyena/src/back-end
 source venv/bin/activate
 time python3 ./parser.py
 echo "end parser"
+#

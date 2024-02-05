@@ -8,7 +8,7 @@
 PATH=/bin:/usr/bin:/etc:/usr/local/bin; export PATH
 #
 echo "start reporter"
-cd /Users/gsc/Documents/github/mellow-hyena/src/p_and_r
+cd /Users/gsc/Documents/github/mellow-hyena/src/back-end
 source venv/bin/activate
 time python3 ./reporter.py
 echo "end reporter"
