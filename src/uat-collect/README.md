@@ -49,34 +49,54 @@ https://stackoverflow.com/questions/63030641/how-to-install-awscli-version-2-on-
 ### output file example
 ```
 {
-    "device": "rpi3b-uat-anderson1", 
-    "project": "hyena", 
-    "timestamp": 1706499497, 
-    "version": 1, 
-    "observation": [
-        {
-            "adsb_hex":"a1c0de",
-            "flight":"N2119T",
-            "lat":38.195772,
-            "lon":-122.280171,
-            "altitude":900,
-            "track":115,
-            "speed":89,
-        }
-    ],
-    "adsbex": [
-        {
-            "adsb_hex": "a68e4c", 
-            "category": "A3", 
-            "emergency": "none", 
-            "flight": "SKW4846", 
-            "registration": "N521SY", 
-            "model": "E75L", 
-            "ladd_flag": false, 
-            "military_flag": false, 
-            "pia_flag": false, 
-            "wierdo_flag": false}
-    ]
+  "device": "rpi3a-uat-vallejo1", 
+  "project": "hyena", 
+  "timestamp": 1707168422, 
+  "version": 1, 
+  "observation": [
+    {
+      "adsb_hex": "a7b255", 
+      "flight": "N5950C", 
+      "altitude": 40000, 
+      "lat": 38.728738, 
+      "lon": -121.102145, 
+      "speed": 484, 
+      "track": 351
+    }, {
+      "adsb_hex": "adaf98", 
+      "flight": "N981HP", 
+      "altitude": 1200, 
+      "lat": 38.1585, 
+      "lon": -122.308903, 
+      "speed": 128, 
+      "track": 20
+    }
+  ], 
+  "adsbex": [
+    {
+      "adsb_hex": "a7b255", 
+      "category": "A2", 
+      "emergency": "none", 
+      "flight": "N5950C", 
+      "registration": "N5950C", 
+      "model": "G150", 
+      "ladd_flag": false, 
+      "military_flag": false, 
+      "pia_flag": false, 
+      "wierdo_flag": false
+    }, {
+      "adsb_hex": "adaf98", 
+      "category": "A7", 
+      "emergency": "none", 
+      "flight": "N981HP", 
+      "registration": "N981HP", 
+      "model": "AS50", 
+      "ladd_flag": false, 
+      "military_flag": false, 
+      "pia_flag": false, 
+      "wierdo_flag": false
+    }
+  ]
 }
 ```
 
