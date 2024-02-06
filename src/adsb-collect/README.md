@@ -91,4 +91,5 @@ curl -v http://127.0.0.1:8080/data.json
 ```
 
 ## Data Flow Diagram
-![Data Flow](https://github.com/guycole/mellow-hyena/blob/main/src/adsb_collect/adsb_data_flow.png)
+![Data Flow](https://github.com/guycole/mellow-hyena/blob/main/src/adsb-collect/adsb_data_flow.png)
+
