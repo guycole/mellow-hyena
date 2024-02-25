@@ -1,0 +1,13 @@
+#
+# collection device and location
+device: rpi3b-uat-test
+#
+# dump978 output file
+dump978out: /tmp/aircraft.json
+#
+# collected files go here
+#exportDir: /Users/gsc/Documents/github/mellow-hyena/aws_export
+exportDir: /var/mellow/hyena/raw
+#
+rapidApiKey: bogus
+#

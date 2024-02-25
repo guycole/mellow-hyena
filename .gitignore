@@ -128,4 +128,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-aws_export/
+src/adsb-collect/config.yaml
+src/uat-collect/config.yaml
