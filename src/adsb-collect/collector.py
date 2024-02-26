@@ -86,7 +86,7 @@ class Collector:
             response = requests.get(self.dump1090url, timeout=5.0)
             if response.status_code == 200:
                 payload = json.loads(response.text)
-                if len(payload) > 1:
+                if len(payload) > 0:
                     self.process_payload(payload)
                     self.write_payload(payload, timestamp)
                 else:
