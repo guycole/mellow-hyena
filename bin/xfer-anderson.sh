@@ -5,10 +5,10 @@
 # Development Environment: Debian 10 (buster)/raspian
 # Author: Guy Cole (guycole at gmail dot com)
 #
-PATH=/bin:/usr/bin:/etc:/usr/local/bin; export PATH
+PATH=/bin:/usr/bin:/etc:/usr/local/bin:~/.local/bin; export PATH
 #
 echo "start transfer"
-cd /home/gsc/github/mellow-hyena/aws_export; gzip *; cd ..
-aws s3 mv aws_export s3://mellow-hyena.braingang.net/anderson1 --profile=hyena-rpi --recursive
+cd /var/mellow/hyena/raw; gzip *; cd ..
+aws s3 mv raw s3://mellow-hyena.braingang.net/anderson1 --profile=wombat01 --recursive
 echo "end transfer"
 #

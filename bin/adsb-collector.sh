@@ -11,7 +11,7 @@ PATH=/bin:/usr/bin:/etc:/usr/local/bin; export PATH
 LD_LIBRARY_PATH=/usr/local/lib/arm-linux-gnueabihf; export LD_LIBRARY_PATH
 #
 echo "start collection"
-cd /home/gsc/github/mellow-hyena/src/adsb-collect
+cd /home/gsc/Documents/github/mellow-hyena/src/adsb-collect
 source venv/bin/activate
 python3 ./collector.py
 echo "end collection"
