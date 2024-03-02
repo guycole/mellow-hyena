@@ -34,3 +34,4 @@ More on reporting [here](https://github.com/guycole/mellow-hyena/blob/main/src/b
 ## Relevant Links
 
 1. [Mode-S.org](https://mode-s.org)
+1. [ADSB exploit](https://journals.open.tudelft.nl/joas/article/view/7229/5774)

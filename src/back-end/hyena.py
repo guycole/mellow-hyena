@@ -159,16 +159,16 @@ class Hyena:
 
         observation = buffer["observation"]
         for element in observation:
-            try:
-                self.hyena_v1_load_observation(element, adsb_keys, load_log)
-                self.hyena_v1_load_cooked(element, buffer["timestamp"])
-                self.run_stat_bump("hex_total")
-            except:
-                print("observation parse error")
-                return -1
+#            try:
+            self.hyena_v1_load_observation(element, adsb_keys, load_log)
+#            self.hyena_v1_load_cooked(element, buffer["timestamp"])
+#            self.run_stat_bump("hex_total")
+#            except:
+#                print("observation parse error")
+#                return -1
 
 #        self.run_stat_dump()
-        self.hyena_v1_load_boxscore(load_log.device, load_log.obs_time)
+#        self.hyena_v1_load_boxscore(load_log.device, load_log.obs_time)
 
         return 0
 

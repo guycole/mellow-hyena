@@ -1,0 +1,21 @@
+#
+# database connection
+dbConn: "postgresql+psycopg2://wombat:batbat@localhost:5432/wombat_v1"
+#
+# problem files
+failureDir: /var/mellow/hyena/failure
+#
+# processed files
+successDir: /var/mellow/hyena/success
+#
+# raw files to process
+importDir: /var/mellow/hyena/raw
+# importDir: /Users/gsc/Documents/github/mellow-hyena/samples
+#
+# HTML output from report
+# reportDir: /Users/gsc/Documents/github/mellow-hyena/web
+#reportDir: /var/mellow/hyena-web
+#
+# Root URL of report
+#baseUrl: "http://braingang.net/mellow-hyena"
+#

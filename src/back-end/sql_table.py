@@ -32,7 +32,8 @@ class Base(DeclarativeBase):
 class AdsbExchange(Base):
     """adsb_exchange table definition"""
 
-    __tablename__ = "adsb_exchange"
+    __tablename__ = "hyena_adsbexchange"
+    #__tablename__ = "adsb_exchange"
 
     id = Column(Integer, primary_key=True)
     adsb_hex = Column(String)
@@ -138,7 +139,7 @@ class Cooked(Base):
 class Device(Base):
     """device table definition"""
 
-    __tablename__ = "device"
+    __tablename__ = "hyena_device"
 
     id = Column(BigInteger, primary_key=True)
     altitude = Column(SmallInteger)
@@ -165,7 +166,8 @@ class Device(Base):
 class LoadLog(Base):
     """load_log table definition"""
 
-    __tablename__ = "load_log"
+    #__tablename__ = "load_log"
+    __tablename__ = "hyena_loadlog"
 
     id = Column(BigInteger, primary_key=True)
     device = Column(String)
@@ -190,7 +192,8 @@ class LoadLog(Base):
 class Observation(Base):
     """observation table definition"""
 
-    __tablename__ = "observation"
+    __tablename__ = "hyena_observation"
+    #__tablename__ = "observation"
 
     id = Column(BigInteger, primary_key=True)
 

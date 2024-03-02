@@ -66,7 +66,8 @@ class Parser:
             json_dict["file_type"] = self.file_classifier(json_dict)
 #            print(f"file_name:{file_name} file_type:{json_dict['file_type']}")
 
-            device = postgres.device_select(json_dict["device"])
+#            device = postgres.device_select(json_dict["device"])
+            device = postgres.device_select("bogus")
             if device is None:
                 print(f"error unknown device: {json_dict['device']}")
                 return -1
@@ -100,11 +101,11 @@ class Parser:
 
             if status == 0:
                 success_counter += 1
-                os.rename(target, f"{success_dir}/{target}")
+#                os.rename(target, f"{success_dir}/{target}")
             else:
                 failure_counter += 1
                 print(f"failure: {target}")
-                os.rename(target, f"{failure_dir}/{target}")
+#                os.rename(target, f"{failure_dir}/{target}")
 
         print(f"success:{success_counter} failure:{failure_counter}")
 
