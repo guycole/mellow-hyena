@@ -5,8 +5,6 @@
 # Development Environment: OS X 10.15.2/postgres 12.12
 # Author: G.S. Cole (guy at shastrax dot com)
 #
-# psql -h localhost -p 5432 -U hyena_py -d hyena_v1
-#
 psql -U postgres template1 (or psql -U gsc template1)
 create database hyena_v1;
 
@@ -16,4 +14,7 @@ woofwoof
 create role hyena_py with login;
 alter role hyena_py with password 'bogus';
 
-psql -U hyena_py -d hyena_v1
+
+psql (PostgreSQL) 15.6 (Debian 15.6-0+deb12u1)
+psql -U wombat -h localhost -d wombat_v1 < dropall.psql
+

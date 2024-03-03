@@ -202,7 +202,7 @@ class PostGres:
 
     def device_select(self, name: str) -> Device:
         """device select row"""
-
+       
         statement = select(Device).filter_by(name=name)
 
         with self.Session() as session:

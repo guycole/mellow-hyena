@@ -1,6 +1,6 @@
 #
 # database connection
-dbConn: "postgresql+psycopg2://wombat:batbat@localhost:5432/wombat_v1"
+dbConn: "postgresql+psycopg2://mellow:batabat@localhost:5432/mellow_v1"
 #
 # problem files
 failureDir: /var/mellow/hyena/failure

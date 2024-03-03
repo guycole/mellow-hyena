@@ -1,0 +1,1166 @@
+Script started on 2024-03-03 21:47:36+00:00 [TERM="xterm-256color" TTY="/dev/pts/2" COLUMNS="120" LINES="57"]
+[?2004hgsc@rpi5a:2000>[7mpython parser.py config.rpi[27m
+[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cpython parser.py config.rpi
+[A
+[?2004lparser start
+3157 files noted
+error unknown device: rpi4d-adsb-test
+failure: 15164048-1c47-45ae-88b0-66a547a9553f
+error unknown device: rpi4d-adsb-test
+failure: 74554dfc-e27b-47e6-b616-907d250d79db
+error unknown device: rpi4d-adsb-test
+failure: 571a8b7d-1257-4faf-b988-13d12b8cee0d
+error unknown device: rpi4d-adsb-test
+failure: 84838463-755e-421f-b2e3-d833847195ab
+error unknown device: rpi4d-adsb-test
+failure: e1cab01b-8e20-4d18-a117-738d227dd21b
+error unknown device: rpi4d-adsb-test
+failure: bed6c29d-1425-4eb0-b7df-94460045af90
+error unknown device: rpi4d-adsb-test
+failure: cebca5fb-0763-48b6-a42c-61f7152fb077
+error unknown device: rpi4d-adsb-test
+failure: ca3e3edc-c210-4b73-9bd9-94ceec1e7387
+error unknown device: rpi4d-adsb-test
+failure: 57ebe257-aff8-4d42-9318-effbdbec819a
+error unknown device: rpi4d-adsb-test
+failure: 86690bcf-b3d4-4366-935f-2de51a8fbdaa
+error unknown device: rpi4d-adsb-test
+failure: 47a138fd-cae6-4c03-98ef-404f1ccb3798
+error unknown device: rpi4d-adsb-test
+failure: a5413497-81c1-4e0e-905c-adc2de775bd6
+error unknown device: rpi4d-adsb-test
+failure: 0f18f659-7c7a-475f-8bfd-a73a29310a87
+error unknown device: rpi4d-adsb-test
+failure: b275fa3e-9cac-4708-9af4-328ba7551911
+error unknown device: rpi4d-adsb-test
+failure: 8faf0928-7d1c-491d-890b-f8cfdddf60f5
+error unknown device: rpi4d-adsb-test
+failure: 798c5577-ac8d-4466-bedc-800f3ec745c7
+error unknown device: rpi4d-adsb-test
+failure: fae12858-4664-44f9-aae3-db0da1623212
+error unknown device: rpi4d-adsb-test
+failure: 4af0bbd6-94b4-4a46-99d2-9ed2ce28a954
+error unknown device: rpi4d-adsb-test
+failure: e2e9be1c-0258-4495-bd7f-3b85ce204884
+error unknown device: rpi4d-adsb-test
+failure: a3094ebd-8ca9-4015-9f32-9088d277e306
+error unknown device: rpi4d-adsb-test
+failure: a932ca80-b162-4d65-86cc-1a8faf4d3e23
+error unknown device: rpi4d-adsb-test
+failure: eb0e119d-65c8-4d3e-bdfb-f47d15b1d097
+error unknown device: rpi4d-adsb-test
+failure: b080cb9e-a195-483d-9ccc-73baaf49917b
+error unknown device: rpi4d-adsb-test
+failure: b8c8b880-1034-4c80-877a-77f2bb3ff1da
+error unknown device: rpi4d-adsb-test
+failure: a2acb947-68e1-4cf2-a512-f5dc8b26e0d0
+error unknown device: rpi4d-adsb-test
+failure: 444e0457-91c5-43a8-918d-d1018d4b23d2
+error unknown device: rpi4d-adsb-test
+failure: ddb865e4-b3a4-4bac-a42c-92fec5162f1c
+error unknown device: rpi4d-adsb-test
+failure: 363ddc0d-dca3-4874-97d4-222ccc81e1fc
+error unknown device: rpi4d-adsb-test
+failure: 0493667d-78aa-4ccf-b890-1ffb66dfff07
+error unknown device: rpi4d-adsb-test
+failure: e4ee7bc5-c235-4e96-a72b-ea75440b78e6
+error unknown device: rpi4d-adsb-test
+failure: 38db5fbc-9d2f-49d6-8f76-f2c8d9b96e2a
+error unknown device: rpi4d-adsb-test
+failure: 28b5941f-e61a-452a-bcea-152d63515cb5
+error unknown device: rpi4d-adsb-test
+failure: d6463900-ffd1-492a-bf0c-59a2b9ca0e43
+error unknown device: rpi4d-adsb-test
+failure: 196571f8-85ec-47fd-ba75-63064aebd667
+error unknown device: rpi4d-adsb-test
+failure: 1524e11b-f5ff-4e7e-bef2-ccc4eea35aaa
+error unknown device: rpi4d-adsb-test
+failure: 918b38c9-41d0-42cc-b466-0dffb4338040
+error unknown device: rpi4d-adsb-test
+failure: 33451baa-b5ce-415a-a458-3f91e9838f9e
+error unknown device: rpi4d-adsb-test
+failure: b1920304-2ec9-4315-b344-d17509b6fd74
+error unknown device: rpi4d-adsb-test
+failure: e0cb7d9f-0b39-461d-a42d-fd0fe3b08a96
+error unknown device: rpi4d-adsb-test
+failure: 245c51f3-48d5-4bbd-9fba-257c7fa567be
+error unknown device: rpi4d-adsb-test
+failure: 50fe2def-a506-4b87-851d-d7a39801e66a
+error unknown device: rpi4d-adsb-test
+failure: 403f1734-3d29-435e-b6b0-ebaae5d8bd74
+error unknown device: rpi4d-adsb-test
+failure: de41c46a-021b-4967-96e1-c7dc97cceaa7
+error unknown device: rpi4d-adsb-test
+failure: 952a7de9-e510-4244-9c23-f4a30d94a4f8
+error unknown device: rpi4d-adsb-test
+failure: 5b9b0fb0-cd8a-4468-b415-5e5d99ddcd8c
+error unknown device: rpi4d-adsb-test
+failure: 5b2e6bab-bd4d-4de8-81e7-96229ea769da
+error unknown device: rpi4d-adsb-test
+failure: 52e5c2dd-5f8a-4ae4-8a7d-921478b55adc
+error unknown device: rpi3b-adsb-test
+failure: 99a569a4-ae21-442c-b8be-c0a403a163a8
+error unknown device: rpi4d-adsb-test
+failure: db6e7c41-e00c-4c1a-accd-47d0d527a8ed
+error unknown device: rpi4d-adsb-test
+failure: aaffb652-5840-49f8-b06e-a04c568f9607
+error unknown device: rpi4d-adsb-test
+failure: ce2d8e4a-f18d-44f1-99da-ae4a43fa9972
+error unknown device: rpi4d-adsb-test
+failure: 20f37f9a-df98-4fad-ad68-5240de708726
+error unknown device: rpi4d-adsb-test
+failure: 38a384be-bff4-4404-a6bd-46e65fa66e9f
+error unknown device: rpi4d-adsb-test
+failure: 4beafad5-dbdf-44a6-99a8-0756b263fdf3
+error unknown device: rpi4d-adsb-test
+failure: 2a0b7189-9a2c-48c4-bea4-083c4073a972
+error unknown device: rpi4d-adsb-test
+failure: d0ed141a-09ed-49b6-b170-4e34581bb6ca
+error unknown device: rpi4d-adsb-test
+failure: ca6640ce-13b4-4c8b-987d-43801fc907ed
+error unknown device: rpi4d-adsb-test
+failure: 39e6b476-f384-4fc8-a017-6ec13c9155bb
+error unknown device: rpi4d-adsb-test
+failure: 067b5d17-7dc9-4a4a-b4ac-3516ab85853d
+error unknown device: rpi4d-adsb-test
+failure: 9d66ad0c-ff12-4e3b-ae58-792dde066857
+error unknown device: rpi4d-adsb-test
+failure: 5b750496-8950-4b32-959f-c2bf3a3d45c1
+error unknown device: rpi4d-adsb-test
+failure: 81cc48c1-8baf-4451-b180-771bb194ba4b
+error unknown device: rpi4d-adsb-test
+failure: 3ed43372-9098-49ae-bc42-ef7a92a516fe
+error unknown device: rpi4d-adsb-test
+failure: 1b6ad2dd-d4de-4eb5-b281-3a503e16137e
+error unknown device: rpi4d-adsb-test
+failure: 24425290-8e74-4ada-acf9-6c7515d69649
+error unknown device: rpi4d-adsb-test
+failure: 5f6cfbb9-6f01-45d7-9d8b-151dfe655fc3
+error unknown device: rpi4d-adsb-test
+failure: 4b2a1662-0b0d-42bc-bcd0-2e57d8734d06
+error unknown device: rpi4d-adsb-test
+failure: 86526cfc-1281-46ee-bf26-b4a8e0208e58
+error unknown device: rpi4d-adsb-test
+failure: 10e59e8d-dd5d-4ada-86b7-8d69e5c952d1
+error unknown device: rpi4d-adsb-test
+failure: 9ea5e538-36cf-40e9-b500-7fb13f7c06f6
+error unknown device: rpi3b-uat-test
+failure: e3f95d19-96c1-447c-960a-8956bffe926e
+error unknown device: rpi4d-adsb-test
+failure: ea024e74-9dd5-4ae7-bc9d-d344722fa45d
+error unknown device: rpi4d-adsb-test
+failure: 847b9103-0d7e-49ef-855a-23d966e8fb04
+error unknown device: rpi3b-uat-test
+failure: ec2d1279-95b2-45b8-bf6a-edad9782e6a3
+error unknown device: rpi4d-adsb-test
+failure: ce2ddc5b-5139-4b8f-9f3c-23562901c9e8
+error unknown device: rpi4d-adsb-test
+failure: 9f4d4cc6-fca4-4bf4-b44f-681fbedfc2da
+error unknown device: rpi4d-adsb-test
+failure: d2696ee4-a990-4faa-a2d1-e02f00f8cd2f
+error unknown device: rpi4d-adsb-test
+failure: 5ab87c34-1995-4313-85f7-2af31bbf8891
+error unknown device: rpi4d-adsb-test
+failure: 6d410651-c0ae-4370-a011-eca5dd8d20eb
+error unknown device: rpi4d-adsb-test
+failure: 0788576f-5a43-435c-9077-c9836a9c7c25
+error unknown device: rpi4d-adsb-test
+failure: 1bd3cad5-95ef-4ac6-bcbe-32d6fe5ae987
+error unknown device: rpi4d-adsb-test
+failure: c46927c0-a04d-4344-b1c2-4654490a4aaa
+error unknown device: rpi4d-adsb-test
+failure: b895b2d2-355d-44f2-a998-06142a874b09
+error unknown device: rpi4d-adsb-test
+failure: 8bf79fae-dda4-428d-950c-0fe300820de7
+error unknown device: rpi4d-adsb-test
+failure: b3646f1a-cc3f-47eb-9879-71f829996ac4
+error unknown device: rpi4d-adsb-test
+failure: 16f46d23-22c8-44d5-bf08-678ab1914648
+error unknown device: rpi4d-adsb-test
+failure: 634f8da6-6e66-495d-8636-340abc009871
+error unknown device: rpi4d-adsb-test
+failure: a760563a-8d41-42d5-86c5-fb330812cc6c
+error unknown device: rpi4d-adsb-test
+failure: a19f5e0f-351d-4694-81e3-78feb6b93e0e
+error unknown device: rpi4d-adsb-test
+failure: 9d90282b-1e61-4dcb-a27c-505f3faf7bde
+error unknown device: rpi4d-adsb-test
+failure: 124ca3af-b51d-4efd-84b7-af9c3acaaa13
+error unknown device: rpi4d-adsb-test
+failure: f175addc-ad38-4623-83ff-2b83d23a52d2
+error unknown device: rpi4d-adsb-test
+failure: 3e790918-50b3-4dd3-b56f-9c8c0346c15e
+error unknown device: rpi4d-adsb-test
+failure: b8cedb84-bf10-4c7d-bcb7-6181c347dd74
+error unknown device: rpi4d-adsb-test
+failure: 105f42e5-dbab-49c6-88b3-cc1d2ae783a0
+error unknown device: rpi4d-adsb-test
+failure: d5c492a9-0e58-4fc3-af73-8b9b92bad5ba
+error unknown device: rpi4d-adsb-test
+failure: 9e936736-c488-4c23-9f9e-f83ab6b9f98e
+error unknown device: rpi4d-adsb-test
+failure: 665e0b15-9d7a-4ae3-bbd7-bc419d00034a
+error unknown device: rpi4d-adsb-test
+failure: 32819e60-dece-4714-8883-431f774b6272
+error unknown device: rpi4d-adsb-test
+failure: 32817dee-6273-4b7d-a91d-7bc8236d3cfe
+error unknown device: rpi4d-adsb-test
+failure: 867669b0-ecaa-4bd5-9a80-fda1cb19a572
+error unknown device: rpi4d-adsb-test
+failure: 441f2a99-4aa9-4d4c-8750-e0552ce56105
+error unknown device: rpi4d-adsb-test
+failure: a8adf787-3424-4d80-a3c4-f5b22ee1b702
+error unknown device: rpi4d-adsb-test
+failure: 70bd42c7-a6e9-45a7-8d20-24642b95920d
+error unknown device: rpi4d-adsb-test
+failure: 198d7b34-1741-4198-84ac-7cf401aa4bc0
+error unknown device: rpi4d-adsb-test
+failure: 1a409418-81b2-4904-a131-eaa49c673d0b
+error unknown device: rpi4d-adsb-test
+failure: b2ac6c40-731e-49aa-8b74-2dc5c592bc74
+error unknown device: rpi4d-adsb-test
+failure: 7f722f2d-6659-4068-8c50-266aa422f5eb
+error unknown device: rpi4d-adsb-test
+failure: 431cc0c3-d4b9-470e-8a16-62406646dddd
+error unknown device: rpi4d-adsb-test
+failure: 5ebe204a-62d4-46dd-a382-a36e0ff9b52d
+error unknown device: rpi4d-adsb-test
+failure: 27413ec9-ced2-4bc2-add2-19d2ad96fb52
+error unknown device: rpi4d-adsb-test
+failure: 32474be7-1952-4bb1-b0fe-2c1cd6af55b7
+error unknown device: rpi4d-adsb-test
+failure: e225af52-c959-41c2-9666-6d097bd079d5
+error unknown device: rpi4d-adsb-test
+failure: fd3e59b8-fe69-4c11-87da-c662949af51a
+error unknown device: rpi4d-adsb-test
+failure: 561c5f53-9c61-40e1-a842-1ab75ea09744
+error unknown device: rpi4d-adsb-test
+failure: 9a6f6486-1238-42a5-9ea5-5997184e30c6
+error unknown device: rpi4d-adsb-test
+failure: d983d992-8d0f-4833-979c-747854666af6
+error unknown device: rpi4d-adsb-test
+failure: 71357cc8-bf88-4722-937f-dfae54ce0e88
+error unknown device: rpi4d-adsb-test
+failure: 160533bf-6080-4b4e-bcee-4f8a2af8f1cc
+error unknown device: rpi4d-adsb-test
+failure: ea571e28-0b0a-48a7-8df4-4d5fdaaef719
+error unknown device: rpi4d-adsb-test
+failure: e32ba4ca-e4e5-48cb-8e30-4833ba1345e3
+error unknown device: rpi4d-adsb-test
+failure: e205a71a-d2eb-4524-8df1-58054462d9ca
+error unknown device: rpi4d-adsb-test
+failure: 44de2749-da1d-453d-b45a-12236fdf4382
+error unknown device: rpi4d-adsb-test
+failure: a04541d6-c9c1-426c-b4d0-9efd88e1335f
+error unknown device: rpi4d-adsb-test
+failure: 1d1ae507-5235-4c4f-9a35-b6bbb2d62d7c
+error unknown device: rpi4d-adsb-test
+failure: 3b85d8de-262a-4880-9ef6-bbadf28616b1
+error unknown device: rpi4d-adsb-test
+failure: f2362e95-8535-4113-ad81-cc0f46344234
+error unknown device: rpi4d-adsb-test
+failure: 42ad8c2d-18c9-4253-9240-6e3245427ab6
+error unknown device: rpi4d-adsb-test
+failure: c12869d9-16f4-42c3-858b-31095c4971c9
+error unknown device: rpi4d-adsb-test
+failure: b93e01dc-b19c-4ddc-b492-f3e3b6e6188d
+error unknown device: rpi3b-adsb-test
+failure: 0e2e06c0-33b2-4846-8b20-ad9313e0d01b
+error unknown device: rpi4d-adsb-test
+failure: 586a0fc4-7aee-48d7-a97a-cbaf7deda52e
+error unknown device: rpi4d-adsb-test
+failure: 84b958ca-72e2-43c2-8b64-36ae72c8b2b6
+error unknown device: rpi4d-adsb-test
+failure: a2562582-7d4b-4fa2-827d-75c20ae0c387
+error unknown device: rpi4d-adsb-test
+failure: 4caf1eff-bde6-4bc9-81b6-19d8b84c0d98
+error unknown device: rpi4d-adsb-test
+failure: b949a563-b7fa-495d-a15d-5aa68ab1a0c2
+error unknown device: rpi4d-adsb-test
+failure: c86dd1a4-3fa5-43d6-8423-673b92e02b5f
+error unknown device: rpi4d-adsb-test
+failure: f7162551-c851-487a-a6a1-b662a58f0cbe
+error unknown device: rpi4d-adsb-test
+failure: b03cb56f-3126-464d-8e49-b8945225121b
+error unknown device: rpi4d-adsb-test
+failure: a064c3dc-4a44-4673-8956-a41fe112200c
+error unknown device: rpi4d-adsb-test
+failure: 7d7d4c94-8df8-4199-9bbe-eb6354792baa
+error unknown device: rpi4d-adsb-test
+failure: f749ea6c-48c5-4782-bbbe-8646e9724f96
+error unknown device: rpi4d-adsb-test
+failure: 2eb38509-6ed3-4958-8398-1bd9272b80cd
+error unknown device: rpi4d-adsb-test
+failure: d07ff21b-eab3-457e-a4dd-1a95dc824dd8
+error unknown device: rpi4d-adsb-test
+failure: 4625bcba-119f-4147-8316-d1eee164a46b
+error unknown device: rpi4d-adsb-test
+failure: bae39802-9efe-417d-9c9e-3af81dbd5b1f
+error unknown device: rpi4d-adsb-test
+failure: 12da9e36-7e43-41f5-b03f-705912317935
+error unknown device: rpi4d-adsb-test
+failure: 909c0a6d-79a2-4ba9-b5ba-540d101e026a
+error unknown device: rpi4d-adsb-test
+failure: 33b14bc7-f441-4e5d-8185-f18f51b5329d
+error unknown device: rpi4d-adsb-test
+failure: 2e796053-185a-404e-afb9-2b7aff95ac1b
+error unknown device: rpi4d-adsb-test
+failure: b6fe3582-5ab0-4767-9ec9-4d34a0c949d5
+error unknown device: rpi4d-adsb-test
+failure: 7b674d04-27b3-499e-87ff-264c49d27fc7
+error unknown device: rpi4d-adsb-test
+failure: 80544ebf-6ebb-489e-82d4-de6c21518573
+error unknown device: rpi4d-adsb-test
+failure: fce828cf-1a7d-4892-9d32-abd4e5f8ed35
+error unknown device: rpi4d-adsb-test
+failure: 92e3bf66-4e98-4108-be17-d37317da467c
+error unknown device: rpi4d-adsb-test
+failure: 1ebdfa77-1e38-42a8-919a-8510bd2785e6
+error unknown device: rpi4d-adsb-test
+failure: 3966683b-5379-4ffb-a051-4e0aa7b0d7c4
+error unknown device: rpi4d-adsb-test
+failure: d8074575-5cb3-411e-bcf7-13f53faf0aa1
+error unknown device: rpi4d-adsb-test
+failure: bf627be2-0afe-45eb-bf01-d147161cee8d
+error unknown device: rpi4d-adsb-test
+failure: fe256e2d-7111-4344-bdf3-e5260f7c5fe5
+error unknown device: rpi4d-adsb-test
+failure: 9dd153c1-bc98-4595-abc3-f86c719fc904
+error unknown device: rpi4d-adsb-test
+failure: 7927d721-768d-4104-90b2-24d8d633adec
+error unknown device: rpi4d-adsb-test
+failure: 570d20a2-39ed-4075-96b3-b466677ac049
+error unknown device: rpi4d-adsb-test
+failure: d1a2e126-6811-4e45-b696-9560a6ed5710
+error unknown device: rpi4d-adsb-test
+failure: df93cde0-d2b2-4958-a11b-c2d2cacf53ac
+error unknown device: rpi4d-adsb-test
+failure: f4aa469d-816b-4e4e-a606-627188850317
+error unknown device: rpi4d-adsb-test
+failure: ee9bdfb1-6d0f-4207-8c84-219d7587e2ea
+error unknown device: rpi4d-adsb-test
+failure: 41470816-b5e2-4dde-b38b-21e97d6e01a8
+error unknown device: rpi4d-adsb-test
+failure: 1eb5f10a-9a71-458c-9d04-1058bcb10c7b
+error unknown device: rpi4d-adsb-test
+failure: 3f727693-efb6-4a5d-ad84-c9a5c1e22724
+error unknown device: rpi4d-adsb-test
+failure: b3d075aa-c496-4a5a-9fa3-0474ee28a507
+error unknown device: rpi4d-adsb-test
+failure: c6b6336b-7693-44bb-9e06-3315681914aa
+error unknown device: rpi4d-adsb-test
+failure: d6eabe51-3267-40de-864b-e0f15715fbcd
+error unknown device: rpi4d-adsb-test
+failure: 030e5b7e-730b-4ba8-8e9e-677144ac11ae
+error unknown device: rpi4d-adsb-test
+failure: 72c41df3-1f42-4070-ae63-4f4fcae19694
+error unknown device: rpi4d-adsb-test
+failure: 19520308-38ec-4de8-b34e-25cf3447f9ba
+error unknown device: rpi4d-adsb-test
+failure: 53364449-c104-4dae-8a3d-3e96d310d472
+error unknown device: rpi4d-adsb-test
+failure: 1e08dc36-7eef-42a9-8885-3cb847fd8653
+error unknown device: rpi4d-adsb-test
+failure: 3c532ccb-ed15-40b1-8b59-ddb898623de8
+error unknown device: rpi4d-adsb-test
+failure: a8e3ff01-962a-4323-a904-2b7568e3b6d8
+error unknown device: rpi4d-adsb-test
+failure: 206a182d-518a-4a9c-a56e-8d7ce5252ee5
+error unknown device: rpi4d-adsb-test
+failure: 06c03083-cff0-4d85-a82b-89ab10f309e6
+error unknown device: rpi4d-adsb-test
+failure: 95f1829b-efb9-41f8-866b-acbc778ba277
+error unknown device: rpi4d-adsb-test
+failure: 82fa567a-2db1-4d20-97c8-466c4fd6a610
+error unknown device: rpi4d-adsb-test
+failure: e26ab380-1936-446f-8d9f-6f7e70f1a130
+error unknown device: rpi4d-adsb-test
+failure: 1dbe11d7-02b3-4501-9fc6-5b49fa94f1c8
+error unknown device: rpi4d-adsb-test
+failure: 083010eb-91df-4baa-aef6-e2d056cd058b
+error unknown device: rpi4d-adsb-test
+failure: 0dfb21fd-bbad-4f89-96b9-00f20029efb9
+error unknown device: rpi4d-adsb-test
+failure: 294dded6-ab96-437a-8234-cc3d1b53714a
+error unknown device: rpi4d-adsb-test
+failure: 1738718d-06bf-403d-8d21-1bd1c9c256f2
+error unknown device: rpi4d-adsb-test
+failure: d662305a-a978-4846-916b-42fb5ba0a8ff
+error unknown device: rpi4d-adsb-test
+failure: 1c9d4e1c-356f-4124-abcf-eb8333e350fb
+error unknown device: rpi4d-adsb-test
+failure: 5f2f1d71-2d79-4d05-8acf-b571a44968ca
+error unknown device: rpi4d-adsb-test
+failure: bde0f962-5685-4145-b4c1-cd0211acfdd9
+error unknown device: rpi4d-adsb-test
+failure: 2e1d6917-2ebf-4c15-a017-0e6df1f2663b
+error unknown device: rpi4d-adsb-test
+failure: eb0c79f5-9e69-48ad-af95-3c9efe670291
+error unknown device: rpi4d-adsb-test
+failure: dfb1dd3b-31a0-4a16-9e4f-c9fb7fc10cc3
+error unknown device: rpi4d-adsb-test
+failure: b6d29dbe-f852-49c3-86f3-f7b81dde71a7
+error unknown device: rpi4d-adsb-test
+failure: bb7fed53-c36a-45af-8f78-d5b25fb5966e
+error unknown device: rpi4d-adsb-test
+failure: 1f9a628e-9ee8-46c6-b0dd-d6bb85ac5874
+error unknown device: rpi4d-adsb-test
+failure: 9af0427e-223b-45ba-8ac5-26d04b795f65
+error unknown device: rpi4d-adsb-test
+failure: d4c17398-3b05-46dc-adb2-e61b1b0902bc
+error unknown device: rpi4d-adsb-test
+failure: 749a3f30-9d52-4333-934e-a1e307a27c7d
+error unknown device: rpi4d-adsb-test
+failure: 514067e2-384c-406c-b870-7ade647b8685
+error unknown device: rpi4d-adsb-test
+failure: d1272ea9-358d-4822-aef1-74a5285810e9
+error unknown device: rpi4d-adsb-test
+failure: 7f1f314c-61b0-44ca-9401-4b03b9363492
+error unknown device: rpi4d-adsb-test
+failure: f3654546-6611-4a8f-b0a4-2ac2679af012
+error unknown device: rpi4d-adsb-test
+failure: cdf70741-8396-4ee7-9e87-2d1238ddaa4c
+error unknown device: rpi4d-adsb-test
+failure: ac94c4de-824f-4327-9a53-dda325d340ed
+error unknown device: rpi4d-adsb-test
+failure: 55d6a84c-3555-489c-9c9e-e321d3889e2c
+error unknown device: rpi4d-adsb-test
+failure: 470a7b3f-c841-4b1c-8bf6-0c154059a8bd
+error unknown device: rpi4d-adsb-test
+failure: 6f295ba7-d504-4551-afb4-ed1f97ea18ba
+error unknown device: rpi4d-adsb-test
+failure: 9af9aa5a-c283-40dd-88c9-ab4d6118697e
+error unknown device: rpi4d-adsb-test
+failure: e4d41b78-7ec4-4ec4-ab79-7025e1e227b3
+error unknown device: rpi4d-adsb-test
+failure: d191655c-3cd6-4c03-b973-9054b7dec4b4
+error unknown device: rpi4d-adsb-test
+failure: a6b3a789-4b7a-44f2-bd48-ff3de3d00587
+error unknown device: rpi4d-adsb-test
+failure: 3fc9b3d1-f9ce-457b-acc5-ba0a99830585
+error unknown device: rpi4d-adsb-test
+failure: 33575491-9d42-4b3b-a6bc-f47b24a7a20e
+error unknown device: rpi4d-adsb-test
+failure: c054ac76-0a59-4ac7-aa59-670f264dee0f
+error unknown device: rpi4d-adsb-test
+failure: b74d97f7-86d8-437e-a65d-ec4bbf75fc73
+error unknown device: rpi4d-adsb-test
+failure: a375c85f-48a8-404d-9443-05711347ac16
+error unknown device: rpi4d-adsb-test
+failure: fe4073b5-9c85-44b8-8b82-f55de16e0763
+error unknown device: rpi4d-adsb-test
+failure: 06e5bc15-8506-4c76-a4fa-f0c40b7c9feb
+error unknown device: rpi4d-adsb-test
+failure: a67d4c67-3113-44b5-b952-cc840ddaa8c6
+error unknown device: rpi4d-adsb-test
+failure: 80a654ab-fcfc-44be-8704-cea820a502c9
+error unknown device: rpi4d-adsb-test
+failure: 68e9a9db-755a-4779-a11d-3814995f724a
+error unknown device: rpi4d-adsb-test
+failure: d2ff9bfb-c286-4820-b097-996988730d8e
+error unknown device: rpi4d-adsb-test
+failure: 77ce0b96-efc3-4928-b16e-79974b9b15f1
+error unknown device: rpi4d-adsb-test
+failure: 3824eec9-1c18-46f0-88d3-1c86046380cc
+error unknown device: rpi4d-adsb-test
+failure: 4d07fb4b-b8c1-4a83-ac32-fe1184d15fd7
+error unknown device: rpi4d-adsb-test
+failure: e8c8494e-394a-4e68-9e4d-966a561703d2
+error unknown device: rpi4d-adsb-test
+failure: 18a37e54-6cc8-4be8-926e-f596e964e5b0
+error unknown device: rpi4d-adsb-test
+failure: 8f206719-9393-4eb7-9849-50c9a11e5b60
+error unknown device: rpi4d-adsb-test
+failure: 97e92526-af40-4d2e-aaa9-0e332f637d20
+error unknown device: rpi4d-adsb-test
+failure: 26b7457c-759a-44ba-860a-6aebe8f75154
+error unknown device: rpi4d-adsb-test
+failure: e852d86b-f695-4eec-accc-937b70a9f442
+error unknown device: rpi4d-adsb-test
+failure: b9cea428-55f9-462e-911f-7fccf8d9d9ac
+error unknown device: rpi4d-adsb-test
+failure: b5d43c13-ffe6-4345-aabd-6096f5aa1484
+error unknown device: rpi4d-adsb-test
+failure: 1cba0891-9939-40bf-a109-e361bbdc315f
+error unknown device: rpi4d-adsb-test
+failure: 35346cc3-4790-4b26-be28-25374c88c882
+error unknown device: rpi4d-adsb-test
+failure: d5c381ae-a5b6-401e-a3f0-74dc1b30696b
+error unknown device: rpi4d-adsb-test
+failure: 3d68d21b-84e3-4757-9877-0fa0f5097762
+error unknown device: rpi4d-adsb-test
+failure: 98e1d9fe-55d4-422b-a6bb-941df1f3132d
+error unknown device: rpi4d-adsb-test
+failure: ae42b49d-eb65-4a90-8ea9-911ea725c8d0
+error unknown device: rpi4d-adsb-test
+failure: 0af9fb2e-92cf-4fbc-b0a5-34a4bc8f68a2
+error unknown device: rpi4d-adsb-test
+failure: 05ef4231-d328-4e27-b7b2-39d3c170299a
+error unknown device: rpi4d-adsb-test
+failure: 4957a408-cc10-420c-bb78-1f5803902796
+error unknown device: rpi4d-adsb-test
+failure: 1e377594-939c-4d0b-a119-cd77c29551c2
+error unknown device: rpi4d-adsb-test
+failure: 61e2826a-5777-4911-8506-926644dcfbfb
+error unknown device: rpi3b-adsb-test
+failure: 5fcbe414-33ca-4684-948c-d88e9fdf7a1e
+error unknown device: rpi4d-adsb-test
+failure: b18fe030-5912-41d4-9591-3857276ee8e4
+error unknown device: rpi4d-adsb-test
+failure: 5f08f481-2ecb-47e5-bc1f-868dca794774
+error unknown device: rpi4d-adsb-test
+failure: e25b81e8-56e1-42ea-98ef-c845aa9564e4
+error unknown device: rpi4d-adsb-test
+failure: c71b7596-ffeb-4a83-a9b7-d8dbab372347
+error unknown device: rpi4d-adsb-test
+failure: c40c9c96-6424-4512-beab-c944b8cdeb36
+error unknown device: rpi4d-adsb-test
+failure: 71135830-da0f-453b-a562-2a7cf9ab9bfc
+error unknown device: rpi4d-adsb-test
+failure: 6f53bce9-cb21-471b-a28c-ad00e079dae0
+error unknown device: rpi4d-adsb-test
+failure: 309b8a26-329a-4f71-bde4-0e2ebaf7ee49
+error unknown device: rpi4d-adsb-test
+failure: 701e80c3-23fc-41dd-8ba6-4f6761129774
+error unknown device: rpi4d-adsb-test
+failure: a18fd078-ba9d-4ad1-9e7d-2b6d6cd13597
+error unknown device: rpi4d-adsb-test
+failure: 0078db78-619d-4807-892d-a27bc44e90ec
+error unknown device: rpi4d-adsb-test
+failure: f172bcda-0836-4f19-8215-9b69ba1d050e
+error unknown device: rpi4d-adsb-test
+failure: 65b0c4a0-ac82-487e-869e-ab2e143a3450
+error unknown device: rpi4d-adsb-test
+failure: e915a717-c4bf-427e-91cf-c6ba126d674c
+error unknown device: rpi4d-adsb-test
+failure: 0f6c6ba0-dcf1-4696-b086-e6fe3dc428a6
+error unknown device: rpi4d-adsb-test
+failure: dd9881e0-4b4c-4db1-861c-113e891c56f5
+error unknown device: rpi4d-adsb-test
+failure: 8515774e-a936-475a-b42f-e82810918b4a
+error unknown device: rpi4d-adsb-test
+failure: a98f20e2-aff4-475b-92cf-47f2a7059c2f
+error unknown device: rpi4d-adsb-test
+failure: a30379a4-0ed9-4740-84d3-cd7e8eeb6fd3
+error unknown device: rpi4d-adsb-test
+failure: 1458bf7b-453e-479e-98d1-0808dc556d78
+error unknown device: rpi4d-adsb-test
+failure: 6017dbff-9f27-43cb-963b-6f46bb704e85
+error unknown device: rpi4d-adsb-test
+failure: 04f4d5b8-0e11-4583-968a-7a1be0817cdb
+error unknown device: rpi4d-adsb-test
+failure: 85578cbc-9219-4495-80bd-c6e53cd7af89
+error unknown device: rpi4d-adsb-test
+failure: 3efa1e29-e5a5-46a2-bc78-84892e16a18e
+error unknown device: rpi4d-adsb-test
+failure: 8f261d06-8c6d-47d2-a324-acd0153d40eb
+error unknown device: rpi4d-adsb-test
+failure: ae4c5548-a9dd-469b-aed1-0e16442b4ed9
+error unknown device: rpi4d-adsb-test
+failure: 9b362d13-0d97-471d-95ed-6df217de9500
+error unknown device: rpi4d-adsb-test
+failure: af3ae5b8-89c3-48ab-96bf-ca2a08e629ea
+error unknown device: rpi4d-adsb-test
+failure: 28182209-c32b-4863-8e02-4cc19b571b42
+error unknown device: rpi4d-adsb-test
+failure: 295a6277-df34-4c7d-920e-b0b1874e5a34
+error unknown device: rpi4d-adsb-test
+failure: 1af07962-68c1-41f6-b50f-e0408ffce5ab
+error unknown device: rpi4d-adsb-test
+failure: fd5353ca-b83a-498c-868a-a069d3e35358
+error unknown device: rpi4d-adsb-test
+failure: a4ff42e8-948e-41c2-9c71-2eee225b6eed
+error unknown device: rpi4d-adsb-test
+failure: fc0baca7-a431-4da2-a665-25b093caec78
+error unknown device: rpi4d-adsb-test
+failure: 2557bfa1-aa15-47b6-8a5b-2010e6fc1ee0
+error unknown device: rpi4d-adsb-test
+failure: d1e19b7c-b12b-4bb1-a64a-807df7f53d9a
+error unknown device: rpi4d-adsb-test
+failure: 1def1792-a602-476d-a4f2-4031d73a3381
+error unknown device: rpi4d-adsb-test
+failure: bdebd3d5-7626-424f-81e5-a2c46cca26c9
+error unknown device: rpi4d-adsb-test
+failure: 6bda731d-3087-44a9-8177-c2583a0f9692
+error unknown device: rpi4d-adsb-test
+failure: 4d41d8aa-9495-4f1c-8066-faa71f72edf7
+error unknown device: rpi4d-adsb-test
+failure: 8ad5c881-fd10-48fa-b086-02bece49a6eb
+error unknown device: rpi4d-adsb-test
+failure: 5b36039f-4049-4235-b688-49cdc7b375eb
+error unknown device: rpi4d-adsb-test
+failure: aaf1f997-9be1-437b-87d4-ef8cb1ed51f8
+error unknown device: rpi4d-adsb-test
+failure: 34838ba7-79a6-4196-8198-aaa05b259956
+error unknown device: rpi4d-adsb-test
+failure: 31730614-ea1d-4f92-bbe1-adff8a0794e1
+error unknown device: rpi4d-adsb-test
+failure: 26b045e7-beb8-44a5-bef8-9f3e79d085fa
+error unknown device: rpi4d-adsb-test
+failure: ef19144a-da3a-4a1e-9587-1a5574b48dd4
+error unknown device: rpi4d-adsb-test
+failure: 1c20521e-dada-42ec-984a-d6c47ca0ac55
+error unknown device: rpi4d-adsb-test
+failure: 824e7928-9239-47a4-a39d-410846bbbbf2
+error unknown device: rpi4d-adsb-test
+failure: 3310460d-7597-4347-92b0-b298d69bdf9e
+error unknown device: rpi4d-adsb-test
+failure: 4c7410d9-73d0-4e8f-bef1-60bd11335a7e
+error unknown device: rpi4d-adsb-test
+failure: 15ba74c6-441d-4403-b965-9b712cd32a96
+error unknown device: rpi4d-adsb-test
+failure: 69e2d732-c61d-41b3-a5a8-81030b511bfe
+error unknown device: rpi4d-adsb-test
+failure: 11217eb7-e630-4d85-80e7-a5720abb4d33
+error unknown device: rpi4d-adsb-test
+failure: 1fdf2f00-0d3c-4fea-8757-1bf8deb749dd
+error unknown device: rpi4d-adsb-test
+failure: 3a969582-ca69-476f-8f74-4c1900130ff1
+error unknown device: rpi4d-adsb-test
+failure: 004922eb-88a9-412f-bf10-bdfa6b6a3534
+error unknown device: rpi4d-adsb-test
+failure: c886f229-21e5-4210-b3f6-6282743a8e19
+error unknown device: rpi4d-adsb-test
+failure: 59bb5ffe-1c7b-4134-90d1-a71c6ea4174c
+error unknown device: rpi4d-adsb-test
+failure: 7ab54a78-ecf4-4ff3-b28e-749c41be2fbc
+error unknown device: rpi4d-adsb-test
+failure: 8085e83c-e2a3-4ca7-bfb3-73425774e828
+error unknown device: rpi4d-adsb-test
+failure: be96f77f-66c3-4a1b-becc-788aeb85d8d1
+error unknown device: rpi4d-adsb-test
+failure: 89e23de8-1f0c-410c-82b3-e3bb63852259
+error unknown device: rpi4d-adsb-test
+failure: 6f05ab48-1d3e-4a98-a12c-b458e72d2e97
+error unknown device: rpi4d-adsb-test
+failure: d90a726a-4f83-4c08-abe2-354797c8a12c
+error unknown device: rpi4d-adsb-test
+failure: 83ee3f36-2a46-46c3-95c8-072096250ef2
+error unknown device: rpi4d-adsb-test
+failure: 08d52acc-488f-4ce4-9eca-39909a445fbc
+error unknown device: rpi4d-adsb-test
+failure: a18ebac3-df35-405a-a120-feddcc95a7c4
+error unknown device: rpi4d-adsb-test
+failure: 8276195d-80de-489e-8c94-6238c74c0c1c
+error unknown device: rpi4d-adsb-test
+failure: ade861c0-ed93-4274-b1eb-17f0f9a4193c
+error unknown device: rpi4d-adsb-test
+failure: a0ff0bc9-b3d3-4ff4-83d9-06377618b742
+error unknown device: rpi4d-adsb-test
+failure: 2ea0f187-48d0-4cea-aaba-6c0d5a25c362
+error unknown device: rpi4d-adsb-test
+failure: cdac3f9b-d710-49c5-95b3-1642212d2ab2
+error unknown device: rpi4d-adsb-test
+failure: 8f63c964-de93-49ac-a375-3207abcbdd5b
+error unknown device: rpi4d-adsb-test
+failure: 6454e2e2-cd89-463e-9e1c-436bab1ff5bf
+error unknown device: rpi4d-adsb-test
+failure: 8de2652d-6dd6-49fc-91d5-2fb979b2e329
+error unknown device: rpi4d-adsb-test
+failure: ab7b1bdf-f9f2-4834-a8e9-5833b25d98c6
+error unknown device: rpi4d-adsb-test
+failure: 7966c804-8698-4d01-acbb-800825ff6a30
+error unknown device: rpi4d-adsb-test
+failure: e7f2ae29-92bf-48ed-8ff6-7496577d49d7
+error unknown device: rpi4d-adsb-test
+failure: ef0d144f-debc-4829-8f5d-f23390002db3
+error unknown device: rpi4d-adsb-test
+failure: dad5cbc2-091b-4fae-8bc2-8b3b843cc4e9
+error unknown device: rpi4d-adsb-test
+failure: 642d4569-10ed-4d7c-a840-c1c16693c4f3
+error unknown device: rpi4d-adsb-test
+failure: 6a6bf79c-60d2-4b23-9ccd-5b8f856391dc
+error unknown device: rpi4d-adsb-test
+failure: 53a3d545-dd37-4538-89ac-93187ba096f4
+error unknown device: rpi4d-adsb-test
+failure: 2d7828f7-91e8-4250-8265-3363984abb5e
+error unknown device: rpi4d-adsb-test
+failure: 21663e05-c4a5-4d9a-9eb7-14f9a6c4bd98
+error unknown device: rpi4d-adsb-test
+failure: 9bbc8d56-e5d5-49b7-b5d8-ef7a7cfc7469
+error unknown device: rpi4d-adsb-test
+failure: 9ef9da45-fff2-4c41-8b05-3119ac4c4912
+error unknown device: rpi4d-adsb-test
+failure: 5a87881f-7ece-49a7-aa22-b0a68b95c402
+error unknown device: rpi4d-adsb-test
+failure: 40bf83fe-00e3-4383-bb18-8206c1434cf4
+error unknown device: rpi4d-adsb-test
+failure: ab1acd3d-5f40-4574-ae6f-05381f79b95c
+error unknown device: rpi4d-adsb-test
+failure: 936af69b-59e6-4fde-9c2b-8f239f74e5bb
+error unknown device: rpi4d-adsb-test
+failure: 31c37dba-3365-49bc-9210-ef2fb255453d
+error unknown device: rpi4d-adsb-test
+failure: f9f58acf-6987-4622-8190-b18c6829480a
+error unknown device: rpi4d-adsb-test
+failure: e96c9b75-e6e5-45f3-8a6c-e10a9c5bb8d3
+error unknown device: rpi4d-adsb-test
+failure: dcfbab3f-2ded-4c19-b7f3-fffe0594870b
+error unknown device: rpi4d-adsb-test
+failure: e925a1c8-93f5-4460-b29d-d35bb424abc3
+error unknown device: rpi4d-adsb-test
+failure: 87ac0de2-ef15-48af-84a8-9837ed69e7f8
+error unknown device: rpi4d-adsb-test
+failure: c2084d89-1a2d-42bd-b94e-93943506f7dd
+error unknown device: rpi4d-adsb-test
+failure: f564eebb-031d-4f79-b696-8d726bacae73
+error unknown device: rpi4d-adsb-test
+failure: a72ebd2e-f2f8-49d2-9877-3135af9fba24
+error unknown device: rpi4d-adsb-test
+failure: 4f50e8c1-a38f-4d7a-8c59-6c40c2b5f9d3
+error unknown device: rpi4d-adsb-test
+failure: f3112350-d2a0-4d3e-b03f-62e7bfcc749d
+error unknown device: rpi4d-adsb-test
+failure: 5a5fd15e-00aa-4e9a-8236-ac08fe76f31a
+error unknown device: rpi4d-adsb-test
+failure: be0c47b7-71d6-4e4e-b1e6-ee91d13b9fff
+error unknown device: rpi4d-adsb-test
+failure: 109db486-db9e-4265-9cd2-b734c13b3d57
+error unknown device: rpi4d-adsb-test
+failure: 25ef20eb-4e3d-41b0-9c07-46c4f929f03d
+error unknown device: rpi4d-adsb-test
+failure: 8df5638c-e241-4dc3-9044-1d3aafa90ee2
+error unknown device: rpi4d-adsb-test
+failure: 317e2b8d-8424-4816-91ce-cbe24664d5ba
+error unknown device: rpi4d-adsb-test
+failure: 08107e64-ccf1-4229-bec8-b5a6bc21e641
+error unknown device: rpi4d-adsb-test
+failure: f8c58d9d-50a8-4927-985c-67dfb8c2e0eb
+error unknown device: rpi4d-adsb-test
+failure: 444be94b-f59c-4df6-aa4d-413c898025e9
+error unknown device: rpi4d-adsb-test
+failure: 5eb70e21-9219-4c15-9863-f1e3bb892939
+error unknown device: rpi4d-adsb-test
+failure: 0b6447bd-80cd-47df-8fb2-6d28751f6fb0
+error unknown device: rpi4d-adsb-test
+failure: 73272287-6910-4683-905b-89cf8b95e720
+error unknown device: rpi4d-adsb-test
+failure: c8bf29c5-1ad7-4c9c-a8ea-5d2ea01dd2e0
+error unknown device: rpi4d-adsb-test
+failure: ff38c46b-91c0-499c-a880-404a299d0e55
+error unknown device: rpi4d-adsb-test
+failure: ecb3006a-4331-4c0a-a7aa-d1c3b90ac401
+error unknown device: rpi4d-adsb-test
+failure: 86cdef4c-ff8b-465f-8e7a-0dcc53c01942
+error unknown device: rpi4d-adsb-test
+failure: ce5165a1-37c1-4c98-b886-cdddaa6f448c
+error unknown device: rpi4d-adsb-test
+failure: e4a178b5-a46f-4238-8f74-97d3516482fc
+error unknown device: rpi4d-adsb-test
+failure: 00c5b3b3-bb3a-4f0d-a782-8e92c2cc9c26
+error unknown device: rpi4d-adsb-test
+failure: 00b15739-2449-4dd9-9497-211feeea974c
+error unknown device: rpi4d-adsb-test
+failure: bf4baad9-b82a-4871-a68f-cec70dbe8784
+error unknown device: rpi4d-adsb-test
+failure: 566b28a4-4025-4e54-8476-3cbef95d45e7
+error unknown device: rpi4d-adsb-test
+failure: 2d130160-6c43-4e99-94cb-718473a9c959
+error unknown device: rpi4d-adsb-test
+failure: 3b483de5-33c9-42b3-a5f4-f57f981fb847
+error unknown device: rpi4d-adsb-test
+failure: 24b1f678-3931-45d6-9690-27d20dd26c9e
+error unknown device: rpi4d-adsb-test
+failure: 9adc1c73-9736-4ea5-bfcb-f078048d0973
+error unknown device: rpi4d-adsb-test
+failure: 51cc6ff5-ffbd-4d60-b24b-24fbb871da3c
+error unknown device: rpi4d-adsb-test
+failure: 7b684f93-0062-4fac-8675-a0a67314b895
+error unknown device: rpi4d-adsb-test
+failure: 74936e30-4e4e-4b2c-a999-c80fb77f9ade
+error unknown device: rpi4d-adsb-test
+failure: b60c85fd-bdc3-43e0-a8cf-3779b9f17f8c
+error unknown device: rpi4d-adsb-test
+failure: 94350e10-9be4-42ad-b564-f87f84732594
+error unknown device: rpi4d-adsb-test
+failure: 228e0594-8fbb-4024-bc92-ef4b4692d316
+error unknown device: rpi4d-adsb-test
+failure: dee26e98-b054-447b-80d2-7439f0ed73dd
+error unknown device: rpi4d-adsb-test
+failure: fe06c95b-7aa6-4ad0-a34c-9112268bbea9
+error unknown device: rpi4d-adsb-test
+failure: 35d073be-0e71-42e7-961e-fff69e1a2fe8
+error unknown device: rpi4d-adsb-test
+failure: 1cfe8b36-0410-4b82-959c-120cf57e53f3
+error unknown device: rpi4d-adsb-test
+failure: 05ae15fa-483b-4f0b-9db3-daad64a8e8cd
+error unknown device: rpi4d-adsb-test
+failure: 1fc61036-ab5a-41a1-888c-4d6c7715a1ac
+error unknown device: rpi4d-adsb-test
+failure: 8e228eb9-7636-4e17-83ca-5eb167997c51
+error unknown device: rpi4d-adsb-test
+failure: a1902382-72c3-46c7-9543-933a36956932
+error unknown device: rpi4d-adsb-test
+failure: e823c2bb-de45-4893-9ce7-7368628bc02e
+error unknown device: rpi4d-adsb-test
+failure: 693f329d-c414-4ef4-b60a-38af9e4e59c6
+error unknown device: rpi4d-adsb-test
+failure: 9060e340-8273-4806-b093-1d88bede85b8
+error unknown device: rpi4d-adsb-test
+failure: 6d57e121-95ef-4779-b712-dc62768e9e91
+error unknown device: rpi4d-adsb-test
+failure: c04c7caa-bcfa-4490-8132-c18f9fa2f2cf
+error unknown device: rpi4d-adsb-test
+failure: 8e04d17b-c4da-41b6-b3b6-55cb26006983
+error unknown device: rpi4d-adsb-test
+failure: 80b6fb84-6213-40dd-8e65-fe8d91fc4baa
+error unknown device: rpi4d-adsb-test
+failure: 504ca069-9c77-4367-94ec-9ad74918a0e7
+error unknown device: rpi4d-adsb-test
+failure: 52d17cb7-fb3e-4f4c-9b73-ecdf1c13fad9
+error unknown device: rpi4d-adsb-test
+failure: e5e735a7-f671-481e-833d-3b5ab25122cf
+error unknown device: rpi4d-adsb-test
+failure: ce75e374-2754-4081-827e-320040631889
+error unknown device: rpi4d-adsb-test
+failure: c4841d0e-1b1f-4d9d-803f-0206e86e64fd
+error unknown device: rpi4d-adsb-test
+failure: e7266093-a401-4cba-9acb-442b18a9d977
+error unknown device: rpi4d-adsb-test
+failure: 8cdaf355-6421-4104-b0a5-f451d978d4f2
+error unknown device: rpi4d-adsb-test
+failure: d58833de-f991-46b5-82bc-452f83b5ca9f
+error unknown device: rpi4d-adsb-test
+failure: 335bad36-efd3-43c4-8f2f-3841e85c6b36
+error unknown device: rpi4d-adsb-test
+failure: d670802d-e2fa-460c-8511-f445d355e695
+error unknown device: rpi4d-adsb-test
+failure: d1890eb1-ba59-4c94-bc30-a8067a55867c
+error unknown device: rpi4d-adsb-test
+failure: 55dfcaef-3b1d-4bb2-9982-40ab643d2e50
+error unknown device: rpi4d-adsb-test
+failure: e20eca84-5fea-4496-9c13-e984aed56d7b
+error unknown device: rpi4d-adsb-test
+failure: ee0f9842-0980-45bf-8099-862baf529e70
+error unknown device: rpi4d-adsb-test
+failure: f1670bc2-5560-4bb9-a80b-568febbaba22
+error unknown device: rpi4d-adsb-test
+failure: a8b29cff-6999-4256-8234-32308943c173
+error unknown device: rpi4d-adsb-test
+failure: 86604611-2da8-4f73-90e5-9e67869147ca
+error unknown device: rpi4d-adsb-test
+failure: 4f281137-7205-409a-8e08-2ff7ce4b2a6c
+error unknown device: rpi4d-adsb-test
+failure: 900e0b7c-ec8b-4152-83e1-69073ea8ac0f
+error unknown device: rpi4d-adsb-test
+failure: e9b48b6a-5b28-48d5-805d-b29b9714114d
+error unknown device: rpi4d-adsb-test
+failure: 566037cb-44a3-4c5e-b852-13343b8459e0
+error unknown device: rpi4d-adsb-test
+failure: 3589dce1-55a2-4e5e-bce3-b1baa29129db
+error unknown device: rpi4d-adsb-test
+failure: 41efbcbf-8b83-423c-b9d5-c1353c9f3964
+error unknown device: rpi4d-adsb-test
+failure: cdfe8c66-0f2d-4c90-97b1-d51f538bf46f
+error unknown device: rpi4d-adsb-test
+failure: 4a56abff-88eb-4a6c-9797-9c95a5c07da5
+error unknown device: rpi4d-adsb-test
+failure: 4a3dc97e-9e31-4167-8598-c247218c4e6a
+error unknown device: rpi4d-adsb-test
+failure: 1460d99d-8047-4b30-b061-867f5c7e7eb9
+error unknown device: rpi4d-adsb-test
+failure: 327faff3-5e0a-4566-9ba8-c61ff52c4984
+error unknown device: rpi4d-adsb-test
+failure: d0645958-6251-4075-926f-1faa8a168393
+error unknown device: rpi4d-adsb-test
+failure: 7017af3c-0f31-4855-9ed0-6eca8266d403
+error unknown device: rpi4d-adsb-test
+failure: 7761a606-f114-4b2e-9ec9-8cb0b4ffeeca
+error unknown device: rpi4d-adsb-test
+failure: f167549a-140c-485a-9eff-590a48e2e560
+error unknown device: rpi4d-adsb-test
+failure: 0eeb0fe0-b256-4520-b8dd-a564271af7be
+error unknown device: rpi4d-adsb-test
+failure: de34546c-bc8c-44f0-9a98-fef3a3e11c90
+error unknown device: rpi4d-adsb-test
+failure: d27faa4d-0f38-416b-96f6-6e9deb1ff4ef
+error unknown device: rpi4d-adsb-test
+failure: 3a8f5d10-16a2-4ced-9e0d-f8ee6e16a0df
+error unknown device: rpi4d-adsb-test
+failure: f35bab0c-863d-44e2-8079-2d0f2fc4e4be
+error unknown device: rpi4d-adsb-test
+failure: d7e90665-bdf2-47c7-b111-f3f22da2926d
+error unknown device: rpi4d-adsb-test
+failure: 931de0c4-b3d5-4e03-8d30-a9c812f5a12f
+error unknown device: rpi4d-adsb-test
+failure: 398f2a68-b1e4-4545-a60c-9f581d02e593
+error unknown device: rpi4d-adsb-test
+failure: 1477a0e7-5589-4be8-8355-34380f5fb646
+error unknown device: rpi4d-adsb-test
+failure: 078d23f7-902a-4a0b-9fb7-8f6baea9f53c
+error unknown device: rpi4d-adsb-test
+failure: 298c7457-42ff-426b-826e-00ae4d2b9fd2
+error unknown device: rpi4d-adsb-test
+failure: 200a0815-b1ee-4208-bd79-29e2f1771762
+error unknown device: rpi4d-adsb-test
+failure: 242e5417-a069-467c-9ab5-fa7f0a038a53
+error unknown device: rpi4d-adsb-test
+failure: a282c862-8bc0-4cb4-9b82-99bc4bbe614e
+error unknown device: rpi4d-adsb-test
+failure: 134b237b-a10f-4230-92dc-dd0d77d29f6f
+error unknown device: rpi4d-adsb-test
+failure: 968d5de9-350b-4d05-8eb5-78d3c6f56920
+error unknown device: rpi4d-adsb-test
+failure: cd99fd93-ed98-46ab-b75d-f8178827b8be
+error unknown device: rpi4d-adsb-test
+failure: 5cdbec27-7935-462e-a29c-c91047303845
+error unknown device: rpi4d-adsb-test
+failure: 5d8766b6-fba6-4565-847f-d8d3310c7e3a
+error unknown device: rpi4d-adsb-test
+failure: 8b9c33b4-c68d-4a7e-977f-40e6160732d5
+error unknown device: rpi4d-adsb-test
+failure: ab07a159-59cb-4de7-858f-5721b9bc0015
+error unknown device: rpi4d-adsb-test
+failure: 497c1c02-6b24-49bb-b442-419158fbef5e
+error unknown device: rpi4d-adsb-test
+failure: b7585c73-77eb-4965-b11b-356b2ed81fb9
+error unknown device: rpi4d-adsb-test
+failure: 23368f21-7efa-4251-975e-7be1fe15dacf
+error unknown device: rpi4d-adsb-test
+failure: 03294573-39d2-406d-9707-14bf89c1b23e
+error unknown device: rpi4d-adsb-test
+failure: 544f8487-6c48-450e-9573-6a26aee06c41
+error unknown device: rpi3b-adsb-test
+failure: 381d2b47-b646-432c-bc14-708a528ad921
+error unknown device: rpi4d-adsb-test
+failure: 265b9487-7e06-42cc-b5b1-c6870e26bffc
+error unknown device: rpi4d-adsb-test
+failure: e07786ba-08fa-4d98-9fb5-ad54f1aff9fe
+error unknown device: rpi4d-adsb-test
+failure: 0046a213-ffba-420d-ac9d-13376a6e31bc
+error unknown device: rpi4d-adsb-test
+failure: 0027ec0b-87d9-444b-b106-6631e5825088
+error unknown device: rpi4d-adsb-test
+failure: b7f91061-df56-415b-8091-6aa43ca3529e
+error unknown device: rpi4d-adsb-test
+failure: b65248b8-9f8b-4724-a3ea-b715a8f1be44
+error unknown device: rpi4d-adsb-test
+failure: cb78f628-520e-44ad-8131-1fc2ce2dbdb8
+error unknown device: rpi4d-adsb-test
+failure: b7efac3e-ac1c-4bc9-a837-fb5ec20773b6
+error unknown device: rpi4d-adsb-test
+failure: 7379ccb3-e89f-42da-a191-83b554894b59
+error unknown device: rpi4d-adsb-test
+failure: 1c317c00-6d71-4579-a993-b8bb686ff921
+error unknown device: rpi4d-adsb-test
+failure: 30ee51cc-c426-4f73-94a6-502a2fb09e56
+error unknown device: rpi4d-adsb-test
+failure: 7415b11d-32ef-4598-9b35-731017d6cb11
+error unknown device: rpi4d-adsb-test
+failure: fed29810-8df2-4054-96e8-3f2a8f234482
+error unknown device: rpi4d-adsb-test
+failure: 66d549f8-37e0-4b9f-be7d-fe4d26e4478b
+error unknown device: rpi4d-adsb-test
+failure: 0e6156ac-2a54-496d-91da-358a20dcdb27
+error unknown device: rpi4d-adsb-test
+failure: 5a69ea4c-2190-4a8f-a1e5-9075037f5d49
+error unknown device: rpi4d-adsb-test
+failure: be79e5fb-d9ff-4d2e-9adf-00863b59646a
+error unknown device: rpi4d-adsb-test
+failure: 02c78ebe-7dd0-4ed1-b765-d320fd046038
+error unknown device: rpi4d-adsb-test
+failure: 3d5483cf-91cd-41b4-bbfc-fd4e85f2144f
+error unknown device: rpi4d-adsb-test
+failure: 37ffc5c3-4ee2-43c1-a0ec-0bef2fb56d2b
+error unknown device: rpi4d-adsb-test
+failure: 3428fc52-9aa3-4833-9923-ecddb229ece3
+error unknown device: rpi4d-adsb-test
+failure: d29f3bc9-691d-4f50-b861-67d250ed3892
+error unknown device: rpi4d-adsb-test
+failure: bc4ac456-0d12-462e-bb77-8d0adcbd76e1
+error unknown device: rpi4d-adsb-test
+failure: 45314d71-6c66-4da4-8300-e91f0c8b7ce1
+error unknown device: rpi4d-adsb-test
+failure: 2dd72308-4abe-4090-8b60-bd7d1e301bcb
+error unknown device: rpi4d-adsb-test
+failure: fad7ddac-e095-4498-8249-3d30ec68bcaa
+error unknown device: rpi4d-adsb-test
+failure: 6097bf80-bf8f-4364-9a41-08bea62bcdb8
+error unknown device: rpi4d-adsb-test
+failure: 109337c5-ce17-416c-b9da-91a73e9b1ad0
+error unknown device: rpi4d-adsb-test
+failure: 721d099d-3fd0-402f-bcd2-5fc63520b475
+error unknown device: rpi4d-adsb-test
+failure: b04cc2f8-a108-40a2-ad71-3aa85aba035d
+error unknown device: rpi4d-adsb-test
+failure: c5f96443-5995-4760-b67f-a74d81a7adbc
+error unknown device: rpi4d-adsb-test
+failure: 84548215-cce8-4f2e-8b31-ec6f1db21bbc
+error unknown device: rpi4d-adsb-test
+failure: 8c920622-ba39-4795-bd6f-bd49558124e4
+error unknown device: rpi4d-adsb-test
+failure: 8969fb78-af0f-4af6-b12b-7a255c4b612e
+error unknown device: rpi4d-adsb-test
+failure: 0040824b-c227-4ade-9656-c9a3cd0a954e
+error unknown device: rpi4d-adsb-test
+failure: bee803e2-4b12-4270-a82a-75f82314a18e
+error unknown device: rpi4d-adsb-test
+failure: 16cfd643-22a9-47b8-944d-ac1a35b798ee
+error unknown device: rpi4d-adsb-test
+failure: 448f9a0e-512c-4141-9d61-67dae701494a
+error unknown device: rpi4d-adsb-test
+failure: 86a7a08f-1728-4219-a7d1-6c7027ed5fd6
+error unknown device: rpi4d-adsb-test
+failure: f907e0d0-b44e-4779-abec-6abab8ddb01e
+error unknown device: rpi4d-adsb-test
+failure: 7895a3c5-76ef-45c4-9bd8-454b55a62e78
+error unknown device: rpi4d-adsb-test
+failure: cadc7966-b8bd-426e-adc7-6bd91f1f4437
+error unknown device: rpi4d-adsb-test
+failure: c5867e7a-6116-4ff0-a948-ea8d4237d48a
+error unknown device: rpi4d-adsb-test
+failure: 5dee5f1f-1423-40ff-ad0e-7598073f0992
+error unknown device: rpi4d-adsb-test
+failure: 6f7aaf40-f01e-4160-9945-1b89cadeb191
+error unknown device: rpi4d-adsb-test
+failure: 0d3a8f1b-5848-4cf0-aa19-1c885cdab266
+error unknown device: rpi4d-adsb-test
+failure: 156116cb-544c-40b9-9290-ab9773b5f158
+error unknown device: rpi4d-adsb-test
+failure: e1c72c5f-a5e0-4e69-b14b-a1f594bec92a
+error unknown device: rpi4d-adsb-test
+failure: 4c003209-c8cb-4fe6-969b-176ad431e213
+error unknown device: rpi4d-adsb-test
+failure: 12f4a4cd-84ff-4e48-98ee-4883aebf059b
+error unknown device: rpi4d-adsb-test
+failure: 395eb6dc-56f3-4588-a49e-c51fd42bc733
+error unknown device: rpi4d-adsb-test
+failure: d10842e7-8eb6-465e-9cf3-8c15e5192108
+error unknown device: rpi4d-adsb-test
+failure: 70f18d3b-c771-47ce-9fd2-110d4d4f605b
+error unknown device: rpi4d-adsb-test
+failure: 1d68cd48-9d18-4e64-ab3a-7db3fb474d16
+error unknown device: rpi4d-adsb-test
+failure: 5caac942-4df5-4c94-8cd2-d8df20d70e6d
+error unknown device: rpi4d-adsb-test
+failure: 3319e878-d15b-45a0-ac3e-20801dab2aee
+error unknown device: rpi4d-adsb-test
+failure: 4c4d352a-fe15-40e3-8e5c-b28444546e5b
+error unknown device: rpi4d-adsb-test
+failure: 4eb5bd60-8c4e-442a-8fb0-5a4a50af5a9a
+error unknown device: rpi4d-adsb-test
+failure: 024c82f9-eaf1-4095-9e36-2852a45080bd
+error unknown device: rpi4d-adsb-test
+failure: 35aacf5d-e885-4888-8255-c2720d9ce771
+error unknown device: rpi4d-adsb-test
+failure: cc4b3a53-2b2e-4c70-bbbe-78f37d8a90dd
+error unknown device: rpi4d-adsb-test
+failure: eb6310ac-f036-4848-b752-f30cc414f92f
+error unknown device: rpi4d-adsb-test
+failure: d6938da0-d00c-4332-a861-811178e604a3
+error unknown device: rpi4d-adsb-test
+failure: eba29dd9-2056-4353-8621-544e44035041
+error unknown device: rpi4d-adsb-test
+failure: 738a5af2-6aa0-4f60-ae29-628b9817fc00
+error unknown device: rpi4d-adsb-test
+failure: 14698ecd-758d-4a9e-b65a-ee8fcb6dbe26
+error unknown device: rpi4d-adsb-test
+failure: 1e94a6ea-0fb9-421f-88c8-c30cc454f59a
+error unknown device: rpi4d-adsb-test
+failure: a6bb9d98-1d4d-4514-8d91-017ef49a8aed
+error unknown device: rpi4d-adsb-test
+failure: 9b76d14b-6223-41f4-94aa-0af1ef80a786
+error unknown device: rpi4d-adsb-test
+failure: 7470c335-3df4-483b-ae32-b8300eee7dcf
+error unknown device: rpi4d-adsb-test
+failure: e370c44c-7c60-4a8f-b0c1-2bec43c25a5b
+error unknown device: rpi4d-adsb-test
+failure: d2ad816f-e2df-4e29-8d79-e207303c9ce0
+error unknown device: rpi4d-adsb-test
+failure: 57de0a1e-ddc5-40e2-b2f9-f8fa14cc6c41
+error unknown device: rpi4d-adsb-test
+failure: fe8037c2-6e8f-4f64-8ad3-1d7eb0530033
+error unknown device: rpi4d-adsb-test
+failure: d2d67a1f-e737-40be-b7cf-e7eb8a7c03d4
+error unknown device: rpi4d-adsb-test
+failure: 0702d184-3a9f-4242-98fd-f052d5d7fae1
+error unknown device: rpi4d-adsb-test
+failure: d77bf6ae-5dfa-47fe-8e26-57fd621e89ca
+error unknown device: rpi4d-adsb-test
+failure: 830fd641-0759-43d4-8e00-f498746b7b3c
+error unknown device: rpi4d-adsb-test
+failure: c7028dc5-4adf-446e-91a9-27f8f11deed4
+error unknown device: rpi4d-adsb-test
+failure: 3dcce3bd-0462-4938-9533-d0c78010e7a3
+error unknown device: rpi4d-adsb-test
+failure: d2644dd1-3881-4846-b799-2cb63722858f
+error unknown device: rpi4d-adsb-test
+failure: 0b2c5881-87a9-4159-8671-a77d4bd84040
+error unknown device: rpi4d-adsb-test
+failure: a3760c67-924c-420b-894d-d8efc018db52
+error unknown device: rpi4d-adsb-test
+failure: f7c3e2c5-1580-4c96-9ca8-b5a2d4577ba3
+error unknown device: rpi4d-adsb-test
+failure: f3529d48-4727-451c-952f-1113313a9c8f
+error unknown device: rpi4d-adsb-test
+failure: 2897a147-4ab2-49f9-b479-816338221588
+error unknown device: rpi4d-adsb-test
+failure: 47f040f3-a62c-4adc-abe3-9bbfad70f7ec
+error unknown device: rpi4d-adsb-test
+failure: defd057c-96e5-43d8-8256-ad7297d99026
+error unknown device: rpi4d-adsb-test
+failure: ac332e83-f279-47a1-bfdf-4915d4085246
+error unknown device: rpi4d-adsb-test
+failure: 1f4be0ea-151e-4abb-9ecc-ac44d3084bf0
+error unknown device: rpi4d-adsb-test
+failure: 2455f76c-11a2-4790-8222-446fbc321684
+error unknown device: rpi4d-adsb-test
+failure: 4b360d29-bb41-4723-9d77-e84e1b6c09a6
+error unknown device: rpi4d-adsb-test
+failure: 50b706d7-544e-43d5-b08b-d1f57684d74c
+error unknown device: rpi4d-adsb-test
+failure: 5df01b08-2dd3-41bd-b56e-78d3f80c253a
+error unknown device: rpi4d-adsb-test
+failure: 6f394eba-69e0-4b8c-b568-858cb93d9a4c
+error unknown device: rpi4d-adsb-test
+failure: 0493ea80-9995-451a-9978-d7d116783243
+error unknown device: rpi4d-adsb-test
+failure: ce8f3bc3-a52c-41ef-9ff3-d35ad8e1eeaf
+error unknown device: rpi4d-adsb-test
+failure: 94acd5a3-1d4a-4cf9-9f67-a6dc6b05ed0e
+error unknown device: rpi4d-adsb-test
+failure: 32ed834c-99aa-40d7-9a36-c6f43f58fa9c
+error unknown device: rpi4d-adsb-test
+failure: 585a5321-c857-49fb-b797-0137f0e49042
+error unknown device: rpi4d-adsb-test
+failure: 2a512510-a16a-41be-bc6f-b1dd3adebf8e
+error unknown device: rpi4d-adsb-test
+failure: 089dc8ac-7bab-4121-a0af-bf3765090f68
+error unknown device: rpi4d-adsb-test
+failure: 10768a63-32e0-4a23-bba2-99cba8b2bdb6
+error unknown device: rpi4d-adsb-test
+failure: 2b0f2489-4008-4c5a-99f7-e31216ee1673
+error unknown device: rpi4d-adsb-test
+failure: b3af8a5f-ebb5-42eb-978a-e44b873a6bb5
+error unknown device: rpi4d-adsb-test
+failure: 1168a535-564c-4385-b044-abb5d428cd2b
+^CTraceback (most recent call last):
+  File "/home/gsc/Documents/github/mellow-hyena/src/back-end/parser.py", line 131, in <module>
+    parser.execute(
+  File "/home/gsc/Documents/github/mellow-hyena/src/back-end/parser.py", line 100, in execute
+    status = self.file_processor(target, postgres)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gsc/Documents/github/mellow-hyena/src/back-end/parser.py", line 56, in file_processor
+    load_log = postgres.load_log_select(file_name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gsc/Documents/github/mellow-hyena/src/back-end/postgres.py", line 233, in load_log_select
+    rows = session.scalars(statement).all()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gsc/Documents/github/mellow-hyena/src/back-end/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 2420, in scalars
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gsc/Documents/github/mellow-hyena/src/back-end/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 2169, in _execute_internal
+    ) = compile_state_cls.orm_pre_session_exec(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gsc/Documents/github/mellow-hyena/src/back-end/venv/lib/python3.11/site-packages/sqlalchemy/orm/context.py", line 479, in orm_pre_session_exec
+    ) = QueryContext.default_load_options.from_execution_options(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gsc/Documents/github/mellow-hyena/src/back-end/venv/lib/python3.11/site-packages/sqlalchemy/sql/base.py", line 944, in from_execution_options
+    set(exec_options).union(statement_exec_options)
+    ^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+
+[?2004hgsc@rpi5a:2001>exit
+[?2004lexit
+
+Script done on 2024-03-03 21:47:45+00:00 [COMMAND_EXIT_CODE="130"]
