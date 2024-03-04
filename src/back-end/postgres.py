@@ -20,15 +20,17 @@ from sql_table import (
 class PostGres:
     """mellow hyena postgresql support"""
 
+    django_flag = False
     Session = None
 
-    def __init__(self, session: sqlalchemy.orm.session.sessionmaker):
+    def __init__(self, django_flag: bool, session: sqlalchemy.orm.session.sessionmaker):
+        self.django_flag = django_flag
         self.Session = session
 
     def adsb_exchange_insert(self, args: Dict[str, str]) -> AdsbExchange:
         """adsb_exchange insert row"""
 
-        adsb_exchange = AdsbExchange(args)
+        adsb_exchange = AdsbExchange(self.django_flag, args)
 
         session = self.Session()
         session.add(adsb_exchange)
@@ -89,7 +91,7 @@ class PostGres:
     def adsb_ranking_insert(self, args: Dict[str, str]) -> AdsbRanking:
         """adsb_ranking insert row"""
 
-        adsb_ranking = AdsbRanking(args)
+        adsb_ranking = AdsbRanking(self.django_flag, args)
 
         session = self.Session()
         session.add(adsb_ranking)
@@ -109,7 +111,7 @@ class PostGres:
         args["refresh_flag"] = True
         args["score_date"] = score_date
 
-        box_score = BoxScore(args)
+        box_score = BoxScore(self.django_flag, args)
 
         session = self.Session()
         session.add(box_score)
@@ -215,7 +217,7 @@ class PostGres:
     def load_log_insert(self, args: Dict[str, str]) -> LoadLog:
         """load_log insert row"""
 
-        load_log = LoadLog(args)
+        load_log = LoadLog(django_flags, args)
 
         session = self.Session()
         session.add(load_log)
@@ -272,7 +274,7 @@ class PostGres:
     def observation_insert(self, args: Dict[str, str]) -> Observation:
         """observation insert row"""
 
-        observation = Observation(args)
+        observation = Observation(django_flags, args)
 
         session = self.Session()
         session.add(observation)

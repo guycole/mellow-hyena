@@ -32,8 +32,7 @@ class Base(DeclarativeBase):
 class AdsbExchange(Base):
     """adsb_exchange table definition"""
 
-    __tablename__ = "hyena_adsbexchange"
-    #__tablename__ = "adsb_exchange"
+    __tablename__ = "adsb_exchange"
 
     id = Column(Integer, primary_key=True)
     adsb_hex = Column(String)
@@ -47,7 +46,7 @@ class AdsbExchange(Base):
     pia_flag = Column(Boolean)
     wierdo_flag = Column(Boolean)
 
-    def __init__(self, args: Dict[str, str]):
+    def __init__(self, django_flag:bool, args: Dict[str, str]):
         self.adsb_hex = args["adsb_hex"]
         self.category = args["category"]
         self.emergency = args["emergency"]
@@ -58,6 +57,9 @@ class AdsbExchange(Base):
         self.military_flag = args["military_flag"]
         self.pia_flag = args["pia_flag"]
         self.wierdo_flag = args["wierdo_flag"]
+
+        if django_flag:
+            __tablename__ = "hyena_adsbexchange"
 
     def __repr__(self):
         return f"adsb_exchange({self.adsb_hex}, {self.registration}, {self.model})"
@@ -84,6 +86,9 @@ class AdsbRanking(Base):
         self.registration = args["registration"]
         self.score_date = args["score_date"]
 
+        if django_flag:
+            __tablename__ = "hyena_adsbranking"
+
     def __repr__(self):
         return f"adsb_ranking({self.score_date} {self.rank} {self.adsb_hex} {self.registration} {self.model})"
 
@@ -109,6 +114,9 @@ class BoxScore(Base):
         self.refresh_flag = args["refresh_flag"]
         self.score_date = args["score_date"]
 
+        if django_flag:
+            __tablename__ = "hyena_boxscore"
+
     def __repr__(self):
         return f"box_score({self.score_date})"
 
@@ -131,6 +139,9 @@ class Cooked(Base):
         self.observed_first = args["observed_first"]
         self.observed_last = args["observed_last"]
         self.note = args["note"]
+
+        if django_flag:
+            __tablename__ = "hyena_cooked"
 
     def __repr__(self):
         return f"cooked({self.adsb_hex})"
@@ -159,6 +170,9 @@ class Device(Base):
         self.retired_date = args["retired_date"]
         self.start_date = args["start_date"]
 
+        if django_flag:
+            __tablename__ = "hyena_device"
+
     def __repr__(self):
         return f"device({self.name})"
 
@@ -166,8 +180,7 @@ class Device(Base):
 class LoadLog(Base):
     """load_log table definition"""
 
-    #__tablename__ = "load_log"
-    __tablename__ = "hyena_loadlog"
+    __tablename__ = "load_log"
 
     id = Column(BigInteger, primary_key=True)
     device = Column(String)
@@ -185,6 +198,9 @@ class LoadLog(Base):
         self.obs_time = args["obs_time"]
         self.population = args["population"]
 
+        if django_flag:
+            __tablename__ = "hyena_loadlog"
+
     def __repr__(self):
         return f"load_log({self.file_name}, {self.file_type})"
 
@@ -192,8 +208,7 @@ class LoadLog(Base):
 class Observation(Base):
     """observation table definition"""
 
-    __tablename__ = "hyena_observation"
-    #__tablename__ = "observation"
+    __tablename__ = "observation"
 
     id = Column(BigInteger, primary_key=True)
 
@@ -224,6 +239,9 @@ class Observation(Base):
         self.range = args["range"]
         self.speed = args["speed"]
         self.track = args["track"]
+
+        if django_flag:
+            __tablename__ = "hyena_observation"
 
     def __repr__(self):
         if self.id is None:

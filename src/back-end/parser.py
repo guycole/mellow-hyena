@@ -21,9 +21,11 @@ class Parser:
     """mellow hynena parser"""
 
     db_conn = None
+    django_flag = False
 
-    def __init__(self, db_conn: str):
+    def __init__(self, db_conn: str, django_flag: bool):
         self.db_conn = db_conn
+        self.django_flag = django_flag
 
     def file_classifier(self, buffer: Dict[str, str]) -> str:
         """discover file format, i.e. hyena_v1, etc"""
@@ -84,7 +86,7 @@ class Parser:
         """drive processing pass"""
 
         db_engine = create_engine(self.db_conn, echo=False)
-        postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False))
+        postgres = PostGres(self.django_flag, sessionmaker(bind=db_engine, expire_on_commit=False))
 
         os.chdir(import_dir)
         targets = os.listdir(".")
@@ -127,7 +129,7 @@ if __name__ == "__main__":
         except yaml.YAMLError as exc:
             print(exc)
 
-    parser = Parser(configuration["dbConn"])
+    parser = Parser(configuration["dbConn"], configuration['djangoFlag'])
     parser.execute(
         configuration["importDir"],
         configuration["successDir"],

@@ -14,8 +14,11 @@ importDir: /var/mellow/hyena/raw
 #
 # HTML output from report
 # reportDir: /Users/gsc/Documents/github/mellow-hyena/web
-#reportDir: /var/mellow/hyena-web
+reportDir: /var/mellow/hyena-web
 #
 # Root URL of report
-#baseUrl: "http://braingang.net/mellow-hyena"
+baseUrl: "http://braingang.net/mellow-hyena"
+#
+# True, use django table names
+djangoFlag: true
 #
