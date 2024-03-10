@@ -33,7 +33,7 @@ create table observation (
   track             smallint     not null
 );
 
-grant select, insert, update, delete on observation to hyena_py;
-grant usage, select on sequence observation_id_seq to hyena_py;
+grant select, insert, update, delete on observation to hyena_loader;
+grant usage, select on sequence observation_id_seq to hyena_loader;
 
 create unique index observation_adsb_hex_flight_obs_time on observation(adsb_hex, flight, obs_time);

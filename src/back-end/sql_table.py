@@ -1,5 +1,7 @@
 """mellow hyena database table definitions"""
 
+from personality import Personality
+
 from datetime import datetime, timezone
 
 from typing import Dict
@@ -28,11 +30,13 @@ mapper_registry = registry()
 class Base(DeclarativeBase):
     pass
 
-
 class AdsbExchange(Base):
     """adsb_exchange table definition"""
 
-    __tablename__ = "adsb_exchange"
+    if Personality.django_flag:
+        __tablename__ = "hyena_adsbexchange"
+    else:
+        __tablename__ = "adsb_exchange"
 
     id = Column(Integer, primary_key=True)
     adsb_hex = Column(String)
@@ -65,7 +69,10 @@ class AdsbExchange(Base):
 class AdsbRanking(Base):
     """adsb_ranking table definition"""
 
-    __tablename__ = "adsb_ranking"
+    if Personality.django_flag:
+        __tablename__ = "hyena_adsbranking"
+    else:
+        __tablename__ = "adsb_ranking"
 
     id = Column(Integer, primary_key=True)
     adsb_hex = Column(String)
@@ -90,7 +97,10 @@ class AdsbRanking(Base):
 class BoxScore(Base):
     """box_score table definition"""
 
-    __tablename__ = "box_score"
+    if Personality.django_flag:
+        __tablename__ = "hyena_boxscore"
+    else:
+        __tablename__ = "box_score"
 
     id = Column(Integer, primary_key=True)
     adsb_hex_total = Column(Integer)
@@ -115,7 +125,10 @@ class BoxScore(Base):
 class Cooked(Base):
     """cooked table definition"""
 
-    __tablename__ = "cooked"
+    if Personality.django_flag:
+        __tablename__ = "hyena_cooked"
+    else:
+        __tablename__ = "cooked"
 
     id = Column(BigInteger, primary_key=True)
     adsb_hex = Column(String)
@@ -138,7 +151,10 @@ class Cooked(Base):
 class Device(Base):
     """device table definition"""
 
-    __tablename__ = "device"
+    if Personality.django_flag:
+        __tablename__ = "hyena_device"
+    else:
+        __tablename__ = "device"
 
     id = Column(BigInteger, primary_key=True)
     altitude = Column(SmallInteger)
@@ -165,7 +181,10 @@ class Device(Base):
 class LoadLog(Base):
     """load_log table definition"""
 
-    __tablename__ = "load_log"
+    if Personality.django_flag is True:
+        __tablename__ = "hyena_loadlog"
+    else:
+        __tablename__ = "load_log"
 
     id = Column(BigInteger, primary_key=True)
     device = Column(String)
@@ -190,7 +209,10 @@ class LoadLog(Base):
 class Observation(Base):
     """observation table definition"""
 
-    __tablename__ = "observation"
+    if Personality.django_flag:
+        __tablename__ = "hyena_observation"
+    else:
+        __tablename__ = "observation"
 
     id = Column(BigInteger, primary_key=True)
 

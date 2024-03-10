@@ -16,7 +16,6 @@ from sql_table import (
     Observation,
 )
 
-
 class PostGres:
     """mellow hyena postgresql support"""
 
@@ -134,7 +133,9 @@ class PostGres:
 
         return results
 
-    def box_score_select_or_insert(self, device: str, score_date: datetime.date) -> BoxScore:
+    def box_score_select_or_insert(
+        self, device: str, score_date: datetime.date
+    ) -> BoxScore:
         """select or insert box_score row"""
 
         statement = select(BoxScore).filter_by(device=device, score_date=score_date)
@@ -239,7 +240,10 @@ class PostGres:
     def load_log_select_or_insert(self, args: Dict[str, str]) -> LoadLog:
         """select or insert load_log row"""
 
-        statement = select(LoadLog).filter_by(device=args["device"], obs_time=args["obs_time"],)
+        statement = select(LoadLog).filter_by(
+            device=args["device"],
+            obs_time=args["obs_time"],
+        )
 
         with self.Session() as session:
             rows = session.scalars(statement).all()
@@ -296,6 +300,7 @@ class PostGres:
                 return row
 
         return self.observation_insert(args)
+
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

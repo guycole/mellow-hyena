@@ -21,9 +21,11 @@ class Parser:
     """mellow hynena parser"""
 
     db_conn = None
+    django_flag = False
 
-    def __init__(self, db_conn: str):
+    def __init__(self, db_conn: str, django_flag: bool):
         self.db_conn = db_conn
+        self.django_flag = django_flag
 
     def file_classifier(self, buffer: Dict[str, str]) -> str:
         """discover file format, i.e. hyena_v1, etc"""
@@ -64,9 +66,10 @@ class Parser:
             json_dict["file_name"] = file_name
 
             json_dict["file_type"] = self.file_classifier(json_dict)
-#            print(f"file_name:{file_name} file_type:{json_dict['file_type']}")
+            #            print(f"file_name:{file_name} file_type:{json_dict['file_type']}")
 
-            device = postgres.device_select(json_dict["device"])
+            #            device = postgres.device_select(json_dict["device"])
+            device = postgres.device_select("bogus")
             if device is None:
                 print(f"error unknown device: {json_dict['device']}")
                 return -1
@@ -83,7 +86,9 @@ class Parser:
         """drive processing pass"""
 
         db_engine = create_engine(self.db_conn, echo=False)
-        postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False))
+        postgres = PostGres(
+            self.django_flag, sessionmaker(bind=db_engine, expire_on_commit=False)
+        )
 
         os.chdir(import_dir)
         targets = os.listdir(".")
@@ -100,11 +105,11 @@ class Parser:
 
             if status == 0:
                 success_counter += 1
-                os.rename(target, f"{success_dir}/{target}")
+            #                os.rename(target, f"{success_dir}/{target}")
             else:
                 failure_counter += 1
                 print(f"failure: {target}")
-                os.rename(target, f"{failure_dir}/{target}")
+        #                os.rename(target, f"{failure_dir}/{target}")
 
         print(f"success:{success_counter} failure:{failure_counter}")
 
@@ -126,7 +131,7 @@ if __name__ == "__main__":
         except yaml.YAMLError as exc:
             print(exc)
 
-    parser = Parser(configuration["dbConn"])
+    parser = Parser(configuration["dbConn"], configuration["djangoFlag"])
     parser.execute(
         configuration["importDir"],
         configuration["successDir"],
