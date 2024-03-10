@@ -7,14 +7,19 @@
 #
 psql -U postgres template1 (or psql -U gsc template1)
 create database hyena_v1;
+create database hyena_v1_test;
 
-createuser -U gsc -d -e -E -l -P -r -s hyena_admin
-woofwoof
+createuser -e -l -P -r -s hyena // woofwoof
 
-create role hyena_py with login;
-alter role hyena_py with password 'bogus';
+alter role hyena set client_encoding to 'utf8';
+alter role hyena set default_transaction_isolation to 'read committed';
+alter role hyena set timezone to 'UTC';
 
+grant all privileges on database hyena_v1 to mellow;
+grant all privileges on database hyena_v1_test to mellow;
 
-psql (PostgreSQL) 15.6 (Debian 15.6-0+deb12u1)
-psql -U wombat -h localhost -d wombat_v1 < dropall.psql
+create role hyena_loader with login;
+alter role hyena_loader with password 'bogus';
+
+psql -U hyena_loader -d hyena_v1_test -h localhost
 

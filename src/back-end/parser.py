@@ -66,9 +66,9 @@ class Parser:
             json_dict["file_name"] = file_name
 
             json_dict["file_type"] = self.file_classifier(json_dict)
-#            print(f"file_name:{file_name} file_type:{json_dict['file_type']}")
+            #            print(f"file_name:{file_name} file_type:{json_dict['file_type']}")
 
-#            device = postgres.device_select(json_dict["device"])
+            #            device = postgres.device_select(json_dict["device"])
             device = postgres.device_select("bogus")
             if device is None:
                 print(f"error unknown device: {json_dict['device']}")
@@ -86,7 +86,9 @@ class Parser:
         """drive processing pass"""
 
         db_engine = create_engine(self.db_conn, echo=False)
-        postgres = PostGres(self.django_flag, sessionmaker(bind=db_engine, expire_on_commit=False))
+        postgres = PostGres(
+            self.django_flag, sessionmaker(bind=db_engine, expire_on_commit=False)
+        )
 
         os.chdir(import_dir)
         targets = os.listdir(".")
@@ -103,11 +105,11 @@ class Parser:
 
             if status == 0:
                 success_counter += 1
-#                os.rename(target, f"{success_dir}/{target}")
+            #                os.rename(target, f"{success_dir}/{target}")
             else:
                 failure_counter += 1
                 print(f"failure: {target}")
-#                os.rename(target, f"{failure_dir}/{target}")
+        #                os.rename(target, f"{failure_dir}/{target}")
 
         print(f"success:{success_counter} failure:{failure_counter}")
 
@@ -129,7 +131,7 @@ if __name__ == "__main__":
         except yaml.YAMLError as exc:
             print(exc)
 
-    parser = Parser(configuration["dbConn"], configuration['djangoFlag'])
+    parser = Parser(configuration["dbConn"], configuration["djangoFlag"])
     parser.execute(
         configuration["importDir"],
         configuration["successDir"],

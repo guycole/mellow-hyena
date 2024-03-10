@@ -16,21 +16,18 @@ from sql_table import (
     Observation,
 )
 
-
 class PostGres:
     """mellow hyena postgresql support"""
 
-    django_flag = False
     Session = None
 
-    def __init__(self, django_flag: bool, session: sqlalchemy.orm.session.sessionmaker):
-        self.django_flag = django_flag
+    def __init__(self, session: sqlalchemy.orm.session.sessionmaker):
         self.Session = session
 
     def adsb_exchange_insert(self, args: Dict[str, str]) -> AdsbExchange:
         """adsb_exchange insert row"""
 
-        adsb_exchange = AdsbExchange(self.django_flag, args)
+        adsb_exchange = AdsbExchange(args)
 
         session = self.Session()
         session.add(adsb_exchange)
@@ -91,7 +88,7 @@ class PostGres:
     def adsb_ranking_insert(self, args: Dict[str, str]) -> AdsbRanking:
         """adsb_ranking insert row"""
 
-        adsb_ranking = AdsbRanking(self.django_flag, args)
+        adsb_ranking = AdsbRanking(args)
 
         session = self.Session()
         session.add(adsb_ranking)
@@ -111,7 +108,7 @@ class PostGres:
         args["refresh_flag"] = True
         args["score_date"] = score_date
 
-        box_score = BoxScore(self.django_flag, args)
+        box_score = BoxScore(args)
 
         session = self.Session()
         session.add(box_score)
@@ -136,7 +133,9 @@ class PostGres:
 
         return results
 
-    def box_score_select_or_insert(self, device: str, score_date: datetime.date) -> BoxScore:
+    def box_score_select_or_insert(
+        self, device: str, score_date: datetime.date
+    ) -> BoxScore:
         """select or insert box_score row"""
 
         statement = select(BoxScore).filter_by(device=device, score_date=score_date)
@@ -204,7 +203,7 @@ class PostGres:
 
     def device_select(self, name: str) -> Device:
         """device select row"""
-       
+
         statement = select(Device).filter_by(name=name)
 
         with self.Session() as session:
@@ -217,7 +216,7 @@ class PostGres:
     def load_log_insert(self, args: Dict[str, str]) -> LoadLog:
         """load_log insert row"""
 
-        load_log = LoadLog(django_flags, args)
+        load_log = LoadLog(args)
 
         session = self.Session()
         session.add(load_log)
@@ -241,7 +240,10 @@ class PostGres:
     def load_log_select_or_insert(self, args: Dict[str, str]) -> LoadLog:
         """select or insert load_log row"""
 
-        statement = select(LoadLog).filter_by(device=args["device"], obs_time=args["obs_time"],)
+        statement = select(LoadLog).filter_by(
+            device=args["device"],
+            obs_time=args["obs_time"],
+        )
 
         with self.Session() as session:
             rows = session.scalars(statement).all()
@@ -274,7 +276,7 @@ class PostGres:
     def observation_insert(self, args: Dict[str, str]) -> Observation:
         """observation insert row"""
 
-        observation = Observation(django_flags, args)
+        observation = Observation(args)
 
         session = self.Session()
         session.add(observation)
@@ -298,6 +300,7 @@ class PostGres:
                 return row
 
         return self.observation_insert(args)
+
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

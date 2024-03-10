@@ -29,7 +29,7 @@ create table adsb_exchange (
 
 insert into adsb_exchange(adsb_hex, category, emergency, flight, model, registration, ladd_flag, military_flag, pia_flag, wierdo_flag) values( 'unknown', 'XX', 'unknown', 'unknown', 'unknown', 'unknown', false, false, false, false);
 
-grant select, insert, update, delete on adsb_exchange to hyena_py;
-grant usage, select on sequence adsb_exchange_id_seq to hyena_py;
+grant select, insert, update, delete on adsb_exchange to hyena_loader;
+grant usage, select on sequence adsb_exchange_id_seq to hyena_loader;
 
 create index adsb_hex on adsb_exchange(adsb_hex);

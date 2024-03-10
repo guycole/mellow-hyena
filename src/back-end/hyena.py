@@ -49,7 +49,9 @@ class Hyena:
 
             element["adsb_hex"] = element["adsb_hex"].lower()
 
-            results[element["adsb_hex"]] = self.postgres.adsb_exchange_select_or_insert(element).id
+            results[element["adsb_hex"]] = self.postgres.adsb_exchange_select_or_insert(
+                element
+            ).id
 
         return results
 
@@ -58,7 +60,9 @@ class Hyena:
 
         box_score = self.postgres.box_score_select_or_insert(device, obs_time.date())
         box_score.adsb_hex_new = box_score.adsb_hex_new + self.run_stats["hex_new"]
-        box_score.adsb_hex_total = (box_score.adsb_hex_total + self.run_stats["hex_total"])
+        box_score.adsb_hex_total = (
+            box_score.adsb_hex_total + self.run_stats["hex_total"]
+        )
         box_score.file_population = box_score.file_population + 1
         box_score.refresh_flag = True
 
@@ -71,7 +75,9 @@ class Hyena:
         load_dict["device"] = self.device.name
         load_dict["file_name"] = buffer["file_name"]
         load_dict["file_type"] = buffer["file_type"]
-        load_dict["obs_time"] = datetime.fromtimestamp(buffer["timestamp"], timezone.utc)
+        load_dict["obs_time"] = datetime.fromtimestamp(
+            buffer["timestamp"], timezone.utc
+        )
         load_dict["population"] = len(buffer["observation"])
 
         return self.postgres.load_log_select_or_insert(load_dict)
@@ -110,7 +116,9 @@ class Hyena:
 
             self.postgres.cooked_update(cooked)
 
-    def hyena_v1_load_observation(self, buffer: Dict[str, str], adsb_keys: Dict[str, str], load_log: LoadLog):
+    def hyena_v1_load_observation(
+        self, buffer: Dict[str, str], adsb_keys: Dict[str, str], load_log: LoadLog
+    ):
         """hyena_v1 load_observation"""
 
         obs_dict = {}
@@ -159,16 +167,16 @@ class Hyena:
 
         observation = buffer["observation"]
         for element in observation:
-#            try:
+            #            try:
             self.hyena_v1_load_observation(element, adsb_keys, load_log)
-#            self.hyena_v1_load_cooked(element, buffer["timestamp"])
-#            self.run_stat_bump("hex_total")
-#            except:
-#                print("observation parse error")
-#                return -1
+        #            self.hyena_v1_load_cooked(element, buffer["timestamp"])
+        #            self.run_stat_bump("hex_total")
+        #            except:
+        #                print("observation parse error")
+        #                return -1
 
-#        self.run_stat_dump()
-#        self.hyena_v1_load_boxscore(load_log.device, load_log.obs_time)
+        #        self.run_stat_dump()
+        #        self.hyena_v1_load_boxscore(load_log.device, load_log.obs_time)
 
         return 0
 
