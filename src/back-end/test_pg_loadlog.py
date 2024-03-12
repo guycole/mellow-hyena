@@ -4,7 +4,9 @@
 # Development Environment: OS X 12.6.9/Python 3.11.5
 # Author: G.S. Cole (guycole at gmail dot com)
 #
-import datetime
+import uuid
+
+from datetime import datetime, timezone
 
 from unittest import TestCase
 
@@ -20,8 +22,8 @@ from postgres import PostGres
 
 
 class TestLoadLogTable(TestCase):
-    def test_select(self):
-        """test load_log selection"""
+    def test_table(self):
+        """test load_log"""
 
         with open("config.test", "r", encoding="utf-8") as stream:
             configuration = yaml.load(stream, Loader=SafeLoader)
@@ -31,22 +33,40 @@ class TestLoadLogTable(TestCase):
         db_engine = create_engine(configuration["dbConn"], echo=False)
         postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False),)
 
+        # select missing row
         result = postgres.load_log_select("bogus")
         assert result is None
 
-#                select * from load_log;
-# id | device | file_name | file_type | load_time | obs_time | population 
+        loadlog_args = {}
+        loadlog_args["device"] = "rpi4c-adsb-anderson1"
+        loadlog_args["file_name"] = str(uuid.uuid4())
+        loadlog_args["file_type"] = "fileType"
+        loadlog_args["obs_time"] = datetime.now(timezone.utc)
+        loadlog_args["population"] = 1234
 
-#        result = postgres.device_select("rpi4c-adsb-anderson1")
-#        assert result.altitude == 500
-#        assert result.latitude == 40.416668
-#        assert result.longitude == -122.24167
-#        assert result.name == "rpi4c-adsb-anderson1"
-#        assert result.note == "no note"
-#        print(type(result.retired_date))
-#        assert result.retired_date == datetime.date(2023, 12, 28)
-#        assert result.start_date == datetime.date(2023, 12, 28)
+        # insert fresh row
+        result = postgres.load_log_insert(loadlog_args)
+        assert result.device == loadlog_args["device"]
+        assert result.file_name == loadlog_args["file_name"]
+        assert result.file_type == loadlog_args["file_type"]
+        assert result.obs_time == loadlog_args["obs_time"]
+        assert result.population == loadlog_args["population"]
 
+        # select existing row
+        result = postgres.load_log_select(loadlog_args["file_name"])
+        assert result.device == loadlog_args["device"]
+        assert result.file_name == loadlog_args["file_name"]
+        assert result.file_type == loadlog_args["file_type"]
+        assert result.obs_time == loadlog_args["obs_time"]
+        assert result.population == loadlog_args["population"]
+
+        # select or insert existing row
+        result = postgres.load_log_select_or_insert(loadlog_args)
+        assert result.device == loadlog_args["device"]
+        assert result.file_name == loadlog_args["file_name"]
+        assert result.file_type == loadlog_args["file_type"]
+        assert result.obs_time == loadlog_args["obs_time"]
+        assert result.population == loadlog_args["population"]
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

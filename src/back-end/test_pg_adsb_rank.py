@@ -1,10 +1,11 @@
 #
-# Title: test_pg_adsbex.py
-# Description: exercise adsb exchange table ORM
+# Title: test_pg_adsb_rank.py
+# Description: exercise adsb ranking table ORM
 # Development Environment: OS X 12.6.9/Python 3.11.5
 # Author: G.S. Cole (guycole at gmail dot com)
 #
 import datetime
+import uuid
 
 from unittest import TestCase
 
@@ -18,9 +19,9 @@ from personality import Personality
 
 from postgres import PostGres
 
-class TestAdsbExchangeTable(TestCase):
-    def test_select(self):
-        """test adsb exchange selection"""
+class TestAdsbRankTable(TestCase):
+    def test_table(self):
+        """test adsb rank"""
 
         with open("config.test", "r", encoding="utf-8") as stream:
             configuration = yaml.load(stream, Loader=SafeLoader)
@@ -29,9 +30,18 @@ class TestAdsbExchangeTable(TestCase):
         db_engine = create_engine(configuration["dbConn"], echo=False)
         postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False),)
 
-        result = postgres.adsb_exchange_select("bogus")
-        assert result is None
+        postgres.adsb_ranking_delete(datetime.date.today())
 
+        args = {}
+        args["adsb_hex"] = str(uuid.uuid4())[:6]
+        args["model"] = "model"
+        args["population"] = 1234
+        args["rank"] = 1
+        args["registration"] = "reg"
+        args["score_date"] = datetime.date.today()
+
+        # insert fresh row
+        postgres.adsb_ranking_insert(args)
 
 
 # ;;; Local Variables: ***

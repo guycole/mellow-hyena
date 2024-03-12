@@ -39,8 +39,6 @@ class PostGres:
     def adsb_exchange_select_or_insert(self, args: Dict[str, str]) -> AdsbExchange:
         """select or insert adsb_exchange row"""
 
-        args["adsb_hex"] = args["adsb_hex"].lower()  # normalize
-
         statement = select(AdsbExchange).filter_by(
             adsb_hex=args["adsb_hex"],
             category=args["category"],

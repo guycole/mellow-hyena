@@ -15,11 +15,13 @@ alter role hyena set client_encoding to 'utf8';
 alter role hyena set default_transaction_isolation to 'read committed';
 alter role hyena set timezone to 'UTC';
 
-grant all privileges on database hyena_v1 to mellow;
-grant all privileges on database hyena_v1_test to mellow;
+grant all privileges on database hyena_v1 to hyena;
+grant all privileges on database hyena_v1_test to hyena;
 
 create role hyena_loader with login;
 alter role hyena_loader with password 'bogus';
 
-psql -U hyena_loader -d hyena_v1_test -h localhost
+grant all privileges on database hyena_v1 to hyena_loader;
+grant all privileges on database hyena_v1_test to hyena_loader;
 
+psql -U hyena_loader -d hyena_v1_test -h localhost

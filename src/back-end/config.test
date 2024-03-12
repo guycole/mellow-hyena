@@ -20,5 +20,6 @@ reportDir: /var/mellow/hyena-web
 baseUrl: "http://braingang.net/mellow-hyena"
 #
 # True, use django table names
-djangoFlag: true
+#djangoFlag: true
+djangoFlag: false
 #
