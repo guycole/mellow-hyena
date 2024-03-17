@@ -1,8 +1,8 @@
 requirement
 =============
-| Id | Title                                       |
-| -- | ----------------------------------------------------------------------- | 
-|  1 | Collect ADS-B messages, and write them to AWS S3.  |
-|  2 | Collect UAT messages, and write them to AWS S3.  There will be multple collectors. |
-|  3 | Collect Mode S messages, and write them to AWS S3.  There will be multiple collectors. |
-| [03](https://github.com/guycole/mellow-wombat/blob/main/crate/crate03.md) | Mellow Wombat system: housekeeping, heeler, hyena, manatee |
+| Id                                                                               | Status | Title                                                |
+| -------------------------------------------------------------------------------- | ------ | ---------------------------------------------------- | 
+|   [1](https://github.com/guycole/mellow-hyena/blob/main/requirement/REQ_0001.md) | Open   | Collect ADS-B messages, and write them to AWS S3.    |
+|   [2](https://github.com/guycole/mellow-hyena/blob/main/requirement/REQ_0002.md) | Open   | Collect UAT messages, and write them to AWS S3.      |
+|   [3](https://github.com/guycole/mellow-hyena/blob/main/requirement/REQ_0003.md) | Open   | Collect Mode S messages, and write them to AWS S3.   |
+|   [4](https://github.com/guycole/mellow-hyena/blob/main/requirement/REQ_0004.md) | Open   | Something |
