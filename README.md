@@ -35,3 +35,4 @@ More on reporting [here](https://github.com/guycole/mellow-hyena/blob/main/src/b
 
 1. [Mode-S.org](https://mode-s.org)
 1. [ADSB exploit](https://journals.open.tudelft.nl/joas/article/view/7229/5774)
+1. [ICAO UAT Tech Manual](https://www.icao.int/safety/acp/Inactive%20working%20groups%20library/ACP-WG-C-UAT-4/UAT-SWG04-WP05%20-%20Draft%20Tech%20Manual-V0-4%20.pdf#search=UAT%20Tech%20Manual)
