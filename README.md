@@ -1,7 +1,7 @@
 mellow-hyena
 =============
 
-Collect and process [ADSB](https://en.wikipedia.org/wiki/Automatic_Dependent_Surveillance%E2%80%93Broadcast) observations
+Collect and process aviation related emitters such as [ACARS](https://en.wikipedia.org/wiki/ACARS), [aircrat transponders](https://en.wikipedia.org/wiki/Aviation_transponder_interrogation_modes), UAT and [ADSB](https://en.wikipedia.org/wiki/Automatic_Dependent_Surveillance%E2%80%93Broadcast).
 
 ## Introduction
 I want to know more about the aircraft around me such as what a "normal" level of activity might be or the types of aircraft.  Since I am only interested in aircraft which operate locally, and I don't need geographic displays etc. (already well supported by websites such as [ADSBexchange](https://adsbexchange.com/)).
@@ -9,6 +9,8 @@ I want to know more about the aircraft around me such as what a "normal" level o
 In addition, I want to know more about the aircraft than is reported via ADSB (i.e. aircraft model and registration).  To learn more, I use [ADSBexchange](https://rapidapi.com/adsbx/api/adsbexchange-com1) which offers an inexpensive REST API.  For best results, I collect from ADSBexchange on each observation.
 
 To learn about nearby aircraft, I have set up multiple collection stations to observe ADS-B and UAT broadcasts.  The observed broadcasts are collected into a PostGres instance for analysis and simple reports are generated.
+
+UML Component Diagram [here](https://github.com/guycole/mellow-hyena/blob/main/uml/hyena-component.png)
 
 ## Collection
 ADSB Collection runs on a standard [Raspberry Pi](https://www.raspberrypi.org/) using a [rtl-sdr](https://osmocom.org/projects/rtl-sdr/wiki/rtl-sdr) running [dump1090](https://github.com/antirez/dump1090) or [dump978](https://github.com/mutability/dump978).
