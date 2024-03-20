@@ -131,3 +131,6 @@ dmypy.json
 src/adsb-collect/config.yaml
 src/back-end/config.yaml
 src/uat-collect/config.yaml
+
+.DS_Store
+
