@@ -1,0 +1,3 @@
+ 1042  rtl_sdr -f 1090000000 -s 2000000 -g 90 output.bin
+ 1047  dump1090 --ifile output.bin
+ 1048  dump1090 --ifile output.bin --raw
