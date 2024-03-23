@@ -8,7 +8,7 @@ I want to know more about the aircraft around me such as what a "normal" level o
 
 In addition, I want to know more about the aircraft than is reported via ADSB (i.e. aircraft model and registration).  To learn more, I use [ADSBexchange](https://rapidapi.com/adsbx/api/adsbexchange-com1) which offers an inexpensive REST API.  For best results, I collect from ADSBexchange on each observation.
 
-To learn about nearby aircraft, I have set up multiple collection stations to observe ADS-B and UAT broadcasts.  The observed broadcasts are collected into a PostGres instance for analysis and simple reports are generated.
+To learn about nearby aircraft, I have set up multiple collection stations to observe ADS-B and UAT broadcasts.  The observed broadcasts are collected into a PostGreSQL instance for analysis and simple reports are generated.
 
 UML Component Diagram [here](https://github.com/guycole/mellow-hyena/blob/main/uml/hyena-component.png)
 

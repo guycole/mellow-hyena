@@ -1,0 +1,2 @@
+#define decoder_VERSION_MAJOR @decoder_VERSION_MAJOR@
+#define decoder_VERSION_MINOR @decoder_VERSION_MINOR@
