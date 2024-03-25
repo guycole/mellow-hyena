@@ -18,11 +18,12 @@ public:
     int string_to_decoder(std::string raw_buffer);
 private:
     int converter(std::string raw_buffer);
-    void dispatcher();
+    int dispatcher();
 
     int converted_array_size;
     unsigned short int converted_array[CONVERTED_ARRAY_LIMIT];
 
+    OBSERVATION observation;
     decoder::Historian *historian;
 };
 

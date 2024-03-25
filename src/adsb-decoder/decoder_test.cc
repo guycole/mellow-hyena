@@ -4,14 +4,17 @@
 
 namespace {
 
-TEST(DecoderTest, ParserSuccess) {
+TEST(DecoderTest, MalformedStringTest) {
     decoder::Decoder *decoder = new decoder::Decoder();
-    //decoder->string_to_decoder("*f6d8c9833540611d6ebdee841425;");
 
-  // Expect two strings not to be equal.
-  EXPECT_STRNE("hello", "world");
-  // Expect equality.
-  EXPECT_EQ(7 * 6, 42);
+    int flag = decoder->string_to_decoder("*8D4840D6202CC371C32CE0576098;");
+    EXPECT_EQ(0, flag); 
+
+    flag = decoder->string_to_decoder("8D4840D6202CC371C32CE0576098;");
+    EXPECT_EQ(-1, flag);
+
+    flag = decoder->string_to_decoder("*8D4840D6202CC371C32CE0576098");
+    EXPECT_EQ(-1, flag); 
 }
 
 }  // namespace

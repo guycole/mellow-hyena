@@ -1,13 +1,20 @@
 #include <iostream>
 
+#include <glog/logging.h>
+
 #include "decoder.h"
-#include "decoder_configuration.h"
+#include "df_17_18.h"
 
 namespace decoder {
 
 Decoder::Decoder(void) {
     std::cout << "decoder constructor" << std::endl;
     historian = new decoder::Historian();
+
+    // TODO replace initialization with gflags
+    google::InitGoogleLogging("INFO");
+    FLAGS_logtostderr= 1;
+    LOG(INFO) << "Found cookies";
 }
 
 Decoder::~Decoder(void) {
@@ -16,17 +23,16 @@ Decoder::~Decoder(void) {
 
 int Decoder::converter(std::string raw_buffer) {
     // buffer looks like "*f6d8c9833540611d6ebdee841425;"
-    // *8da0c53899080612c8040979d912;
     // test for "*" and ";" 
     std::size_t asterisk_ndx = raw_buffer.find("*");
     if (asterisk_ndx == std::string::npos) {
-        std::cout << "not found asterisk" << std::endl;
+        LOG(INFO) << "not found asterisk";
         return -1;
     }
 
     std::size_t semicolon_ndx = raw_buffer.find(";");
     if (semicolon_ndx == std::string::npos) {
-        std::cout << "not found semicolon" << std::endl;
+        LOG(INFO) << "not found semicolon";
         return -1;
     }
 
@@ -50,43 +56,44 @@ int Decoder::converter(std::string raw_buffer) {
     return 0;
 }
 
-void Decoder::dispatcher() {
+int Decoder::dispatcher() {
+    int retflag = 0;
     int download_format = converted_array[0] >> 3;
-    //std::cout << download_format << std::endl;
+    LOG(INFO) << "download_format:" << download_format;
 
-    switch (download_format) {
-        case 11:
-            std::cout << "downlink format 11" << std::endl;
-            break;
-        case 17:
-            std::cout << "downlink format 17" << std::endl;
-//            adsb();
-            break;
-        case 18:
-            std::cout << "downlink format 18" << std::endl;
-//            adsb();
-            break;
-        default:
-            std::cout << "downlink format default:" << download_format << std::endl;
-            break;
+    if (download_format == 11) {
+        std::cout << "downlink format 11" << std::endl;
+    } else if ((download_format == 17) || (download_format == 18)) {
+        DF_17_18* parser = new DF_17_18();
+        retflag = parser->df_17_18_parser(&observation);
+        free(parser);
+    } else {
+        std::cout << "downlink format default:" << download_format << std::endl;
     }
+
+    return retflag;
 }
 
 int Decoder::string_to_decoder(std::string raw_buffer) {
-    int flag = converter(raw_buffer);
+    int retflag = converter(raw_buffer);
 
-    if (flag < 0) {
+    if (retflag < 0) {
         std::cout << "converter error noted" << std::endl;
     } else {
         std::cout << "converter success" << std::endl;
-        dispatcher();
-        historian->record_update("aaa");
+        historian->reset(&observation);
+        retflag = dispatcher();
+        if (retflag == 0) {
+            historian->update(&observation);
+        }
     }
 
-    return flag;
+    return retflag;
 }
 
 int Decoder::pipe_to_decoder() {
+    int retflag;
+    int failure = 0, success = 0;
     std::string raw_buffer;
 
     std::cout << "pipe_to_decoder" << std::endl;
@@ -96,7 +103,12 @@ int Decoder::pipe_to_decoder() {
             break;
         }
 
-        string_to_decoder(raw_buffer);
+        retflag = string_to_decoder(raw_buffer);
+        if (retflag < 0) {
+            failure++;
+        } else {
+            success++;
+        }
     }
 
     return EXIT_SUCCESS;

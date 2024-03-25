@@ -5,6 +5,8 @@
 
 #define MAX_BANNER 64
 
+// TODO https://github.com/gflags/gflags
+
 int main(int argc, char *argv[]) {
 	char banner [MAX_BANNER];
 
