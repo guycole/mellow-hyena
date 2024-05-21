@@ -1,11 +1,10 @@
 #ifndef HYENA_DECODER_H
 #define HYENA_DECODER_H
 
+#define ALLOC_FAILURE -101
+
 #define DECODER_VERSION_MAJOR 0
 #define DECODER_VERSION_MINOR 0
-
-#define RAW_BUFFER_MISSING_SEMICOLON -101
-#define RAW_BUFFER_MISSING_ASTERISK -102
 
 typedef struct {
     unsigned int adsb_hex;          // icao address
