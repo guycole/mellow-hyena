@@ -11,18 +11,17 @@
 #define MAX_IDENTIFICATION_LENGTH 16
 
 typedef struct {
-    char raw_sample[MAX_RAW_SAMPLE_LENGTH];
-    size_t converted_sample_size;
-    unsigned char converted_sample[MAX_CONVERTED_SAMPLE_LENGTH];
-    unsigned short ca;    // transponder capability
-    unsigned short df;    // downlink format
-    unsigned int icao;    // icao address
-    unsigned long me;     // message, extended squitter
-    unsigned short me_tc; // message type code
-    unsigned int pi;      // parity/interrogator ID
-    unsigned short wake_vertex;
-    char identification[MAX_IDENTIFICATION_LENGTH];
-
+	char raw_sample[MAX_RAW_SAMPLE_LENGTH];
+	size_t converted_sample_size;
+	unsigned char converted_sample[MAX_CONVERTED_SAMPLE_LENGTH];
+	unsigned short ca;	// transponder capability
+	unsigned short df;	// downlink format
+	unsigned int icao;	// icao address
+	unsigned long me;	// message, extended squitter
+	unsigned short me_tc;	// message type code
+	unsigned int pi;	// parity/interrogator ID
+	unsigned short wake_vertex;
+	char identification[MAX_IDENTIFICATION_LENGTH];
 } SAMPLE, *SAMPLE_PTR;
 
 extern int sample_converter(SAMPLE_PTR sample);
