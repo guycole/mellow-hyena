@@ -5,10 +5,10 @@
 # Development Environment: Debian 10 (buster)/raspian
 # Author: Guy Cole (guycole at gmail dot com)
 #
-# * * * * * /home/gsc/github/mellow-hyena/bin/adsb-collector.sh > /dev/null 2>&1
+# * * * * * /home/gsc/Documents/github/mellow-hyena/bin/adsb-collector.sh > /dev/null 2>&1
 #
 PATH=/bin:/usr/bin:/etc:/usr/local/bin; export PATH
-LD_LIBRARY_PATH=/usr/local/lib/arm-linux-gnueabihf; export LD_LIBRARY_PATH
+#LD_LIBRARY_PATH=/usr/local/lib/arm-linux-gnueabihf; export LD_LIBRARY_PATH
 #
 echo "start collection"
 cd /home/gsc/Documents/github/mellow-hyena/src/adsb-collect
