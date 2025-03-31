@@ -1,4 +1,4 @@
-Unit]
+[Unit]
 Description=dump1090
 After=multi-user.target
 
