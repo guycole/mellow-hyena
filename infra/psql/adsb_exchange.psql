@@ -15,12 +15,12 @@
 --
 create table hyena_v1.adsb_exchange (
   id             bigserial    primary key,
-  adsb_hex       varchar(12)  not null,
+  adsb_hex       varchar(16)  not null,
   category       varchar(4)   not null,
   emergency      varchar(8)   not null,
-  flight         varchar(12)  not null,
-  model          varchar(24)  not null,
-  registration   varchar(12)  not null,
+  flight         varchar(32)  not null,
+  model          varchar(32)  not null,
+  registration   varchar(16)  not null,
   ladd_flag      boolean      not null,
   military_flag  boolean      not null,
   pia_flag       boolean      not null,

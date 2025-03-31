@@ -11,7 +11,7 @@
 --
 create table hyena_v1.cooked (
   id            bigserial     primary key,
-  adsb_hex      varchar(12)   unique not null,
+  adsb_hex      varchar(16)   unique not null,
   obs_quantity  bigint        not null,
   obs_first     timestamp     not null default CURRENT_TIMESTAMP,
   obs_last      timestamp     not null default CURRENT_TIMESTAMP,

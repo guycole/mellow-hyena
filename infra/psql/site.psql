@@ -1,0 +1,21 @@
+--
+-- Title: site.psql
+-- Description: collection site locations
+--
+create table hyena_v1.site (
+  id         bigserial     primary key,
+  altitude   real          not null,
+  latitude   real          not null,
+  longitude  real          not null,
+  name       varchar(16)   unique not null,
+  note       varchar(132)  not null default 'noNote'
+) tablespace hyena;
+
+grant select, insert, update, delete on hyena_v1.site to hyena_client;
+grant usage, select on sequence hyena_v1.site_id_seq to hyena_client;
+
+-- anderson1
+insert into hyena_v1.site(altitude, latitude, longitude, name) values(12.3, 40.41746, -122.24048, 'anderson1');
+
+-- vallejo1
+insert into hyena_v1.site(altitude, latitude, longitude, name) values(12.3, 38.10812, -122.26794, 'vallejo1');

@@ -18,7 +18,7 @@ from sqlalchemy import and_
 from sqlalchemy import func
 from sqlalchemy import select
 
-from sql_table import AdsbExchange, Cooked, LoadLog, Observation, Site
+from sql_table import AdsbExchange, BoxScore, Cooked, LoadLog, Observation, Site
 
 
 class PostGres:
@@ -58,13 +58,50 @@ class PostGres:
         )
 
         with self.Session() as session:
-            result = session.scalars(statement).first()
+            candidate = session.scalars(statement).first()
 
-        if result is None:
+        if candidate is None:
             return self.adsb_exchange_insert(args)
         else:
-            return result
+            return candidate
 
+    def box_score_insert(self, args: dict[str, any]) -> BoxScore:
+        candidate = BoxScore(args)
+
+        try:
+            with self.Session() as session:
+                session.add(candidate)
+                session.commit()
+        except Exception as error:
+            print(error)
+
+        return candidate
+        
+    def box_score_update_or_insert(self, args: dict[str, any]) -> BoxScore:
+        statement = select(BoxScore).filter_by(
+            platform=args["platform"],
+            project=args["project"],
+            score_date=args["score_date"],
+            site_id=args["site_id"],
+        )
+                
+        try:
+            with self.Session() as session:
+                candidate = session.scalars(statement).first()
+                if candidate is None:
+                    candidate = self.box_score_insert(args)
+                else:
+                    candidate.adsb_hex_new = args['adsb_hex_new']
+                    candidate.adsb_hex_total = args['adsb_hex_total']
+                    candidate.file_quantity = args['file_quantity']
+                    
+                session.add(candidate)
+                session.commit()
+        except Exception as error:
+            print(error)
+
+        return candidate
+        
     def cooked_insert(self, args: dict[str, any]) -> Cooked:
         # expecting obs dictionary
         args['obs_quantity'] = 1
@@ -149,6 +186,10 @@ class PostGres:
 
         return candidate
 
+    def observation_select_by_load_log_id(self, load_log_id: int) -> list[Observation]:
+        with self.Session() as session:
+            return session.scalars(select(Observation).filter_by(load_log_id=load_log_id)).all()
+
     def site_select_by_id(self, id: int) -> Site:
         with self.Session() as session:
             return session.scalars(select(Site).filter_by(id=id)).first()
@@ -156,7 +197,6 @@ class PostGres:
     def site_select_by_name(self, name: str) -> Site:
         with self.Session() as session:
             return session.scalars(select(Site).filter_by(name=name)).first()
-            
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

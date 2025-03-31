@@ -1,0 +1,44 @@
+{# year.jinja #}
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Mellow Hyena">
+    <meta name="author" content="Mongo Hax">
+
+    <title>Mellow Hyena</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+
+  <body id=about style="font-family: sans-serif;">
+    <h2><center>Mellow Hyena {{ year }}</center></h2>
+
+    <hr>
+
+    <table border="1" cellspacing="0" cellpadding="0" width="600" align="center">
+      <tr>
+        <th><center>Date</center></th>
+        <th><center>Device</center></th>
+        <th><center>Files</center></th>
+        <th><center>hex total</center></th>
+        <th><center>hex new</center></th>
+      </tr>
+
+      {% for item in daily_list %}
+        <tr>
+          <td><center>{{item.score_date}}</center></td>
+          <td><center>{{item.device}}</center></td>
+          <td><center>{{item.file_population}}</center></td>
+          <td><center>{{item.adsb_hex_total}}</center></td>
+          <td><center>{{item.adsb_hex_new}}</center></td>
+        </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>

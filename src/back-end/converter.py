@@ -43,11 +43,24 @@ class Converter:
         return obs_list
 
     def fresh_payload(self, args: dict[str, any]) -> dict[str, any]:
+        #"device": "rpi4c-anderson1",
+        #"device": "rpi4a-vallejo1",
+        #"device": "rpi4a-adsb-vallejo1"
+        #"device": "rpi3a-uat-vallejo1",
+        #"device": "rpi3a-uat-978-vallejo1",
+        #"device": "rpi3b-adsb-1090-anderson1",
+        
         tokens = args['device'].split('-')
 
-        if "adsb-1090" in args['device']:
+        if len(tokens) == 2:
             project = "adsb-1090";
+        elif len(tokens) > 2:
+            if tokens[1] == "uat":
+                project = "uat-978";
+            else:
+                project = "adsb-1090";
         else:
+            print(f"unsupported device {args['device']}")
             project = "unknown"
 
         return {
