@@ -5,19 +5,16 @@
 # Development Environment: OS X 10.15.2/postgres 12.12
 # Author: G.S. Cole (guy at shastrax dot com)
 #
-# psql -U hyena_loader -d hyena_v1 // bogus
-# psql -U hyena_loader -d hyena_v1_test // bogus
-#
-export PGDATABASE=hyena_v1_test
+export PGDATABASE=hyena
 export PGHOST=localhost
 export PGPASSWORD=woofwoof
-export PGUSER=hyena
+export PGUSER=hyena_admin
 #
-psql < adsb_exchange.psql
-psql < adsb_ranking.psql
-psql < box_score.psql
 psql < cooked.psql
-psql < device.psql
+psql < site.psql
+#psql < adsb_ranking.psql
+psql < box_score.psql
 psql < load_log.psql
+psql < adsb_exchange.psql
 psql < observation.psql
 #

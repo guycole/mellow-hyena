@@ -10,17 +10,19 @@
 -- refresh_flag = true, must recalculate stats
 -- score_date = date
 --
-create table box_score (
-  id               bigserial    primary key,
-  adsb_hex_total   int          not null,
-  adsb_hex_new     int          not null,
-  device           varchar(32)  not null,
-  file_population  smallint     not null, 
-  refresh_flag     boolean      not null,
-  score_date       date         not null
-);
+create table hyena_v1.box_score (
+  id              bigserial    primary key,
+  adsb_hex_new    int          not null,
+  adsb_hex_total  int          not null,
+  file_quantity   int          not null, 
+  platform        varchar(16)  not null,
+  project         varchar(16)  not null,
+  score_date      date         not null,
+  site_id         bigint       not null,
+  constraint      site_id foreign key(site_id) references hyena_v1.site(id)
+) tablespace hyena;
 
-grant select, insert, update, delete on box_score to hyena_loader;
-grant usage, select on sequence box_score_id_seq to hyena_loader;
+grant select, insert, update, delete on hyena_v1.box_score to hyena_client;
+grant usage, select on sequence hyena_v1.box_score_id_seq to hyena_client;
 
-create unique index boxscore_date_device on box_score(score_date, device);
+create unique index boxscore_date_platform on hyena_v1.box_score(score_date, platform);

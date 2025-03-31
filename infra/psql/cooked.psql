@@ -5,20 +5,18 @@
 -- adsb_hex = hex beacon id
 -- adsb_hex_population = total of adsb_exchange rows associated w/adsb_hex
 -- note
--- observed_counter = total observation rows associated w/adsb_hex
--- observed_first = adsb_hex first observation
--- observed_last = adsb_hex recent AP observation
+-- obs_quantity = total observation rows associated w/adsb_hex
+-- obs_first = adsb_hex first observation
+-- obs_last = adsb_hex recent AP observation
 --
-create table cooked (
-  id                bigserial     primary key,
-  adsb_hex          varchar(12)   unique not null,
-  observed_counter  bigint        not null,
-  observed_first    timestamptz   not null default CURRENT_TIMESTAMP,
-  observed_last     timestamptz   not null default CURRENT_TIMESTAMP,
-  note              varchar(132)  not null default 'default'
-);
+create table hyena_v1.cooked (
+  id            bigserial     primary key,
+  adsb_hex      varchar(12)   unique not null,
+  obs_quantity  bigint        not null,
+  obs_first     timestamp     not null default CURRENT_TIMESTAMP,
+  obs_last      timestamp     not null default CURRENT_TIMESTAMP,
+  note          varchar(132)  not null default 'default'
+) tablespace hyena;
 
-grant select, insert, update, delete on cooked to hyena_loader;
-grant usage, select on sequence cooked_id_seq to hyena_loader;
-
-create unique index cooked_adsb_hex on cooked(adsb_hex);
+grant select, insert, update, delete on hyena_v1.cooked to hyena_client;
+grant usage, select on sequence hyena_v1.cooked_id_seq to hyena_client;

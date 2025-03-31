@@ -2,21 +2,24 @@
 -- Title: load_log.psql
 -- Description: file load history
 --
--- device i.e. rpi4c-anderson1
--- file_type i.e. hyena_v1
--- 
---
-create table load_log (
-  id          bigserial    primary key,
-  device      varchar(32)  not null,
-  file_name   varchar(48)  unique not null,
-  file_type   varchar(16)  not null,
-  load_time   timestamptz  not null default CURRENT_TIMESTAMP,
-  obs_time    timestamptz  not null default CURRENT_TIMESTAMP,
-  population  smallint     not null
-);
+create table hyena_v1.load_log (
+  id            bigserial    primary key,
+  file_name     varchar(48)  unique not null,
+  file_type     varchar(16)  not null,
+  obs_date      date         not null default CURRENT_DATE,
+  obs_quantity  smallint     not null,
+  obs_time      timestamp    not null default CURRENT_TIMESTAMP,
+  platform      varchar(16)  not null,
+  project       varchar(16)  not null,
+  site_id       bigint       not null,
+  constraint    site_id foreign key(site_id) references hyena_v1.site(id)
+) tablespace hyena;
 
-grant select, insert, update, delete on load_log to hyena_loader;
-grant usage, select on sequence load_log_id_seq to hyena_loader;
+insert into hyena_v1.load_log(file_name, file_type, obs_quantity, platform, project, site_id) values('pytest', 'pytest', 0, 'pytest', 'pytest', 1);
 
-create unique index load_log_device_obs_time on load_log(device, obs_time);
+grant select, insert, update, delete on hyena_v1.load_log to hyena_client;
+grant usage, select on sequence hyena_v1.load_log_id_seq to hyena_client;
+
+create index load_log_obs_date on hyena_v1.load_log(obs_date);
+
+create unique index load_log_site_obs_time on hyena_v1.load_log(site_id, obs_time);

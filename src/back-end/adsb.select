@@ -1,8 +1,0 @@
-Script started on Sat Dec 30 22:51:12 2023
-
-The default interactive shell is now zsh.
-To update your account to use zsh, please run `chsh -s /bin/zsh`.
-For more details, please visit https://support.apple.com/kb/HT208050.
-[?1034hgsc@lingling:3>
-curl -v https://airlabs.co/api/v9/fleets?api_key=2910d8dd-3373-4f 
-34-a68c-1af57ed173ac&hex=ac13f9
