@@ -36,4 +36,4 @@ create table hyena_v1.observation (
 grant select, insert, update, delete on hyena_v1.observation to hyena_client;
 grant usage, select on sequence hyena_v1.observation_id_seq to hyena_client;
 
-create unique index observation_adsb_hex_flight_time on hyena_v1.observation(adsb_hex, flight, obs_time);
+create unique index observation_adsb_hex_flight_time on hyena_v1.observation(adsb_hex, flight, obs_time, load_log_id);

@@ -127,7 +127,7 @@ class LoadLog(Base):
         self.obs_time = args["obs_datetime"]
         self.platform = args["platform"]
         self.project = args["project"]
-        self.site_id = args["site_id"]
+        self.site_id = site_id
 
     def __repr__(self):
         return f"load_log({self.file_name} {self.obs_time})"

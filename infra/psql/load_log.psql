@@ -22,4 +22,4 @@ grant usage, select on sequence hyena_v1.load_log_id_seq to hyena_client;
 
 create index load_log_obs_date on hyena_v1.load_log(obs_date);
 
-create unique index load_log_date_platform_project_site on hyena_v1.load_log(obs_date, platform, project, site_id);
+create unique index load_log_time_platform_project_site on hyena_v1.load_log(obs_time, platform, project, site_id);
