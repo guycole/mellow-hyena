@@ -1,5 +1,5 @@
 --
--- Title: box_score.psql
+-- Title: daily_score.psql
 -- Description: daily boxscore, for 24 hour period 00:00 to 23:59 UTC
 --
 -- adsb_hex_total = total of adsb hex heard today
@@ -10,7 +10,7 @@
 -- refresh_flag = true, must recalculate stats
 -- score_date = date
 --
-create table hyena_v1.box_score (
+create table hyena_v1.daily_score (
   id              bigserial    primary key,
   adsb_hex_new    int          not null,
   adsb_hex_total  int          not null,
@@ -22,7 +22,7 @@ create table hyena_v1.box_score (
   constraint      site_id foreign key(site_id) references hyena_v1.site(id)
 ) tablespace hyena;
 
-grant select, insert, update, delete on hyena_v1.box_score to hyena_client;
-grant usage, select on sequence hyena_v1.box_score_id_seq to hyena_client;
+grant select, insert, update, delete on hyena_v1.daily_score to hyena_client;
+grant usage, select on sequence hyena_v1.daily_score_id_seq to hyena_client;
 
-create unique index boxscore_date_platform on hyena_v1.box_score(score_date, platform);
+create unique index boxscore_date_platform on hyena_v1.daily_score(score_date, platform);

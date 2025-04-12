@@ -15,6 +15,7 @@ batabat
 
 # as pg superuser
 # create tablespace hyena location '/mnt/pg_tablespace/hyena';
+# create tablespace hyena location '/mnt/pp1/postgres/hyena';
 
 createdb hyena -O hyena_admin -D hyena -E UTF8 -T template0 -l C
 

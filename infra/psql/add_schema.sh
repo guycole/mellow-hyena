@@ -12,8 +12,8 @@ export PGUSER=hyena_admin
 #
 psql < cooked.psql
 psql < site.psql
-#psql < adsb_ranking.psql
-psql < box_score.psql
+psql < adsb_rank.psql
+psql < daily_score.psql
 psql < load_log.psql
 psql < adsb_exchange.psql
 psql < observation.psql
