@@ -15,7 +15,7 @@ from sqlalchemy.orm import sessionmaker
 
 import postgres
 
-#from sql_table import WeeklyRank, WeeklyRankDetail
+from sql_table import LoadLog
 
 
 class DailyScores:
@@ -81,7 +81,7 @@ class DailyScores:
                 print(error)
                 return None
 
-class WeeklyScores:
+class DailyObservations:
     candidates = {}
 
     def __init__(self, configuration: dict[str, str]):
@@ -89,7 +89,7 @@ class WeeklyScores:
         self.db_conn = configuration["dbConn"]
         self.sql_echo = configuration["sqlEchoEnable"]
 
-        connect_dict = {"options": "-csearch_path={}".format("heeler_v1")}
+        connect_dict = {"options": "-csearch_path={}".format("hyena_v1")}
         db_engine = create_engine(
             self.db_conn, echo=self.sql_echo, connect_args=connect_dict
         )
@@ -98,63 +98,82 @@ class WeeklyScores:
             sessionmaker(bind=db_engine, expire_on_commit=False)
         )
 
-    def weekly_format(self, args: dict[str, any]) -> None:
-        buffer = f"|{args['date']}|{args['site']}|{args['platform']}|{args['obs_total']}|{args['bssid']}|{args['ssid']}|\n"
-        return buffer
+    def pass1(self, row: LoadLog) -> None:
+        key = f"{row.obs_date}-{row.site_id}-{row.platform}-{row.project}"
 
- #   def weekly_write(self, weekly_rank: WeeklyRank) -> None:
-        #geo_loc = self.postgres.geo_loc_select_by_id(weekly_rank.geo_loc_id)
-        #        if geo_loc.site.startswith("mobile"):
-        #            print("skipping mobile report")
-        #            return
+        site = self.postgres.site_select_by_id(row.site_id)
 
-#        key = f"{weekly_rank.start_date}-{weekly_rank.site}-{weekly_rank.platform}"
-        #        print(key)
+        if key not in self.candidates:
+            self.candidates[key] = {
+                "adsb": {}, 
+                "load_log_id": row.id,
+                "platform": row.platform,
+                "project": row.project,
+                "obs_date": row.obs_date,
+                "site_id": site.id,
+                "site_name": site.name,
+            }
 
-#        file_name = f"{self.report_dir}/{key}.md"
-#        print(f"creating file: {file_name}")
+    def pass2(self, key: str) -> None:
+        print(key)
 
-#        selected = self.postgres.weekly_rank_detail_select(weekly_rank.id)
+        candidate = self.candidates[key]
+        adsb = candidate['adsb']
 
-#        buffer = []
-#        for row in selected:
-#            wap = self.postgres.wap_select_by_id(row.wap_id)
+        obs_list = self.postgres.observation_select_by_load_log_id(candidate['load_log_id'])
+        for obs in obs_list:
+            if obs.adsb_hex not in adsb:
+                adsbex = self.postgres.adsb_exchange_select_by_id(obs.adsb_exchange_id)
+                mil_flag = "T" if adsbex.military_flag else "F"
+                wierdo_flag = "T" if adsbex.wierdo_flag else "F"
+                                
+                adsb[obs.adsb_hex] = {
+                    "adsb_exchange_id": obs.adsb_exchange_id,
+                    "adsb_hex": obs.adsb_hex,
+                    "emergency": adsbex.emergency,
+                    "flight": obs.flight,
+                    "model": adsbex.model,
+                    "registration": adsbex.registration,
+                    "military": mil_flag,
+                    "weirdo": wierdo_flag,
+                }
 
-#            args = {
-#                "bssid": wap.bssid,
-#                "date": weekly_rank.start_date,
-#                "obs_total": row.obs_quantity,
-#                "platform": weekly_rank.platform,
-#                "site": weekly_rank.site,
-#                "ssid": wap.ssid,
-#            }
+    def pass3(self, key: str) -> None:
+        candidate = self.candidates[key]
+        adsb = candidate['adsb']
+        
+        file_name = f"{candidate['obs_date']}-{candidate['site_name']}-{candidate['platform']}-{candidate['project']}"
+        full_name = f"{self.report_dir}/{file_name}.md"
+        print(f"creating file: {file_name}")
 
+        banner1 = f"mellow-hyena daily summary for {file_name}\n\n"
+        banner3 = f"|hex|flight|model|reg|emergency|mil|weirdo|\n"
+        banner4 = f"|--|--|--|--|--|--|--|\n"
 
-#            buffer.append(self.weekly_format(args))
+        try:
+            with open(full_name, "w", encoding="utf-8") as out_file:
+                out_file.write(banner1)
+                out_file.write(banner3)
+                out_file.write(banner4)
 
-#        banner1 = f"mellow-heeler weekly score for {key}\n\n"
-#        banner3 = f"|date|site|platform|obs total|bssid|ssid|\n"
-#        banner4 = f"|--|--|--|--|--|--|\n"
-
-#        try:
-#            with open(file_name, "w", encoding="utf-8") as out_file:
-#                out_file.write(banner1)
-#                out_file.write(banner3)
-#                out_file.write(banner4)
-#
-#                for row in buffer:
-#                    out_file.write(row)
-#        except Exception as error:
-#            print(error)
-#            return None
+                for key, value in adsb.items():
+                    buffer = f"|{value['adsb_hex']}|{value['flight']}|{value['model']}|{value['registration']}|{value['emergency']}|{value['military']}|{value['weirdo']}|\n"
+                    out_file.write(buffer)
+        except Exception as error:
+            print(error)
+            return None
 
     def execute(self) -> None:
-        pass
-#        rows = self.postgres.weekly_rank_select_all()
+        rows = self.postgres.load_log_select_all()
 
-#        for row in rows:
-#            self.weekly_write(row)
+        for row in rows:
+            self.pass1(row)
 
+        for key in self.candidates.keys():
+            self.pass2(key)
+
+        for key in self.candidates.keys():
+            self.pass3(key)
 
 print("start reporter")
 
@@ -174,10 +193,10 @@ if __name__ == "__main__":
             print(error)
 
     reporter = DailyScores(configuration)
-    reporter.execute()
-    
-#    reporter = WeeklyScores(configuration)
 #    reporter.execute()
+
+    reporter = DailyObservations(configuration)
+    reporter.execute()
 
 print("stop reporter")
 

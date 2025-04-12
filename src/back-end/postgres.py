@@ -42,6 +42,10 @@ class PostGres:
 
         return candidate
 
+    def adsb_exchange_select_by_id(self, id: int) -> AdsbExchange:
+        with self.Session() as session:
+            return session.scalars(select(AdsbExchange).filter_by(id=id)).first()
+        
     def adsb_exchange_select_or_insert(self, args: dict[str, any]) -> AdsbExchange:
 
         statement = select(AdsbExchange).filter_by(

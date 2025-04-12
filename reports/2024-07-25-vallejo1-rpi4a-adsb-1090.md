@@ -1,0 +1,25 @@
+mellow-hyena daily summary for 2024-07-25-vallejo1-rpi4a-adsb-1090
+
+|hex|flight|model|reg|emergency|mil|weirdo|
+|--|--|--|--|--|--|--|
+|ab6542|UAL325T|A319|N833UA|none|F|yyy|
+|ad1691|N942WG|RV9|N942WG|none|F|yyy|
+|ad4102|NKS1455|A20N|N953NK|none|F|yyy|
+|a02ad1|N11KX|PA32|N11KX|none|F|yyy|
+|a1f10d|N224ND|P28A|N224ND|none|F|yyy|
+|aacc5b|UAL672|B772|N795UA|none|F|yyy|
+|aa9321|unknown|B772|N78017|none|F|yyy|
+|a1d433|HAL60|A21N|N217HA|none|F|yyy|
+|ac04d3|SWA4408|B38M|N8737L|none|F|yyy|
+|a2c43e|ASA660|B739|N278AK|none|F|yyy|
+|4caa41|EIN960|A333|EI-EIN|none|F|yyy|
+|ac0143|SWA3122|B38M|N8728Q|none|F|yyy|
+|c030fd|ACA559|B38M|C-FSOI|none|F|yyy|
+|a8a146|PXT655|C525|N655WE|none|F|yyy|
+|47880d|SAS936|A333|LN-RKT|none|F|yyy|
+|ab4515|SCX396|B738|N825SY|none|F|yyy|
+|a2de7e|SKW3840|E75L|N284SY|none|F|yyy|
+|a2f77b|SWA2724|B737|N290WN|none|F|yyy|
+|780cb1|CSN327|B77W|B-2008|none|F|yyy|
+|a87428|ASA418|B737|N644AS|none|F|yyy|
+|a15a6e|N1868H|P28A|N1868H|none|F|yyy|
