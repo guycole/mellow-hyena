@@ -2,6 +2,6 @@ mellow-hyena daily summary for 2024-10-23-vallejo1-rpi3a-uat-978
 
 |hex|flight|model|reg|emergency|mil|weirdo|
 |--|--|--|--|--|--|--|
-|ad3e71|N9520D|C172|N9520D|none|F|yyy|
-|a51612|N427EP|C172|N427EP|none|F|yyy|
-|a5498f|N44PF|P28A|N44PF|none|F|yyy|
+|ad3e71|N9520D|C172|N9520D|none|F|F|
+|a51612|N427EP|C172|N427EP|none|F|F|
+|a5498f|N44PF|P28A|N44PF|none|F|F|
