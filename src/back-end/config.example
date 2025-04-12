@@ -11,9 +11,6 @@ failureDir: /var/mellow/hyena/failure
 # repository of freshly collected observations
 freshDir: /var/mellow/hyena/fresh
 #
-# reports 
-reportDir: /home/gsc/Documents/github/mellow-hyena/reports
-#
 # test artifacts
 testDir: /var/mellow/hyena/test
 #

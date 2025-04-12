@@ -135,3 +135,5 @@ src/uat-collect/config.yaml
 .DS_Store
 *~
 typescript
+src/back-end/config.yaml
+

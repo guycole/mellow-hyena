@@ -45,21 +45,21 @@ class Loader:
 
         self.failure_counter += 1
 
-#        if self.dry_run is True:
-#            print(f"skip failure move for {file_name}")
-#        else:
-#            print(f"failure move for {file_name}")
-#            os.rename(file_name, self.failure_dir + "/" + file_name)
+        if self.dry_run is True:
+            print(f"skip failure move for {file_name}")
+        else:
+            print(f"failure move for {file_name}")
+            os.rename(file_name, self.failure_dir + "/" + file_name)
 
     def file_success(self, file_name: str):
         """file was successfully processed"""
 
         self.success_counter += 1
 
-#        if self.dry_run is True:
-#            print(f"skip archive move for {file_name}")
-#        else:
-#            os.rename(file_name, self.archive_dir + "/" + file_name)
+        if self.dry_run is True:
+            print(f"skip archive move for {file_name}")
+        else:
+            os.rename(file_name, self.archive_dir + "/" + file_name)
 
     def json_reader(self, file_name: str) -> dict[str, any]:
         results = {}
@@ -116,7 +116,7 @@ class Loader:
 
 #        print(candidates)
 
-        return False
+        return True
 
     def execute(self) -> None:
         print(f"fresh dir:{self.fresh_dir}")
@@ -142,7 +142,10 @@ class Loader:
                 continue
 
             flag = self.payload_insert(raw_payload)
-
+            if flag is True:
+                self.file_success(target)
+            else:
+                self.file_failure(target)
 
 print("start loader")
 

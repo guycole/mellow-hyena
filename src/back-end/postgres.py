@@ -18,7 +18,7 @@ from sqlalchemy import and_
 from sqlalchemy import func
 from sqlalchemy import select
 
-from sql_table import AdsbExchange, BoxScore, Cooked, LoadLog, Observation, Site
+from sql_table import AdsbExchange, Cooked, DailyScore, LoadLog, Observation, Site
 
 
 class PostGres:
@@ -65,43 +65,6 @@ class PostGres:
         else:
             return candidate
 
-    def box_score_insert(self, args: dict[str, any]) -> BoxScore:
-        candidate = BoxScore(args)
-
-        try:
-            with self.Session() as session:
-                session.add(candidate)
-                session.commit()
-        except Exception as error:
-            print(error)
-
-        return candidate
-        
-    def box_score_update_or_insert(self, args: dict[str, any]) -> BoxScore:
-        statement = select(BoxScore).filter_by(
-            platform=args["platform"],
-            project=args["project"],
-            score_date=args["score_date"],
-            site_id=args["site_id"],
-        )
-                
-        try:
-            with self.Session() as session:
-                candidate = session.scalars(statement).first()
-                if candidate is None:
-                    candidate = self.box_score_insert(args)
-                else:
-                    candidate.adsb_hex_new = args['adsb_hex_new']
-                    candidate.adsb_hex_total = args['adsb_hex_total']
-                    candidate.file_quantity = args['file_quantity']
-                    
-                session.add(candidate)
-                session.commit()
-        except Exception as error:
-            print(error)
-
-        return candidate
-        
     def cooked_insert(self, args: dict[str, any]) -> Cooked:
         # expecting obs dictionary
         args['obs_quantity'] = 1
@@ -147,7 +110,50 @@ class PostGres:
             print(error)
 
         return candidate
+    
+    def daily_score_insert(self, args: dict[str, any]) -> DailyScore:
+        candidate = DailyScore(args)
 
+        try:
+            with self.Session() as session:
+                session.add(candidate)
+                session.commit()
+        except Exception as error:
+            print(error)
+
+        return candidate
+        
+    def daily_score_update_or_insert(self, args: dict[str, any]) -> DailyScore:
+        statement = select(DailyScore).filter_by(
+            platform=args["platform"],
+            project=args["project"],
+            score_date=args["score_date"],
+            site_id=args["site_id"],
+        )
+                
+        try:
+            with self.Session() as session:
+                candidate = session.scalars(statement).first()
+                if candidate is None:
+                    candidate = self.daily_score_insert(args)
+                else:
+                    candidate.adsb_hex_new = args['adsb_hex_new']
+                    candidate.adsb_hex_total = args['adsb_hex_total']
+                    candidate.file_quantity = args['file_quantity']
+                    
+                session.add(candidate)
+                session.commit()
+        except Exception as error:
+            print(error)
+
+        return candidate
+
+    def daily_score_select_all(self) -> list[DailyScore]:
+        statement = select(DailyScore).order_by(DailyScore.score_date, DailyScore.project, DailyScore.platform)
+
+        with self.Session() as session:
+            return session.scalars(statement).all()
+    
     def load_log_insert(self, args: dict[str, any], obs_quantity: int, site_id: int) -> LoadLog:
         args["obs_quantity"] = obs_quantity
         

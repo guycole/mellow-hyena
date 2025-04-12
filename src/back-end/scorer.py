@@ -75,7 +75,7 @@ class Scorer:
 
     def pass2(self) -> None:
         for key, value in self.scores.items():
-            self.postgres.box_score_update_or_insert(value)
+            self.postgres.daily_score_update_or_insert(value)
     
     def execute(self) -> None:
         current_day = datetime.date(2023, 12, 25)

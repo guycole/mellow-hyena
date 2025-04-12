@@ -55,32 +55,6 @@ class AdsbExchange(Base):
     def __repr__(self):
         return f"adsb_exchange({self.adsb_hex}, {self.registration}, {self.model})"
 
-class BoxScore(Base):
-    """box_score table definition"""
-
-    __tablename__ = "box_score"
-
-    id = Column(Integer, primary_key=True)
-    adsb_hex_new = Column(Integer)
-    adsb_hex_total = Column(Integer)
-    file_quantity = Column(Integer)
-    platform = Column(String)
-    project = Column(String)
-    score_date = Column(Date)
-    site_id = Column(BigInteger)
-
-    def __init__(self, args: dict[str, any]):
-        self.adsb_hex_new = args["adsb_hex_new"]
-        self.adsb_hex_total = args["adsb_hex_total"]
-        self.file_quantity = args["file_quantity"]
-        self.platform = args["platform"]
-        self.project = args["project"]
-        self.score_date = args["score_date"]        
-        self.site_id = args['site_id']
-
-    def __repr__(self):
-        return f"box_score({self.score_date} {self.site_id})"
-
 class Cooked(Base):
     """cooked table definition"""
 
@@ -103,6 +77,31 @@ class Cooked(Base):
     def __repr__(self):
         return f"cooked({self.adsb_hex})"
 
+class DailyScore(Base):
+    """daily_score table definition"""
+
+    __tablename__ = "daily_score"
+
+    id = Column(Integer, primary_key=True)
+    adsb_hex_new = Column(Integer)
+    adsb_hex_total = Column(Integer)
+    file_quantity = Column(Integer)
+    platform = Column(String)
+    project = Column(String)
+    score_date = Column(Date)
+    site_id = Column(BigInteger)
+
+    def __init__(self, args: dict[str, any]):
+        self.adsb_hex_new = args["adsb_hex_new"]
+        self.adsb_hex_total = args["adsb_hex_total"]
+        self.file_quantity = args["file_quantity"]
+        self.platform = args["platform"]
+        self.project = args["project"]
+        self.score_date = args["score_date"]        
+        self.site_id = args['site_id']
+
+    def __repr__(self):
+        return f"daily_score({self.score_date} {self.site_id} {self.platform} {self.project})"
 
 class LoadLog(Base):
     """load_log table definition"""
