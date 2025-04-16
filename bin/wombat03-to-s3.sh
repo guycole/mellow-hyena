@@ -24,8 +24,8 @@ echo "start s3 transfer"
 aws s3 mv ${FILE_NAME} $DEST_BUCKET --profile=wombat03
 #
 echo "cleanup"
-#rm -rf ${SOURCE_DIR}
-#mkdir ${SOURCE_DIR}
+rm -rf ${SOURCE_DIR}
+mkdir ${SOURCE_DIR}
 #
 echo "end archive"
 #
