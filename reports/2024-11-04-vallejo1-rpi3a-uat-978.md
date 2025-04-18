@@ -1,6 +1,0 @@
-mellow-hyena daily summary for 2024-11-04-vallejo1-rpi3a-uat-978
-
-|hex|flight|model|reg|emergency|mil|weirdo|
-|--|--|--|--|--|--|--|
-|a39edb|N332SP|C172|N332SP|none|F|F|
-|a2428f|N24498|C152|N24498|none|F|F|
