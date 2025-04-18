@@ -1,43 +1,52 @@
-"""mellow hyena postgresql support"""
-import datetime
+#
+# Title: postgres.py
+# Description: postgresql support
+# Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
+# Author: G.S. Cole (guycole at gmail dot com)
+#
+# import sqlalchemy
+# from sqlalchemy import and_
+# from sqlalchemy import select
 
-from typing import Dict, List
+import datetime
+import time
+
+from typing import List, Dict
 
 import sqlalchemy
-from sqlalchemy import delete, select
+from sqlalchemy import and_
+from sqlalchemy import func
+from sqlalchemy import select
 
-from sql_table import (
-    AdsbExchange,
-    AdsbRanking,
-    BoxScore,
-    Cooked,
-    Device,
-    LoadLog,
-    Observation,
-)
+from sql_table import AdsbExchange, Cooked, DailyScore, LoadLog, Observation, Site
+
 
 class PostGres:
-    """mellow hyena postgresql support"""
+    """mellow heeler postgresql support"""
 
+    db_engine = None
     Session = None
 
     def __init__(self, session: sqlalchemy.orm.session.sessionmaker):
         self.Session = session
 
-    def adsb_exchange_insert(self, args: Dict[str, str]) -> AdsbExchange:
-        """adsb_exchange insert row"""
+    def adsb_exchange_insert(self, args: dict[str, any]) -> AdsbExchange:
+        candidate = AdsbExchange(args)
 
-        adsb_exchange = AdsbExchange(args)
+        try:
+            with self.Session() as session:
+                session.add(candidate)
+                session.commit()
+        except Exception as error:
+            print(error)
 
-        session = self.Session()
-        session.add(adsb_exchange)
-        session.commit()
-        session.close()
+        return candidate
 
-        return adsb_exchange
-
-    def adsb_exchange_select_or_insert(self, args: Dict[str, str]) -> AdsbExchange:
-        """select or insert adsb_exchange row"""
+    def adsb_exchange_select_by_id(self, id: int) -> AdsbExchange:
+        with self.Session() as session:
+            return session.scalars(select(AdsbExchange).filter_by(id=id)).first()
+        
+    def adsb_exchange_select_or_insert(self, args: dict[str, any]) -> AdsbExchange:
 
         statement = select(AdsbExchange).filter_by(
             adsb_hex=args["adsb_hex"],
@@ -53,252 +62,151 @@ class PostGres:
         )
 
         with self.Session() as session:
-            rows = session.scalars(statement).all()
-            for row in rows:
-                return row
+            candidate = session.scalars(statement).first()
 
-        return self.adsb_exchange_insert(args)
+        if candidate is None:
+            return self.adsb_exchange_insert(args)
+        else:
+            return candidate
 
-    def adsb_exchange_select(self, adsb_hex: str) -> AdsbExchange:
-        """select adsb exchange row, note some adsb hex have multiple rows"""
+    def cooked_insert(self, args: dict[str, any]) -> Cooked:
+        # expecting obs dictionary
+        args['obs_quantity'] = 1
+        args['obs_first'] = args['obs_time']
+        args['obs_last'] = args['obs_time']
+        args['note'] = 'noNote'
+        
+        candidate = Cooked(args)
 
-        statement = select(AdsbExchange).filter_by(adsb_hex=adsb_hex)
+        try:
+            with self.Session() as session:
+                session.add(candidate)
+                session.commit()
+        except Exception as error:
+            print(error)
 
+        return candidate
+    
+    def cooked_select_by_adsb_hex(self, adsb_hex: str) -> Cooked:
         with self.Session() as session:
-            rows = session.scalars(statement).all()
-            for row in rows:
-                return row
+            return session.scalars(select(Cooked).filter_by(adsb_hex=adsb_hex)).first()
 
-        return None
+    def cooked_update_or_insert(self, args: dict[str, any]) -> Cooked:
+        # expecting observation
+        
+        try:
+            with self.Session() as session:
+                candidate = session.scalars(select(Cooked).filter_by(adsb_hex=args['adsb_hex'])).first()
 
-    def adsb_ranking_delete(self, score_date: datetime.date):
-        """delete all rows for a specific date"""
-
-        statement = delete(AdsbRanking).where(AdsbRanking.score_date == score_date)
-
-        with self.Session() as session:
-            session.query(AdsbRanking).filter(
-                AdsbRanking.score_date == score_date
-            ).delete()
-            session.commit()
-            session.close()
-
-    def adsb_ranking_insert(self, args: Dict[str, str]) -> AdsbRanking:
-        """adsb_ranking insert row"""
-
-        adsb_ranking = AdsbRanking(args)
-
-        session = self.Session()
-        session.add(adsb_ranking)
-        session.commit()
-        session.close()
-
-        return adsb_ranking
-
-    def box_score_insert(self, device: str, score_date: datetime.date) -> BoxScore:
-        """box_score insert row"""
-
-        args = {}
-        args["adsb_hex_total"] = 0
-        args["adsb_hex_new"] = 0
-        args["device"] = device
-        args["file_population"] = 0
-        args["refresh_flag"] = True
-        args["score_date"] = score_date
-
-        box_score = BoxScore(args)
-
-        session = self.Session()
-        session.add(box_score)
-        session.commit()
-        session.close()
-
-        return box_score
-
-    def box_score_select_daily(self, target_date: datetime.date) -> List[BoxScore]:
-        """return all rows for a specific date"""
-
-        statement = (
-            select(BoxScore).filter_by(score_date=target_date).order_by(BoxScore.device)
-        )
-
-        results = []
-
-        with self.Session() as session:
-            rows = session.scalars(statement).all()
-            for row in rows:
-                results.append(row)
-
-        return results
-
-    def box_score_select_or_insert(
-        self, device: str, score_date: datetime.date
-    ) -> BoxScore:
-        """select or insert box_score row"""
-
-        statement = select(BoxScore).filter_by(device=device, score_date=score_date)
-
-        with self.Session() as session:
-            rows = session.scalars(statement).all()
-            for row in rows:
-                return row
-
-        return self.box_score_insert(device, score_date)
-
-    def box_score_select_refresh(self) -> List[BoxScore]:
-        """select box score rows with refresh flag true"""
-
-        statement = select(BoxScore).filter_by(refresh_flag=True)
-
-        results = []
-
-        with self.Session() as session:
-            rows = session.scalars(statement).all()
-            for row in rows:
-                results.append(row)
-
-        return results
-
-    def box_score_update(self, box_score: BoxScore):
-        """update box_score row"""
-
-        session = self.Session()
-        session.add(box_score)
-        session.commit()
-        session.close()
-
-    def cooked_insert(self, args: Dict[str, str]) -> Cooked:
-        """cooked insert row"""
-
-        cooked = Cooked(args)
-
-        session = self.Session()
-        session.add(cooked)
-        session.commit()
-        session.close()
-
-        return cooked
-
-    def cooked_select(self, adsb_hex: str) -> Cooked:
-        """cooked select row"""
-
-        statement = select(Cooked).filter_by(adsb_hex=adsb_hex)
-
-        with self.Session() as session:
-            rows = session.scalars(statement).all()
-            for row in rows:
-                return row
-
-        return None
-
-    def cooked_update(self, cooked: Cooked):
-        """update cooked row"""
-
-        session = self.Session()
-        session.add(cooked)
-        session.commit()
-        session.close()
-
-    def device_select(self, name: str) -> Device:
-        """device select row"""
-
-        statement = select(Device).filter_by(name=name)
-
-        with self.Session() as session:
-            rows = session.scalars(statement).all()
-            for row in rows:
-                return row
-
-        return None
-
-    def load_log_insert(self, args: Dict[str, str]) -> LoadLog:
-        """load_log insert row"""
-
-        load_log = LoadLog(args)
-
-        session = self.Session()
-        session.add(load_log)
-        session.commit()
-        session.close()
-
-        return load_log
-
-    def load_log_select(self, file_name: str) -> LoadLog:
-        """load_log select row"""
-
-        statement = select(LoadLog).filter_by(file_name=file_name)
-
-        with self.Session() as session:
-            rows = session.scalars(statement).all()
-            for row in rows:
-                return row
-
-        return None
-
-    def load_log_select_or_insert(self, args: Dict[str, str]) -> LoadLog:
-        """select or insert load_log row"""
-
-        statement = select(LoadLog).filter_by(
-            device=args["device"],
-            obs_time=args["obs_time"],
-        )
-
-        with self.Session() as session:
-            rows = session.scalars(statement).all()
-            for row in rows:
-                return row
-
-        return self.load_log_insert(args)
-
-    def observation_counter(
-        self, start_time: datetime.datetime, stop_time: datetime.datetime
-    ) -> Dict[str, int]:
-        """return a dictionary of adsb key and count of observations for one day"""
-
-        results = {}
-
-        with self.Session() as session:
-            for row in (
-                session.query(Observation).filter(
-                    Observation.obs_time >= start_time,
-                    Observation.obs_time <= stop_time,
-                )
-            ).all():
-                if row.adsb_hex in results:
-                    results[row.adsb_hex] = 1 + results[row.adsb_hex]
+                if candidate is None:
+                    candidate = self.cooked_insert(args)
                 else:
-                    results[row.adsb_hex] = 1
+                    candidate.obs_quantity += 1
 
-        return results
+                    if args['obs_time'] < candidate.obs_first:
+                        candidate.obs_first = args['obs_time']
+                    elif args['obs_time'] > candidate.obs_last:
+                        candidate.obs_last = args['obs_time']
 
-    def observation_insert(self, args: Dict[str, str]) -> Observation:
-        """observation insert row"""
+                    session.add(candidate)
+                    session.commit()
+        except Exception as error:
+            print(error)
 
-        observation = Observation(args)
+        return candidate
+    
+    def daily_score_insert(self, args: dict[str, any]) -> DailyScore:
+        candidate = DailyScore(args)
 
-        session = self.Session()
-        session.add(observation)
-        session.commit()
-        session.close()
+        try:
+            with self.Session() as session:
+                session.add(candidate)
+                session.commit()
+        except Exception as error:
+            print(error)
 
-        return observation
-
-    def observation_select_or_insert(self, args: Dict[str, str]) -> Observation:
-        """select or insert observation row"""
-
-        statement = select(Observation).filter_by(
-            adsb_hex=args["adsb_hex"],
-            flight=args["flight"],
-            obs_time=args["obs_time"],
+        return candidate
+        
+    def daily_score_update_or_insert(self, args: dict[str, any]) -> DailyScore:
+        statement = select(DailyScore).filter_by(
+            platform=args["platform"],
+            project=args["project"],
+            score_date=args["score_date"],
+            site_id=args["site_id"],
         )
+                
+        try:
+            with self.Session() as session:
+                candidate = session.scalars(statement).first()
+                if candidate is None:
+                    candidate = self.daily_score_insert(args)
+                else:
+                    candidate.adsb_hex_new = args['adsb_hex_new']
+                    candidate.adsb_hex_total = args['adsb_hex_total']
+                    candidate.file_quantity = args['file_quantity']
+                    
+                session.add(candidate)
+                session.commit()
+        except Exception as error:
+            print(error)
+
+        return candidate
+
+    def daily_score_select_all(self) -> list[DailyScore]:
+        statement = select(DailyScore).order_by(DailyScore.score_date, DailyScore.project, DailyScore.platform)
 
         with self.Session() as session:
-            rows = session.scalars(statement).all()
-            for row in rows:
-                return row
+            return session.scalars(statement).all()
+    
+    def load_log_insert(self, args: dict[str, any], obs_quantity: int, site_id: int) -> LoadLog:
+        args["obs_quantity"] = obs_quantity
+        
+        candidate = LoadLog(args, site_id)
 
-        return self.observation_insert(args)
+        try:
+            with self.Session() as session:
+                session.add(candidate)
+                session.commit()
+        except Exception as error:
+            print(error)
 
+        return candidate
+    
+    def load_log_select_all(self) -> list[LoadLog]:
+        with self.Session() as session:
+            return session.scalars(select(LoadLog)).all()
+
+    def load_log_select_by_file_name(self, file_name: str) -> LoadLog:
+        with self.Session() as session:
+            return session.scalars(select(LoadLog).filter_by(file_name=file_name)).first()
+
+    def load_log_select_by_obs_date(self, target: datetime) -> list[LoadLog]:
+        with self.Session() as session:
+            return session.scalars(select(LoadLog).filter_by(obs_date=target)).all()
+
+    def observation_insert(self, args: [str, any], load_log_id: int) -> Observation:
+        candidate = Observation(args, load_log_id)
+
+        try:
+            with self.Session() as session:
+                session.add(candidate)
+                session.commit()
+        except Exception as error:
+            print(error)
+
+        return candidate
+
+    def observation_select_by_load_log_id(self, load_log_id: int) -> list[Observation]:
+        with self.Session() as session:
+            return session.scalars(select(Observation).filter_by(load_log_id=load_log_id)).all()
+
+    def site_select_by_id(self, id: int) -> Site:
+        with self.Session() as session:
+            return session.scalars(select(Site).filter_by(id=id)).first()
+
+    def site_select_by_name(self, name: str) -> Site:
+        with self.Session() as session:
+            return session.scalars(select(Site).filter_by(name=name)).first()
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

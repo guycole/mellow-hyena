@@ -13,23 +13,23 @@
 -- "pia_flag": false
 -- "wierdo_flag": false
 --
-create table adsb_exchange (
+create table hyena_v1.adsb_exchange (
   id             bigserial    primary key,
-  adsb_hex       varchar(12)  not null,
+  adsb_hex       varchar(16)  not null,
   category       varchar(4)   not null,
   emergency      varchar(8)   not null,
-  flight         varchar(12)  not null,
-  model          varchar(24)  not null,
-  registration   varchar(12)  not null,
+  flight         varchar(32)  not null,
+  model          varchar(32)  not null,
+  registration   varchar(16)  not null,
   ladd_flag      boolean      not null,
   military_flag  boolean      not null,
   pia_flag       boolean      not null,
   wierdo_flag    boolean      not null
 );
 
-insert into adsb_exchange(adsb_hex, category, emergency, flight, model, registration, ladd_flag, military_flag, pia_flag, wierdo_flag) values( 'unknown', 'XX', 'unknown', 'unknown', 'unknown', 'unknown', false, false, false, false);
+insert into hyena_v1.adsb_exchange(adsb_hex, category, emergency, flight, model, registration, ladd_flag, military_flag, pia_flag, wierdo_flag) values('pytest', 'xxx', 'pytest', 'pytest', 'pytest', 'pytest', false, false, false, false);
 
-grant select, insert, update, delete on adsb_exchange to hyena_loader;
-grant usage, select on sequence adsb_exchange_id_seq to hyena_loader;
+grant select, insert, update, delete on hyena_v1.adsb_exchange to hyena_client;
+grant usage, select on sequence hyena_v1.adsb_exchange_id_seq to hyena_client;
 
-create index adsb_hex on adsb_exchange(adsb_hex);
+create index adsb_hex on hyena_v1.adsb_exchange(adsb_hex);

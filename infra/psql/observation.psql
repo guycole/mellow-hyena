@@ -15,25 +15,25 @@
 -- speed = reported speed in knots
 -- track = reported heading in degrees from north
 -- 
-create table observation (
+create table hyena_v1.observation (
   id                bigserial    primary key,
-  adsb_hex          varchar(12)  not null,
   adsb_exchange_id  bigint       not null,
-  constraint        adsb_exchange_id  foreign key(adsb_exchange_id) references adsb_exchange(id),
+  constraint        adsb_exchange_id  foreign key(adsb_exchange_id) references hyena_v1.adsb_exchange(id),
+  adsb_hex          varchar(16)  not null,
   altitude          int          not null,
-  bearing           real         not null,
-  flight            varchar(12)  not null,
+  bearing           real         not null default -1.0,
+  flight            varchar(32)  not null,
   latitude          real         not null,
   longitude         real         not null,
   load_log_id       bigint       not null,
-  constraint        load_log_id  foreign key(load_log_id) references load_log(id),
-  obs_time          timestamptz  not null default CURRENT_TIMESTAMP,
-  range             real         not null,
+  constraint        load_log_id  foreign key(load_log_id) references hyena_v1.load_log(id),
+  obs_time          timestamp    not null,
+  range             real         not null default -1.0,
   speed             smallint     not null,
   track             smallint     not null
-);
+) tablespace hyena;
 
-grant select, insert, update, delete on observation to hyena_loader;
-grant usage, select on sequence observation_id_seq to hyena_loader;
+grant select, insert, update, delete on hyena_v1.observation to hyena_client;
+grant usage, select on sequence hyena_v1.observation_id_seq to hyena_client;
 
-create unique index observation_adsb_hex_flight_obs_time on observation(adsb_hex, flight, obs_time);
+create unique index observation_adsb_hex_flight_time on hyena_v1.observation(adsb_hex, flight, obs_time, load_log_id);

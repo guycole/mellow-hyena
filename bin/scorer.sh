@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Title: reporter.sh
+# Title: scorer.sh
 # Description: 
 # Development Environment: Ubuntu 22.04.05 LTS
 # Author: Guy Cole (guycole at gmail dot com)
@@ -13,6 +13,6 @@ HOME_DIR="/home/gsc/Documents/github"
 echo "start load"
 cd $HOME_DIR/mellow-hyena/src/back-end
 source venv/bin/activate
-time python3 ./reporter.py
+time python3 ./scorer.py
 echo "end load"
 #

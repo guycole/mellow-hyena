@@ -1,28 +1,21 @@
-"""mellow hyena database table definitions"""
+#
+# Title: sql_table.py
+# Description: database table definitions
+# Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
+# Author: G.S. Cole (guycole at gmail dot com)
+#
+# import sqlalchemy
+# from sqlalchemy import and_
+# from sqlalchemy import select
 
-from personality import Personality
-
-from datetime import datetime, timezone
-
-from typing import Dict
+from datetime import datetime
 
 from sqlalchemy import Column
-
-from sqlalchemy import (
-    BigInteger,
-    Boolean,
-    Date,
-    DateTime,
-    Float,
-    Integer,
-    SmallInteger,
-    String,
-)
+from sqlalchemy import BigInteger, Boolean, Date, DateTime, Float, Integer, String
 
 from sqlalchemy.orm import registry
-from sqlalchemy.ext.declarative import declared_attr
-
 from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.ext.declarative import declared_attr
 
 mapper_registry = registry()
 
@@ -33,10 +26,7 @@ class Base(DeclarativeBase):
 class AdsbExchange(Base):
     """adsb_exchange table definition"""
 
-    if Personality.django_flag:
-        __tablename__ = "hyena_adsbexchange"
-    else:
-        __tablename__ = "adsb_exchange"
+    __tablename__ = "adsb_exchange"
 
     id = Column(Integer, primary_key=True)
     adsb_hex = Column(String)
@@ -50,7 +40,7 @@ class AdsbExchange(Base):
     pia_flag = Column(Boolean)
     wierdo_flag = Column(Boolean)
 
-    def __init__(self, args: Dict[str, str]):
+    def __init__(self, args: dict[str, str]):
         self.adsb_hex = args["adsb_hex"]
         self.category = args["category"]
         self.emergency = args["emergency"]
@@ -65,187 +55,138 @@ class AdsbExchange(Base):
     def __repr__(self):
         return f"adsb_exchange({self.adsb_hex}, {self.registration}, {self.model})"
 
-
-class AdsbRanking(Base):
-    """adsb_ranking table definition"""
-
-    if Personality.django_flag:
-        __tablename__ = "hyena_adsbranking"
-    else:
-        __tablename__ = "adsb_ranking"
-
-    id = Column(Integer, primary_key=True)
-    adsb_hex = Column(String)
-    model = Column(String)
-    population = Column(Integer)
-    rank = Column(SmallInteger)
-    registration = Column(String)
-    score_date = Column(Date)
-
-    def __init__(self, args: Dict[str, str]):
-        self.adsb_hex = args["adsb_hex"]
-        self.model = args["model"]
-        self.population = args["population"]
-        self.rank = args["rank"]
-        self.registration = args["registration"]
-        self.score_date = args["score_date"]
-
-    def __repr__(self):
-        return f"adsb_ranking({self.score_date} {self.rank} {self.adsb_hex} {self.registration} {self.model})"
-
-
-class BoxScore(Base):
-    """box_score table definition"""
-
-    if Personality.django_flag:
-        __tablename__ = "hyena_boxscore"
-    else:
-        __tablename__ = "box_score"
-
-    id = Column(Integer, primary_key=True)
-    adsb_hex_total = Column(Integer)
-    adsb_hex_new = Column(Integer)
-    device = Column(String)
-    file_population = Column(SmallInteger)
-    refresh_flag = Column(Boolean)
-    score_date = Column(Date)
-
-    def __init__(self, args: Dict[str, str]):
-        self.adsb_hex_total = args["adsb_hex_total"]
-        self.adsb_hex_new = args["adsb_hex_new"]
-        self.device = args["device"]
-        self.file_population = args["file_population"]
-        self.refresh_flag = args["refresh_flag"]
-        self.score_date = args["score_date"]
-
-    def __repr__(self):
-        return f"box_score({self.score_date})"
-
-
 class Cooked(Base):
     """cooked table definition"""
 
-    if Personality.django_flag:
-        __tablename__ = "hyena_cooked"
-    else:
-        __tablename__ = "cooked"
+    __tablename__ = "cooked"
 
     id = Column(BigInteger, primary_key=True)
     adsb_hex = Column(String)
-    observed_counter = Column(BigInteger)
-    observed_first = Column(DateTime)
-    observed_last = Column(DateTime)
+    obs_quantity = Column(Integer)
+    obs_first = Column(DateTime)
+    obs_last = Column(DateTime)
     note = Column(String)
 
-    def __init__(self, args: Dict[str, str]):
+    def __init__(self, args: dict[str, any]):
         self.adsb_hex = args["adsb_hex"]
-        self.observed_counter = args["observed_counter"]
-        self.observed_first = args["observed_first"]
-        self.observed_last = args["observed_last"]
+        self.obs_quantity = args["obs_quantity"]
+        self.obs_first = args["obs_first"]
+        self.obs_last = args["obs_last"]
         self.note = args["note"]
 
     def __repr__(self):
         return f"cooked({self.adsb_hex})"
 
+class DailyScore(Base):
+    """daily_score table definition"""
 
-class Device(Base):
-    """device table definition"""
+    __tablename__ = "daily_score"
 
-    if Personality.django_flag:
-        __tablename__ = "hyena_device"
-    else:
-        __tablename__ = "device"
+    id = Column(Integer, primary_key=True)
+    adsb_hex_new = Column(Integer)
+    adsb_hex_total = Column(Integer)
+    file_quantity = Column(Integer)
+    platform = Column(String)
+    project = Column(String)
+    score_date = Column(Date)
+    site_id = Column(BigInteger)
 
-    id = Column(BigInteger, primary_key=True)
-    altitude = Column(SmallInteger)
-    latitude = Column(Float)
-    longitude = Column(Float)
-    name = Column(String)
-    note = Column(String)
-    retired_date = Column(Date)
-    start_date = Column(Date)
-
-    def __init__(self, args: Dict[str, str]):
-        self.altitude = args["altitude"]
-        self.latitude = args["latitude"]
-        self.longitude = args["longitude"]
-        self.name = args["name"]
-        self.note = args["note"]
-        self.retired_date = args["retired_date"]
-        self.start_date = args["start_date"]
+    def __init__(self, args: dict[str, any]):
+        self.adsb_hex_new = args["adsb_hex_new"]
+        self.adsb_hex_total = args["adsb_hex_total"]
+        self.file_quantity = args["file_quantity"]
+        self.platform = args["platform"]
+        self.project = args["project"]
+        self.score_date = args["score_date"]        
+        self.site_id = args['site_id']
 
     def __repr__(self):
-        return f"device({self.name})"
-
+        return f"daily_score({self.score_date} {self.site_id} {self.platform} {self.project})"
 
 class LoadLog(Base):
     """load_log table definition"""
 
-    if Personality.django_flag is True:
-        __tablename__ = "hyena_loadlog"
-    else:
-        __tablename__ = "load_log"
+    __tablename__ = "load_log"
 
-    id = Column(BigInteger, primary_key=True)
-    device = Column(String)
+    id = Column(Integer, primary_key=True)
     file_name = Column(String)
     file_type = Column(String)
-    load_time = Column(DateTime)
+    obs_date = Column(Date)
+    obs_quantity = Column(Integer)
     obs_time = Column(DateTime)
-    population = Column(SmallInteger)
+    platform = Column(String)
+    project = Column(String)
+    site_id = Column(BigInteger)
 
-    def __init__(self, args: Dict[str, str]):
-        self.device = args["device"]
+    def __init__(self, args: dict[str, any], site_id: int):
         self.file_name = args["file_name"]
         self.file_type = args["file_type"]
-        self.load_time = datetime.now(timezone.utc)
-        self.obs_time = args["obs_time"]
-        self.population = args["population"]
+        self.obs_date = args["obs_datetime"].date()
+        self.obs_quantity = args["obs_quantity"]
+        self.obs_time = args["obs_datetime"]
+        self.platform = args["platform"]
+        self.project = args["project"]
+        self.site_id = site_id
 
     def __repr__(self):
-        return f"load_log({self.file_name}, {self.file_type})"
-
+        return f"load_log({self.file_name} {self.obs_time})"
 
 class Observation(Base):
-    """observation table definition"""
 
-    if Personality.django_flag:
-        __tablename__ = "hyena_observation"
-    else:
-        __tablename__ = "observation"
+    __tablename__ = "observation"
 
-    id = Column(BigInteger, primary_key=True)
-
+    id = Column(Integer, primary_key=True)
     adsb_exchange_id = Column(BigInteger)
-    load_log_id = Column(BigInteger)
-
     adsb_hex = Column(String)
     altitude = Column(Integer)
     bearing = Column(Float)
     flight = Column(String)
     latitude = Column(Float)
     longitude = Column(Float)
+    load_log_id = Column(BigInteger)
     obs_time = Column(DateTime)
     range = Column(Float)
     speed = Column(Integer)
     track = Column(Integer)
 
-    def __init__(self, args: Dict[str, str]):
-        self.adsb_hex = args["adsb_hex"]
+    def __init__(self, args: dict[str, str], load_log_id: int):
         self.adsb_exchange_id = args["adsb_exchange_id"]
+        self.adsb_hex = args["adsb_hex"]
         self.altitude = args["altitude"]
         self.bearing = args["bearing"]
         self.flight = args["flight"]
-        self.latitude = args["latitude"]
-        self.load_log_id = args["load_log_id"]
-        self.longitude = args["longitude"]
+        self.latitude = args["lat"]
+        self.longitude = args["lon"]
+        self.load_log_id = load_log_id
         self.obs_time = args["obs_time"]
         self.range = args["range"]
         self.speed = args["speed"]
         self.track = args["track"]
 
     def __repr__(self):
-        if self.id is None:
-            self.id = 0
+        return f"observation({self.adsb_hex} {self.flight})"
 
-        return f"observation({self.id}, {self.adsb_hex}, {self.flight})"
+class Site(Base):
+
+    __tablename__ = "site"
+
+    id = Column(Integer, primary_key=True)
+    altitude = Column(Float)
+    latitude = Column(Float)
+    longitude = Column(Float)
+    name = Column(String)
+    note = Column(String)
+
+    def __init__(self, args: dict[str, any]):
+        self.altitude = args["altitude"]
+        self.latitude = args["latitude"]
+        self.longitude = args["longitude"]
+        self.name = args["name"]
+        self.note = args["name"]
+
+    def __repr__(self):
+        return f"site({self.name})"
+    
+# ;;; Local Variables: ***
+# ;;; mode:python ***
+# ;;; End: ***

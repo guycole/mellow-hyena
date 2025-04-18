@@ -6,6 +6,27 @@
 # Author: G.S. Cole (guy at shastrax dot com)
 #
 psql -U postgres template1 (or psql -U gsc template1)
+
+# (linux) su - postgres
+createuser -U postgres -d -e -l -P -r -s hyena_admin
+woofwoof
+createuser -U postgres -e -l -P hyena_client
+batabat
+
+# as pg superuser
+# create tablespace hyena location '/mnt/pg_tablespace/hyena';
+# create tablespace hyena location '/mnt/pp1/postgres/hyena';
+
+createdb hyena -O hyena_admin -D hyena -E UTF8 -T template0 -l C
+
+# psql -h localhost -p 5432 -U hyena_admin -d hyena
+# psql -h localhost -p 5432 -U hyena_client -d hyena
+
+# as hyena_admin
+create schema hyena_v1;
+grant usage on schema hyena_v1 to hyena_client;
+
+###### old
 create database hyena_v1;
 create database hyena_v1_test;
 

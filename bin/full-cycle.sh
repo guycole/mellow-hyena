@@ -8,10 +8,9 @@
 PATH=/bin:/usr/bin:/etc:/usr/local/bin; export PATH
 #
 echo "start full-cycle"
-/Users/gsc/Documents/github/mellow-hyena/bin/s3-move.sh
-/Users/gsc/Documents/github/mellow-hyena/bin/parser.sh
-/Users/gsc/Documents/github/mellow-hyena/bin/ranker.sh
-/Users/gsc/Documents/github/mellow-hyena/bin/reporter.sh
-/Users/gsc/Documents/github/mellow-hyena/bin/web-copy.sh
+/home/gsc/Documents/github/mellow-hyena/bin/fresh-from-s3.sh
+/home/gsc/Documents/github/mellow-hyena/bin/loader.sh
+#/home/gsc/Documents/github/mellow-hyena/bin/scorer.sh
+#/home/gsc/Documents/github/mellow-hyena/bin/reporter.sh
 echo "end full-cycle"
 #

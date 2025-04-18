@@ -1,21 +1,28 @@
 #
+# repository of processed observations
+archiveDir: /var/mellow/hyena/archive
+#
+# export to AWS
+exportDir: /var/mellow/hyena/export
+#
+# repository of problem files
+failureDir: /var/mellow/hyena/failure
+#
+# repository of freshly collected observations
+freshDir: /var/mellow/hyena/fresh
+#
+# reports 
+reportDir: /home/gsc/Documents/github/mellow-hyena/reports
+#
+# test artifacts
+testDir: /var/mellow/hyena/test
+#
 # database connection
-dbConn: "postgresql+psycopg2://hyena_py:bogus@localhost:5432/hyena_v1"
+dbConn: "postgresql+psycopg2://hyena_client:batabat@localhost:5432/hyena"
 #
-# problem files
-failureDir: /var/mellow/hyena-failure
+# dryRun true is parse only, not load database and not delete/move files
+dryRun: false
 #
-# processed files
-successDir: /var/mellow/hyena-success
-#
-# raw files to process
-importDir: /var/mellow/hyena-raw
-# importDir: /Users/gsc/Documents/github/mellow-hyena/samples
-#
-# HTML output from report
-# reportDir: /Users/gsc/Documents/github/mellow-hyena/web
-reportDir: /var/mellow/hyena-web
-#
-# Root URL of report
-baseUrl: "http://braingang.net/mellow-hyena"
+# true, echo SQL statements
+sqlEchoEnable: false
 #

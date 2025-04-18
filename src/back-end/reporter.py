@@ -1,137 +1,181 @@
-"""utility to generate mellow hyena reports"""
-
-import sys
-
-import calendar
+#
+# Title: reporter.py
+# Description: write markdown reports
+# Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
+# Author: G.S. Cole (guycole at gmail dot com)
+#
 import datetime
-import jinja2
-
-import pytz
-
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-
-from typing import Dict, List
+import sys
 
 import yaml
 from yaml.loader import SafeLoader
 
-from postgres import PostGres
-from sql_table import BoxScore
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+import postgres
+
+from sql_table import LoadLog
 
 
-class DailyRow:
-    """daily box score row"""
+class DailyScores:
+    daily_scores = {}
 
-    adsb_hex_new = None
-    adsb_hex_total = None
-    device = None
-    file_population = None
-    score_date = None
+    def __init__(self, configuration: dict[str, str]):
+        self.report_dir = configuration["reportDir"]
+        self.db_conn = configuration["dbConn"]
+        self.sql_echo = configuration["sqlEchoEnable"]
 
-    def __init__(self, args: BoxScore):
-        self.adsb_hex_new = args.adsb_hex_new
-        self.adsb_hex_total = args.adsb_hex_total
-        self.device = args.device
-        self.file_population = args.file_population
-        self.score_date = args.score_date
+        connect_dict = {"options": "-csearch_path={}".format("hyena_v1")}
+        db_engine = create_engine(
+            self.db_conn, echo=self.sql_echo, connect_args=connect_dict
+        )
 
+        self.postgres = postgres.PostGres(
+            sessionmaker(bind=db_engine, expire_on_commit=False)
+        )
 
-class YearRow:
-    """year row"""
+    def converter(self):
+        """convert from postgres daily score to markdown"""
 
-    caption = None
-    href = None
+        selected = self.postgres.daily_score_select_all()
+        if len(selected) < 1:
+            print("empty daily score select")
+            return
 
-    def __init__(self, base_url: str, year: int):
-        self.caption = str(year)
-        self.href = f"{base_url}/{self.caption}.html"
+        for row in selected:
+            print(row)
+            row_year = row.score_date.year
+            if row_year not in self.daily_scores:
+                self.daily_scores[row_year] = []
 
+            temp = self.daily_scores[row_year]
 
-class Reporter:
-    """utility to create static HTML report"""
+            candidate = f"|{row.score_date}|{row.project}|{row.platform}|{row.file_quantity}|{row.adsb_hex_total}|{row.adsb_hex_new}|\n"
 
-    base_url = None
-    db_conn = None
-    report_dir = None
+            temp.append(candidate)
 
-    def __init__(self, base_url: str, report_dir: str, db_conn: str):
-        self.base_url = base_url
-        self.report_dir = report_dir
-        self.db_conn = db_conn
+    def execute(self) -> None:
+        self.converter()
 
-    def get_years(self) -> List[int]:
-        """return all known years"""
+        time_now = datetime.datetime.now()
+        banner2 = f"created at {time_now}\n\n"
+        banner3 = (f"|date|project|platform|file total|adsb total|adsb new|\n")
+        banner4 =  f"|--|--|--|--|--|--|\n"
 
-        years = []
-        for ndx in range(2024, 2026):
-            years.append(ndx)
+        for key, values in self.daily_scores.items():
+            file_name = f"{self.report_dir}/{key}.md"
+            print(f"creating file: {file_name}")
 
-        return years
+            banner1 = f"mellow-hyena collection scores for {key}\n\n"
 
-    def write_year(self, environment: jinja2.environment.Environment, year: int):
-        """write each daily box score for year"""
+            try:
+                with open(file_name, "w", encoding="utf-8") as out_file:
+                    out_file.write(banner1)
+                    out_file.write(banner3)
+                    out_file.write(banner4)
 
-        db_engine = create_engine(self.db_conn, echo=False)
-        postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False))
+                    for value in values:
+                        out_file.write(value)
+            except Exception as error:
+                print(error)
+                return None
 
-        range_limit = 366 if calendar.isleap(year) else 365
-        new_years_day = datetime.date(year, 1, 1).toordinal()
+class DailyObservations:
+    candidates = {}
 
-        rows = []
-        for ndx in range(range_limit):
-            desired_ordinal = new_years_day + int(ndx)
-            target_date = datetime.date.fromordinal(desired_ordinal)
+    def __init__(self, configuration: dict[str, str]):
+        self.report_dir = configuration["reportDir"]
+        self.db_conn = configuration["dbConn"]
+        self.sql_echo = configuration["sqlEchoEnable"]
 
-            candidates = postgres.box_score_select_daily(target_date)
-            if len(candidates) > 0:
-                for row in candidates:
-                    rows.append(DailyRow(row))
+        connect_dict = {"options": "-csearch_path={}".format("hyena_v1")}
+        db_engine = create_engine(
+            self.db_conn, echo=self.sql_echo, connect_args=connect_dict
+        )
 
-        template = environment.get_template("year.jinja")
+        self.postgres = postgres.PostGres(
+            sessionmaker(bind=db_engine, expire_on_commit=False)
+        )
 
-        content = template.render(daily_list=rows, year=year)
+    def pass1(self, row: LoadLog) -> None:
+        key = f"{row.obs_date}-{row.site_id}-{row.platform}-{row.project}"
 
-        out_filename = f"{self.report_dir}/{year}.html"
-        with open(out_filename, mode="w", encoding="utf-8") as message:
-            message.write(content)
+        site = self.postgres.site_select_by_id(row.site_id)
 
-    def write_index(
-        self, environment: jinja2.environment.Environment, years: List[int]
-    ):
-        """write index.html"""
+        if key not in self.candidates:
+            self.candidates[key] = {
+                "adsb": {}, 
+                "load_log_id": row.id,
+                "platform": row.platform,
+                "project": row.project,
+                "obs_date": row.obs_date,
+                "site_id": site.id,
+                "site_name": site.name,
+            }
 
-        date_time_stamp = datetime.datetime.utcnow()
-        formatted_date_time = date_time_stamp.strftime("%Y-%b-%d %H:%M:%S")
+    def pass2(self, key: str) -> None:
+        print(key)
 
-        rows = []
-        for ndx in years:
-            rows.append(YearRow(self.base_url, ndx))
+        candidate = self.candidates[key]
+        adsb = candidate['adsb']
 
-        template = environment.get_template("index.jinja")
+        obs_list = self.postgres.observation_select_by_load_log_id(candidate['load_log_id'])
+        for obs in obs_list:
+            if obs.adsb_hex not in adsb:
+                adsbex = self.postgres.adsb_exchange_select_by_id(obs.adsb_exchange_id)
+                mil_flag = "T" if adsbex.military_flag else "F"
+                wierdo_flag = "T" if adsbex.wierdo_flag else "F"
+                                
+                adsb[obs.adsb_hex] = {
+                    "adsb_exchange_id": obs.adsb_exchange_id,
+                    "adsb_hex": obs.adsb_hex,
+                    "emergency": adsbex.emergency,
+                    "flight": obs.flight,
+                    "model": adsbex.model,
+                    "registration": adsbex.registration,
+                    "military": mil_flag,
+                    "weirdo": wierdo_flag,
+                }
 
-        content = template.render(report_date=formatted_date_time, year_list=rows)
+    def pass3(self, key: str) -> None:
+        candidate = self.candidates[key]
+        adsb = candidate['adsb']
+        
+        file_name = f"{candidate['obs_date']}-{candidate['site_name']}-{candidate['platform']}-{candidate['project']}"
+        full_name = f"{self.report_dir}/{file_name}.md"
+        print(f"creating file: {file_name}")
 
-        out_filename = f"{self.report_dir}/index.html"
-        with open(out_filename, mode="w", encoding="utf-8") as message:
-            message.write(content)
+        banner1 = f"mellow-hyena daily summary for {file_name}\n\n"
+        banner3 = f"|hex|flight|model|reg|emergency|mil|weirdo|\n"
+        banner4 = f"|--|--|--|--|--|--|--|\n"
 
-    def execute(self):
-        """write report"""
+        try:
+            with open(full_name, "w", encoding="utf-8") as out_file:
+                out_file.write(banner1)
+                out_file.write(banner3)
+                out_file.write(banner4)
 
-        db_engine = create_engine(self.db_conn, echo=True)
-        postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False))
-        years = self.get_years()
+                for key, value in adsb.items():
+                    buffer = f"|{value['adsb_hex']}|{value['flight']}|{value['model']}|{value['registration']}|{value['emergency']}|{value['military']}|{value['weirdo']}|\n"
+                    out_file.write(buffer)
+        except Exception as error:
+            print(error)
+            return None
 
-        environment = jinja2.Environment(loader=jinja2.FileSystemLoader("."))
+    def execute(self) -> None:
+        rows = self.postgres.load_log_select_all()
 
-        self.write_index(environment, years)
+        for row in rows:
+            self.pass1(row)
 
-        for ndx in years:
-            self.write_year(environment, ndx)
+        for key in self.candidates.keys():
+            self.pass2(key)
 
+        for key in self.candidates.keys():
+            self.pass3(key)
 
-print("start report")
+print("start reporter")
 
 #
 # argv[1] = configuration filename
@@ -142,18 +186,19 @@ if __name__ == "__main__":
     else:
         config_name = "config.yaml"
 
-    with open(config_name, "r", encoding="utf-8") as stream:
+    with open(config_name, "r", encoding="utf-8") as in_file:
         try:
-            configuration = yaml.load(stream, Loader=SafeLoader)
-        except yaml.YAMLError as exc:
-            print(exc)
+            configuration = yaml.load(in_file, Loader=SafeLoader)
+        except yaml.YAMLError as error:
+            print(error)
 
-    driver = Reporter(
-        configuration["baseUrl"], configuration["reportDir"], configuration["dbConn"]
-    )
-    driver.execute()
+    reporter = DailyScores(configuration)
+#    reporter.execute()
 
-print("stop report")
+    reporter = DailyObservations(configuration)
+    reporter.execute()
+
+print("stop reporter")
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

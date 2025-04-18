@@ -1,8 +1,8 @@
 --
--- Title: adsb_ranking.psql
+-- Title: adsb_rank.psql
 -- Description: which beacons are most common? 
 --
-create table adsb_ranking (
+create table hyena_v1.adsb_rank (
   id            bigserial    primary key,
   adsb_hex      varchar(12)  not null,
   model         varchar(24)  not null,
@@ -12,7 +12,7 @@ create table adsb_ranking (
   score_date    date         not null
 );
 
-grant select, insert, update, delete on adsb_ranking to hyena_loader;
-grant usage, select on sequence adsb_ranking_id_seq to hyena_loader;
+grant select, insert, update, delete on hyena_v1.adsb_rank to hyena_client;
+grant usage, select on sequence hyena_v1.adsb_rank_id_seq to hyena_client;
 
-create unique index ranking_adsb_hex_date on adsb_ranking(adsb_hex, score_date);
+create unique index ranking_adsb_hex_date on hyena_v1.adsb_rank(adsb_hex, score_date);
