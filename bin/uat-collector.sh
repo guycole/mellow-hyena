@@ -8,7 +8,7 @@
 # * * * * * /home/gsc/github/mellow-hyena/bin/uat-collector.sh > /dev/null 2>&1
 #
 PATH=/bin:/usr/bin:/etc:/usr/local/bin; export PATH
-LD_LIBRARY_PATH=/usr/local/lib/arm-linux-gnueabihf; export LD_LIBRARY_PATH
+#LD_LIBRARY_PATH=/usr/local/lib/arm-linux-gnueabihf; export LD_LIBRARY_PATH
 #
 echo "start collection"
 cd /home/gsc/Documents/github/mellow-hyena/src/uat-collect

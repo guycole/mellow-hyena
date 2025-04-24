@@ -1,0 +1,14 @@
+# /etc/systemd/system/dump978.service
+
+[Unit]
+Description=dump978
+After=multi-user.target
+
+[Service]
+User=root
+ExecStart=/home/gsc/Documents/github/mellow-hyena/bin/dump978.sh
+StandardOutput=null
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
