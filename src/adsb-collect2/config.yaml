@@ -1,0 +1,12 @@
+#
+# collection device and location
+platform: c4c-adsb-test
+#
+# dump1090 URL
+dump1090url: http://localhost:8080/data.json
+#
+# collected files go here
+freshDir: /var/wombat/fresh/hyena
+#
+rapidApiKey: bogus
+#
