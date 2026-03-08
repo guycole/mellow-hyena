@@ -137,3 +137,4 @@ src/uat-collect/config.yaml
 typescript
 src/back-end/config.yaml
 
+src/adsb-collect2/config.yaml

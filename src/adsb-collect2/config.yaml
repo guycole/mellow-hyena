@@ -1,6 +1,7 @@
 #
-# collection device and location
-platform: c4c-adsb-test
+application: "hyena-adsb-v2"
+#
+crate: wombat00
 #
 # dump1090 URL
 dump1090url: http://localhost:8080/data.json
@@ -9,4 +10,8 @@ dump1090url: http://localhost:8080/data.json
 freshDir: /var/wombat/fresh/hyena
 #
 rapidApiKey: bogus
+#
+siteName: vallejo
+siteLatitude: 38.1085
+siteLongitude: -122.268
 #
