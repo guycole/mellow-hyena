@@ -81,25 +81,17 @@ class Collector:
             print(error)
 
     def execute(self) -> int:
-        timestamp = self.get_timestamp()
-
-        fake1 = "[{\"hex\":\"ab77d5\", \"flight\":\"UAL2262 \", \"lat\":40.293365, \"lon\":-122.189575, \"altitude\":33050, \"track\":191, \"speed\":463}]"
-        fake2 = json.loads(fake1)
-        self.write_payload(fake2)
-        
         try:
-            response = fake2
-#            response = requests.get(self.dump1090url, timeout=5.0)
-#            if response.status_code == 200:
-#                payload = json.loads(response.text)
-#                if len(payload) > 0:
-#                    self.process_payload(payload)
-#                    self.write_payload(payload, timestamp)
-#                else:
-#                    print("empty response from dump1090")
-#            else:
-#                print(f"error reading dump1090:{response.status_code}")
-#                return -1
+            response = requests.get(self.dump1090url, timeout=5.0)
+            if response.status_code == 200:
+                payload = json.loads(response.text)
+                if len(payload) > 0:
+                    self.write_payload(payload)
+                else:
+                    print("empty response from dump1090")
+            else:
+                print(f"error reading dump1090:{response.status_code}")
+                return -1
         except Exception as error:
             print(f"dump1090 error: {error}")
             return -1
