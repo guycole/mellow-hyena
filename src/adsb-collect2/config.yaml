@@ -1,0 +1,11 @@
+#
+application: "hyena-adsb-v2"
+#
+crate: wombat01
+#
+freshDir: /var/wombat/fresh/hyena
+#
+siteName: vallejo
+siteLatitude: 38.1085
+siteLongitude: -122.268
+#
