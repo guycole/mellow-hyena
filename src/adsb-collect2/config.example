@@ -3,13 +3,8 @@ application: "hyena-adsb-v2"
 #
 crate: wombat00
 #
-# dump1090 URL
-dump1090url: http://localhost:8080/data.json
-#
 # collected files go here
 freshDir: /var/wombat/fresh/hyena
-#
-rapidApiKey: bogus
 #
 siteName: vallejo
 siteLatitude: 38.1085
