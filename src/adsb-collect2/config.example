@@ -7,6 +7,7 @@ crate: wombat00
 freshDir: /var/wombat/fresh/hyena
 #
 siteName: vallejo
+siteAltitude: 0
 siteLatitude: 38.1085
 siteLongitude: -122.268
 #

@@ -28,6 +28,7 @@ class Collector:
         self.fresh_dir = args["fresh_dir"]
         self.host_name = args["host_name"]
         self.site_name = args["site_name"]
+        self.site_alt = args["site_alt"]
         self.site_lat = args["site_lat"]
         self.site_lng = args["site_lng"]
 
@@ -66,6 +67,7 @@ class Collector:
             },
             "geoLoc": {
                 "site": self.site_name,
+                "altitude": self.site_alt,
                 "latitude": self.site_lat,
                 "longitude": self.site_lng
             },
@@ -120,6 +122,7 @@ if __name__ == "__main__":
                 "fresh_dir": configuration["freshDir"],
                 "host_name": socket.gethostname(),
                 "site_name": configuration["siteName"],
+                "site_alt": configuration["siteAltitude"],
                 "site_lat": configuration["siteLatitude"],
                 "site_lng": configuration["siteLongitude"],
             }
