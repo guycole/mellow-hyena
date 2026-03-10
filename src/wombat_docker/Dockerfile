@@ -18,6 +18,8 @@ COPY requirements.txt ./
 RUN $VIRTUAL_ENV/bin/pip install --no-cache-dir -r requirements.txt
 
 COPY hyena_app.py ./
+COPY postgres.py ./
+COPY validator.py ./
 
 RUN mkdir -p /mnt/wombat
 CMD ["python", "hyena_app.py"]

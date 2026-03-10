@@ -1,12 +1,17 @@
 black==26.3.0
+certifi==2026.2.25
+charset-normalizer==3.4.5
 click==8.3.1
 greenlet==3.3.2
+idna==3.11
 mypy_extensions==1.1.0
 packaging==26.0
 pathspec==1.0.4
 platformdirs==4.9.4
 psycopg2-binary==2.9.11
 pytokens==0.4.1
+requests==2.32.5
 SQLAlchemy==2.0.48
 tomli==2.4.0
 typing_extensions==4.15.0
+urllib3==2.6.3

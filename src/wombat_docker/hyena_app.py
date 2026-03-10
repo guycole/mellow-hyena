@@ -7,6 +7,9 @@
 import logging
 import os
 
+from postgres import PostGres
+from validator import Validator
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -23,10 +26,13 @@ class HyenaApp:
 #        self.db_conn = "postgresql+psycopg2://wombat_client:batabat@host.docker.internal:5432/wombat"
         self.db_conn = "postgresql+psycopg2://wombat_client:batabat@172.17.0.1:5432/wombat"
         db_engine = create_engine(self.db_conn, echo=False)
-#        self.postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False))
+        self.postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False))
 
     def execute(self) -> None:
         logger.info(f"hyena execute:{self.stunt_box}")
+
+        validator = Validator(self.postgres)
+        validator.validate()
 
 if __name__ == "__main__":
     score_limit = os.environ.get("limit", -1)
