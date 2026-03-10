@@ -26,7 +26,7 @@ class Validator:
         self.failure = 0
         self.success = 0
 
-        self.api_key = "157d35d13dmshe52e978be5060bep1cd67ajsnd38f4add87d5"
+        self.api_key = "bogus"
 
         self.headers = {}
         self.headers["X-RapidAPI-Key"] = self.api_key
