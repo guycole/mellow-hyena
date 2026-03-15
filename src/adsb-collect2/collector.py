@@ -16,20 +16,23 @@ from datetime import timezone
 
 import requests
 
-import yaml
-from yaml.loader import SafeLoader
+#import yaml
+#from yaml.loader import SafeLoader
 
 class Collector:
 
-    def __init__(self, args:dict[str, any]):
-        self.application = args["application"]
-        self.crate = args["crate"]
-        self.dump1090url = "http://localhost:8080/data.json"
-        self.fresh_dir = args["fresh_dir"]
-        self.host_name = args["host_name"]
-        self.site_name = args["site_name"]
-        self.site_lat = args["site_lat"]
-        self.site_lng = args["site_lng"]
+    def __init__(self):
+        self.host_name = socket.gethostname()
+        self.host_name = "pi4c"
+
+#        self.application = args["application"]
+#        self.crate = args["crate"]
+#        self.dump1090url = "http://localhost:8080/data.json"
+#        self.fresh_dir = args["fresh_dir"]
+#        self.host_name = args["host_name"]
+#        self.site_name = args["site_name"]
+#        self.site_lat = args["site_lat"]
+#        self.site_lng = args["site_lng"]
 
     def get_filename(self) -> str:
         """return fully qualified filename"""
@@ -80,7 +83,7 @@ class Collector:
         except Exception as error:
             print(error)
 
-    def execute(self) -> int:
+    def execute2(self) -> int:
         timestamp = self.get_timestamp()
 
         fake1 = "[{\"hex\":\"ab77d5\", \"flight\":\"UAL2262 \", \"lat\":40.293365, \"lon\":-122.189575, \"altitude\":33050, \"track\":191, \"speed\":463}]"
@@ -105,6 +108,31 @@ class Collector:
             return -1
 
         return 0
+    
+    def read_tasking(self, tasking_file_name: str) -> None:
+        try:
+            with open(tasking_file_name, "r", encoding="utf-8") as stream:
+                task_list = json.load(stream)
+                print(task_list)
+                print(len(task_list))
+                for crate in task_list:
+                    print(crate)
+                    for task in crate["tasks"]:
+                        print(task)
+                        if task["name"] == self.host_name:
+                            print("hithithit")
+
+#                for element in tasking["tasks"]:
+#                    print(element)
+
+                    
+
+        except Exception as error:
+            print(f"error reading tasking file: {error}")
+            sys.exit(-1)
+
+    def execute(self, tasking_file_name: str) -> int:
+        self.read_tasking(tasking_file_name)
 
 print("collection start")
 
@@ -113,29 +141,32 @@ print("collection start")
 #
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        config_file_name = sys.argv[1]
+        tasking_file_name = sys.argv[1]
     else:
-        config_file_name = "config.yaml"
+        tasking_file_name = "/var/wombat/admin/tasking.json"
 
-    args = {}
-    with open(config_file_name, "r", encoding="utf-8") as stream:
-        try:
-            configuration = yaml.load(stream, Loader=SafeLoader)
+    collector = Collector()
+    sys.exit(collector.execute(tasking_file_name))
 
-            args = {
-                "application": configuration["application"],
-                "crate": configuration["crate"],
-                "fresh_dir": configuration["freshDir"],
-                "host_name": socket.gethostname(),
-                "site_name": configuration["siteName"],
-                "site_lat": configuration["siteLatitude"],
-                "site_lng": configuration["siteLongitude"],
-            }
-        except yaml.YAMLError as exc:
-            print(exc)
-
-    collector = Collector(args)
-    sys.exit(collector.execute())
+#    args = {}
+#    with open(config_file_name, "r", encoding="utf-8") as stream:
+#        try:
+#            configuration = yaml.load(stream, Loader=SafeLoader)
+#
+#            args = {
+#                "application": configuration["application"],
+#                "crate": configuration["crate"],
+#                "fresh_dir": configuration["freshDir"],
+#                "host_name": socket.gethostname(),
+#                "site_name": configuration["siteName"],
+#                "site_lat": configuration["siteLatitude"],
+#                "site_lng": configuration["siteLongitude"],
+#            }
+#        except yaml.YAMLError as exc:
+#            print(exc)
+#
+#    collector = Collector(args)
+#    sys.exit(collector.execute())
 
 print("collection stop")
 
