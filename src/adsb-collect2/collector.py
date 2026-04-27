@@ -19,9 +19,13 @@ import requests
 import yaml
 from yaml.loader import SafeLoader
 
+from adsb_exchange import AdsbExchange
+
+
 class Collector:
 
-    def __init__(self, args:dict[str, any]):
+    def __init__(self, args: dict[str, any]):
+        self.api_key = args["api_key"]
         self.application = args["application"]
         self.crate = args["crate"]
         self.dump1090url = "http://localhost:8080/data.json"
@@ -31,6 +35,22 @@ class Collector:
         self.site_alt = args["site_alt"]
         self.site_lat = args["site_lat"]
         self.site_lng = args["site_lng"]
+
+    def get_adsbex(self, payload: dict[str, any]) -> list[dict[str, any]]:
+        retlist = []
+
+        if len(self.api_key) < 2:
+            print("short api_key skipping adsbex")
+            return []
+
+        adsbex = AdsbExchange(self.api_key)
+        for element in payload:
+            candidate = element["hex"]
+            templist = adsbex.execute(candidate)
+            for temp in templist:
+                retlist.append(temp)
+
+        return retlist
 
     def get_filename(self) -> str:
         """return fully qualified filename"""
@@ -43,17 +63,10 @@ class Collector:
             epoch_seconds, tz=zoneinfo.ZoneInfo("UTC")
         )
         iso8601_timestamp = dt_object_utc.isoformat()
-        
-        return(epoch_seconds, iso8601_timestamp)
-    
-    def json_writer(self, file_name, payload: dict[str, any]) -> None:
-        try:
-            with open(file_name, "w") as out_file:
-                json.dump(payload, out_file, indent=4)
-        except Exception as error:
-            print(error)
 
-    def write_payload(self, payload: dict[str, any]):
+        return (epoch_seconds, iso8601_timestamp)
+
+    def write_payload(self, adsbex: dict[str, any], payload: dict[str, any]):
         timestamp_tuple = self.get_timestamp()
 
         result = {
@@ -63,17 +76,15 @@ class Collector:
                 "hostName": self.host_name,
                 "schemaVersion": 2,
                 "timeStampEpoch": timestamp_tuple[0],
-                "timeStampIso8601": timestamp_tuple[1]
+                "timeStampIso8601": timestamp_tuple[1],
             },
             "geoLoc": {
                 "site": self.site_name,
                 "altitude": self.site_alt,
                 "latitude": self.site_lat,
-                "longitude": self.site_lng
+                "longitude": self.site_lng,
             },
-            "payload": {
-                "raw": payload
-            }
+            "payload": {"adsbex": adsbex, "observation": payload},
         }
 
         try:
@@ -87,8 +98,11 @@ class Collector:
             response = requests.get(self.dump1090url, timeout=5.0)
             if response.status_code == 200:
                 payload = json.loads(response.text)
-                if len(payload) > 0:
-                    self.write_payload(payload)
+                payload_len = len(payload)
+                print(f"payload length {payload_len}")
+                if payload_len > 0:
+                    adsbex = self.get_adsbex(payload)
+                    self.write_payload(adsbex, payload)
                 else:
                     print("empty response from dump1090")
             else:
@@ -99,6 +113,7 @@ class Collector:
             return -1
 
         return 0
+
 
 print("collection start")
 
@@ -117,6 +132,7 @@ if __name__ == "__main__":
             configuration = yaml.load(stream, Loader=SafeLoader)
 
             args = {
+                "api_key": configuration["rapidApiKey"],
                 "application": configuration["application"],
                 "crate": configuration["crate"],
                 "fresh_dir": configuration["freshDir"],
@@ -125,12 +141,13 @@ if __name__ == "__main__":
                 "site_alt": configuration["siteAltitude"],
                 "site_lat": configuration["siteLatitude"],
                 "site_lng": configuration["siteLongitude"],
+                "site_lng": configuration["siteLongitude"],
             }
         except yaml.YAMLError as exc:
             print(exc)
 
     collector = Collector(args)
-    sys.exit(collector.execute())
+    collector.execute()
 
 print("collection stop")
 
